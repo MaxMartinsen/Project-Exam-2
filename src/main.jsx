@@ -7,10 +7,15 @@ import App from './components/App/App';
 
 import './main.css';
 
+import { Provider } from 'react-redux';
+import { store } from './features/store';
+
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
+    <Provider store={store}>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </Provider>
   </React.StrictMode>
 );
