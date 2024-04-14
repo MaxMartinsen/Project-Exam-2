@@ -6,7 +6,7 @@ import LOGO from '/HolidazeLogo.svg';
 
 function Header() {
   return (
-    <nav className="bg-white sticky w-full z-20 top-0 start-0 border-b border-gray-200">
+    <nav className="bg-white sticky w-full z-40 top-0 start-0 border-b border-gray-200">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
         <Link
           to={ROUTES.HOME}

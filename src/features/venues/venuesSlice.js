@@ -32,7 +32,9 @@ const venuesSlice = createSlice({
       })
       .addCase(fetchVenues.fulfilled, (state, action) => {
         state.status = 'succeeded';
-        state.venues = action.payload.data;
+        state.venues = action.payload.data.sort(
+          (a, b) => new Date(b.created) - new Date(a.created)
+        );
       })
       .addCase(fetchVenues.rejected, (state, action) => {
         state.status = 'failed';

@@ -1,6 +1,6 @@
 function Search() {
   return (
-    <div className="bg-white sticky w-full z-40 top-0 start-0">
+    <div className="bg-white sticky w-full z-20 top-0 start-0">
       <form className="max-w-md mx-auto my-3 px-2">
         <label
           htmlFor="default-search"
