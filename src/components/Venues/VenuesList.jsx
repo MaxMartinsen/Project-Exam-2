@@ -2,7 +2,6 @@ import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Rating from '../Rating/Rating';
 import IMAGE from '../../assets/image/default-image.png';
-import { ROUTES } from '../../utils/routes';
 
 function VenuesList() {
   const { venues, status, error } = useSelector((state) => state.venues);
@@ -17,7 +16,7 @@ function VenuesList() {
         {venues.map((venue) => (
           <Link
             key={venue.id}
-            to={`${ROUTES.VENUE}/${venue.id}`}
+            to={`/Venue/${venue.id}`}
             className="flex flex-col bg-white border border-gray-200 rounded-lg shadow md:flex-row hover:bg-gray-100"
           >
             <img

@@ -14,7 +14,7 @@ function AppRoutes() {
         <Route path={ROUTES.HOME} element={<Home />} />
         <Route path={ROUTES.ABOUT} element={<About />} />
         <Route path={ROUTES.CONTACT} element={<Contact />} />
-        <Route path={`${ROUTES.VENUE}/:id`} element={<VenuesCard />} />
+        <Route path={ROUTES.VENUE} element={<VenuesCard />} />
       </Route>
     </Routes>
   );

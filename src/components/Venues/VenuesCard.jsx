@@ -8,20 +8,22 @@ import { ROUTES } from '../../utils/routes';
 function VenuesCard() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { data: venue, isLoading, error } = useGetVenueQuery(id);
+  const { data: venueResponse, isLoading, error } = useGetVenueQuery(id);
 
   useEffect(() => {
     if (error) navigate(ROUTES.HOME);
   }, [error, navigate]);
 
   if (isLoading) return <div>Loading...</div>;
-  return venue ? (
+  if (!venueResponse) return <div>Venue not found</div>;
+
+  const venue = venueResponse.data;
+
+  return (
     <>
       <Breadcrumb />
       <VenuesItem venue={venue} />
     </>
-  ) : (
-    <div>Venue not found</div>
   );
 }
 
