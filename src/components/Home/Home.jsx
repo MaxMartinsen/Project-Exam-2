@@ -1,14 +1,24 @@
+// src/components/Home/Home.jsx
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { fetchVenues } from '../../features/venues/venuesSlice';
 import Breadcrumb from '../Breadcrumb/Breadcrumb';
-import Allvenues from '../List/Allvenues';
-import Search from './../Forms/Search';
+import VenuesList from '../Venues/VenuesList';
+import Search from '../Forms/Search';
 
 function Home() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchVenues());
+  }, [dispatch]);
+
   return (
-    <main className="">
+    <>
       <Breadcrumb />
       <Search />
-      <Allvenues />
-    </main>
+      <VenuesList />
+    </>
   );
 }
 

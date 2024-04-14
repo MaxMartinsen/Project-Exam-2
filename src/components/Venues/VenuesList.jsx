@@ -1,17 +1,11 @@
-import { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { fetchVenues } from '../../features/venues/venuesSlice';
 import Rating from '../Rating/Rating';
 import IMAGE from '../../assets/image/default-image.png';
+import { ROUTES } from '../../utils/routes';
 
-function Allvenues() {
-  const dispatch = useDispatch();
+function VenuesList() {
   const { venues, status, error } = useSelector((state) => state.venues);
-
-  useEffect(() => {
-    dispatch(fetchVenues());
-  }, [dispatch]);
 
   if (status === 'loading') return <div>Loading...</div>;
   if (error) return <div>Error: {error.toString()}</div>;
@@ -23,7 +17,7 @@ function Allvenues() {
         {venues.map((venue) => (
           <Link
             key={venue.id}
-            to="#"
+            to={`${ROUTES.VENUE}/${venue.id}`}
             className="flex flex-col bg-white border border-gray-200 rounded-lg shadow md:flex-row hover:bg-gray-100"
           >
             <img
@@ -78,4 +72,4 @@ function Allvenues() {
   );
 }
 
-export default Allvenues;
+export default VenuesList;

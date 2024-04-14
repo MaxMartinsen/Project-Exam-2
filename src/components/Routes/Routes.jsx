@@ -5,6 +5,7 @@ import Layout from '../Layout/Layout';
 import Home from '../Home/Home';
 import About from '../../pages/About/About';
 import Contact from '../../pages/Contact/Contact';
+import VenuesCard from '../Venues/VenuesCard';
 
 function AppRoutes() {
   return (
@@ -13,6 +14,7 @@ function AppRoutes() {
         <Route path={ROUTES.HOME} element={<Home />} />
         <Route path={ROUTES.ABOUT} element={<About />} />
         <Route path={ROUTES.CONTACT} element={<Contact />} />
+        <Route path={`${ROUTES.VENUE}/:id`} element={<VenuesCard />} />
       </Route>
     </Routes>
   );
