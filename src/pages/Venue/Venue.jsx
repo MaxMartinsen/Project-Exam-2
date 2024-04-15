@@ -1,11 +1,11 @@
 import { useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useGetVenueQuery } from '../../features/api/apiSlice';
-import Breadcrumb from '../Breadcrumb/Breadcrumb';
-import VenuesItem from './VenuesItem';
+import Breadcrumb from '../../components/Breadcrumb/Breadcrumb';
+import VenuesItem from '../../components/Venues/VenuesItem';
 import { ROUTES } from '../../utils/routes';
 
-function VenuesCard() {
+function Venue() {
   const { id } = useParams();
   const navigate = useNavigate();
   const { data: venueResponse, isLoading, error } = useGetVenueQuery(id);
@@ -27,4 +27,4 @@ function VenuesCard() {
   );
 }
 
-export default VenuesCard;
+export default Venue;

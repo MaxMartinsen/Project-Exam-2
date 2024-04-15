@@ -11,7 +11,7 @@ function VenuesItem({ venue }) {
         <div className="lg:grid lg:grid-cols-2 lg:gap-8 xl:gap-16">
           <div className="shrink-0 max-w-md lg:max-w-lg mx-auto">
             <img
-              className="w-full dark:hidden"
+              className="w-full"
               src={venue.media.length > 0 ? venue.media[0].url : IMAGE}
               alt={
                 venue.media.length > 0 ? venue.media[0].alt : 'Default Image'

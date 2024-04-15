@@ -7,6 +7,8 @@ import App from './components/App/App';
 
 import './main.css';
 
+import 'flowbite';
+
 import { Provider } from 'react-redux';
 import { store } from './features/store';
 
