@@ -1,78 +1,99 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axiosClient from '../api/axiosClient';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { API_URL } from '../../utils/constans';
 
-export const registerUser = createAsyncThunk(
-  'user/registerUser',
+export const createUser = createAsyncThunk(
+  'user/createUser',
   async (userData, { rejectWithValue }) => {
     try {
-      const response = await axiosClient.post('/auth/register', userData);
-      return response.data;
+      const response = await fetch(`${API_URL}/auth/register`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(userData),
+      });
+      if (!response.ok) throw new Error('Could not register user');
+      const data = await response.json();
+      return data;
     } catch (error) {
-      return rejectWithValue(error.response ? error.response.data : error);
+      return rejectWithValue(error.message);
     }
   }
 );
 
 export const loginUser = createAsyncThunk(
   'user/loginUser',
-  async (loginData, { rejectWithValue }) => {
-    console.log('Sending login request with data:', loginData);
+  async (userData, { rejectWithValue }) => {
     try {
-      const response = await axiosClient.post('/auth/login', loginData);
-      console.log('Login response:', response.data);
-      return response.data;
+      const loginResponse = await fetch(`${API_URL}/auth/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(userData),
+      });
+
+      if (!loginResponse.ok) throw new Error('Login failed');
+      const loginData = await loginResponse.json();
+
+      const accessToken = loginData.data.accessToken;
+
+      const apiKeyResponse = await fetch(`${API_URL}/auth/create-api-key`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${accessToken}`,
+        },
+        body: JSON.stringify({ name: 'API Key' }),
+      });
+
+      if (!apiKeyResponse.ok) throw new Error('API Key creation failed');
+      const apiKeyData = await apiKeyResponse.json();
+
+      return {
+        user: loginData.data,
+        apiKey: apiKeyData.data.key,
+      };
     } catch (error) {
-      console.error(
-        'Login failed with error:',
-        error.response ? error.response.data : error
-      );
-      return rejectWithValue(error.response ? error.response.data : error);
+      return rejectWithValue(error.toString());
     }
   }
 );
 
-export const createApiKey = createAsyncThunk(
-  'user/createApiKey',
-  async (accessToken, { rejectWithValue }) => {
-    try {
-      const response = await axiosClient.post(
-        '/auth/create-api-key',
-        {},
-        {
-          headers: { Authorization: `Bearer ${accessToken}` },
-        }
-      );
-      return response.data;
-    } catch (error) {
-      return rejectWithValue(error.response.data);
-    }
-  }
-);
-
-// Reducer slice
 const userSlice = createSlice({
   name: 'user',
   initialState: {
-    user: null,
-    token: null,
-    status: 'idle',
+    currentUser: null,
+    apiKey: null,
+    bookings: [],
+    isLoading: false,
+    formType: 'signup',
+    showForm: false,
     error: null,
   },
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(registerUser.fulfilled, (state, action) => {
-        state.user = action.payload;
+      .addCase(createUser.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(createUser.fulfilled, (state, action) => {
+        state.currentUser = action.payload.data;
+        state.isLoading = false;
+      })
+      .addCase(createUser.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      })
+      .addCase(loginUser.pending, (state) => {
+        state.isLoading = true;
       })
       .addCase(loginUser.fulfilled, (state, action) => {
-        state.user = action.payload.user;
-        state.token = action.payload.accessToken;
+        state.currentUser = action.payload.user;
+        state.apiKey = action.payload.apiKey;
+        state.isLoading = false;
       })
       .addCase(loginUser.rejected, (state, action) => {
-        state.error = action.payload || 'Login failed';
-      })
-      .addCase(createApiKey.fulfilled, (state, action) => {
-        state.apiKey = action.payload.key;
+        state.isLoading = false;
+        state.error = action.payload;
       });
   },
 });

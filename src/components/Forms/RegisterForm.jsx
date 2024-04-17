@@ -1,33 +1,42 @@
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { ROUTES } from '../../utils/routes';
-import { registerUser } from '../../features/user/userSlice';
+
+import { createUser } from '../../features/user/userSlice';
 
 function RegisterForm() {
-  const [userData, setUserData] = useState({
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [values, setValues] = useState({
     name: '',
     email: '',
     password: '',
+    avatar: '',
   });
-  const navigate = useNavigate();
-
-  const handleChange = (event) => {
-    setUserData({ ...userData, [event.target.name]: event.target.value });
+  const handleChange = ({ target: { value, name } }) => {
+    setValues({ ...values, [name]: value });
   };
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
-    try {
-      const data = await registerUser(userData);
-      console.log('Registration successful', data);
-      navigate(ROUTES.LOGIN);
-    } catch (error) {
-      console.error(
-        'Registration failed',
-        error.response ? error.response.data : error
-      );
-    }
+
+    const avatarObject = values.avatar
+      ? {
+          url: values.avatar,
+          alt: 'User avatar',
+        }
+      : undefined;
+
+    const userData = {
+      name: values.name,
+      email: values.email,
+      password: values.password,
+      avatar: avatarObject,
+    };
+    dispatch(createUser(userData));
+    navigate(ROUTES.LOGIN);
   };
   return (
     <div className="justify-center items-center ">
