@@ -76,7 +76,7 @@ function Header() {
               </button>
               {showDropdown && (
                 <div
-                  className="z-50 absolute top-12 right-1 my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow"
+                  className="z-40 absolute top-12 right-1 my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow"
                   id="user-dropdown"
                 >
                   <div className="px-4 py-3">

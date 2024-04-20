@@ -72,6 +72,7 @@ export const logoutUser = createAsyncThunk(
 
 const initialState = {
   currentUser: JSON.parse(localStorage.getItem('user')) || null,
+  token: null,
   apiKey: null,
   bookings: [],
   isLoading: false,
@@ -106,6 +107,7 @@ const userSlice = createSlice({
       })
       .addCase(loginUser.fulfilled, (state, action) => {
         state.currentUser = action.payload.user;
+        state.token = action.payload.user.accessToken;
         state.apiKey = action.payload.apiKey;
         state.isLoading = false;
       })
