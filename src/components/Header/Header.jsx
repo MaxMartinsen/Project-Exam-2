@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { Link, useNavigate, NavLink } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { logoutUser } from '../../features/user/userSlice';
 
@@ -19,6 +19,28 @@ function Header() {
     dispatch(logoutUser());
     navigate(ROUTES.HOME);
   };
+
+  const handleSettings = () => {
+    setShowDropdown(false);
+    navigate(ROUTES.SETTINGS);
+  };
+
+  useEffect(() => {
+    const closeDropdown = (event) => {
+      if (
+        !event.target.closest('#user-menu-button') &&
+        !event.target.closest('#user-dropdown')
+      ) {
+        setShowDropdown(false);
+      }
+    };
+    if (showDropdown) {
+      document.addEventListener('click', closeDropdown);
+    }
+    return () => {
+      document.removeEventListener('click', closeDropdown);
+    };
+  }, [showDropdown]);
   return (
     <nav className="bg-white sticky w-full z-40 top-0 start-0 border-b border-gray-200">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
@@ -68,7 +90,7 @@ function Header() {
                   <ul className="py-2" aria-labelledby="user-menu-button">
                     <li>
                       <button
-                        to="#"
+                        onClick={handleSettings}
                         className="w-full text-left block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                       >
                         Settings
@@ -125,29 +147,34 @@ function Header() {
         >
           <ul className="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white">
             <li>
-              <a
-                href="#"
-                className="block py-2 px-3 text-white bg-alizarin-crimson-500 rounded md:bg-transparent md:text-alizarin-crimson-700 md:p-0"
-                aria-current="page"
+              <NavLink
+                to={ROUTES.HOME}
+                className={({ isActive }) =>
+                  `block py-2 px-3 rounded md:bg-transparent md:p-0 ${isActive ? 'md:text-alizarin-crimson-500 text-white bg-alizarin-crimson-500' : 'text-gray-900'} `
+                }
               >
                 Venues
-              </a>
+              </NavLink>
             </li>
             <li>
-              <a
-                href="#"
-                className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-alizarin-crimson-600 md:p-0"
+              <NavLink
+                to={ROUTES.ABOUT}
+                className={({ isActive }) =>
+                  `block py-2 px-3 rounded md:bg-transparent md:p-0 ${isActive ? 'md:text-alizarin-crimson-500 text-white bg-alizarin-crimson-500' : 'text-gray-900'} `
+                }
               >
                 About
-              </a>
+              </NavLink>
             </li>
             <li>
-              <a
-                href="#"
-                className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-alizarin-crimson-600 md:p-0"
+              <NavLink
+                to={ROUTES.CONTACT}
+                className={({ isActive }) =>
+                  `block py-2 px-3 rounded md:bg-transparent md:p-0 ${isActive ? 'md:text-alizarin-crimson-500 text-white bg-alizarin-crimson-500' : 'text-gray-900'} `
+                }
               >
                 Contact
-              </a>
+              </NavLink>
             </li>
           </ul>
         </div>

@@ -8,6 +8,7 @@ import Contact from '../../pages/Contact/Contact';
 import Venue from '../../pages/Venue/Venue';
 import Login from '../../pages/Login/Login';
 import Register from '../../pages/Register/Register';
+import Settings from '../../pages/Settings/Settings';
 
 function AppRoutes() {
   return (
@@ -19,6 +20,7 @@ function AppRoutes() {
         <Route path={ROUTES.VENUE} element={<Venue />} />
         <Route path={ROUTES.LOGIN} element={<Login />} />
         <Route path={ROUTES.REGISTER} element={<Register />} />
+        <Route path={ROUTES.SETTINGS} element={<Settings />} />
       </Route>
     </Routes>
   );

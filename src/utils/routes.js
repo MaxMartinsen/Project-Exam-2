@@ -4,5 +4,6 @@ export const ROUTES = {
   CONTACT: '/Contact',
   LOGIN: '/Login',
   REGISTER: '/Register',
+  SETTINGS: '/Settings',
   VENUE: '/Venue/:id',
 };
