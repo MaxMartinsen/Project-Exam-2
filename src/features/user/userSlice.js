@@ -33,6 +33,7 @@ export const loginUser = createAsyncThunk(
 
       if (!loginResponse.ok) throw new Error('Login failed');
       const loginData = await loginResponse.json();
+      localStorage.setItem('user', JSON.stringify(loginData.data));
 
       const accessToken = loginData.data.accessToken;
 
@@ -48,6 +49,9 @@ export const loginUser = createAsyncThunk(
       if (!apiKeyResponse.ok) throw new Error('API Key creation failed');
       const apiKeyData = await apiKeyResponse.json();
 
+      // Store user data in local storage
+      localStorage.setItem('user', JSON.stringify(loginData.data));
+
       return {
         user: loginData.data,
         apiKey: apiKeyData.data.key,
@@ -58,18 +62,32 @@ export const loginUser = createAsyncThunk(
   }
 );
 
+export const logoutUser = createAsyncThunk(
+  'user/logoutUser',
+  async (_, { dispatch }) => {
+    localStorage.removeItem('user');
+    dispatch(clearCurrentUser());
+  }
+);
+
+const initialState = {
+  currentUser: JSON.parse(localStorage.getItem('user')) || null,
+  apiKey: null,
+  bookings: [],
+  isLoading: false,
+  formType: 'signup',
+  showForm: false,
+  error: null,
+};
+
 const userSlice = createSlice({
   name: 'user',
-  initialState: {
-    currentUser: null,
-    apiKey: null,
-    bookings: [],
-    isLoading: false,
-    formType: 'signup',
-    showForm: false,
-    error: null,
+  initialState,
+  reducers: {
+    clearCurrentUser: (state) => {
+      state.currentUser = null;
+    },
   },
-  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(createUser.pending, (state) => {
@@ -97,5 +115,5 @@ const userSlice = createSlice({
       });
   },
 });
-
+export const { clearCurrentUser } = userSlice.actions;
 export default userSlice.reducer;

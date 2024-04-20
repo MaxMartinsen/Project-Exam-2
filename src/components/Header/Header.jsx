@@ -1,10 +1,24 @@
-import { Link } from 'react-router-dom';
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { logoutUser } from '../../features/user/userSlice';
 
 import { ROUTES } from '../../utils/routes';
-
 import LOGO from '/HolidazeLogo.svg';
+import DEFAULT_AVATAR from '../../assets/image/default-avatar.png';
 
 function Header() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const currentUser = useSelector((state) => state.user.currentUser);
+  const isLoggedIn = Boolean(currentUser);
+
+  const [showDropdown, setShowDropdown] = useState(false);
+
+  const handleLogout = () => {
+    dispatch(logoutUser());
+    navigate(ROUTES.HOME);
+  };
   return (
     <nav className="bg-white sticky w-full z-40 top-0 start-0 border-b border-gray-200">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
@@ -17,13 +31,69 @@ function Header() {
             Holidaze
           </span>
         </Link>
-        <div className="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
-          <Link
-            to={ROUTES.LOGIN}
-            className="text-white bg-alizarin-crimson-500 hover:bg-alizarin-crimson-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center"
-          >
-            Sign in
-          </Link>
+        <div className="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
+          {isLoggedIn ? (
+            <>
+              <button
+                type="button"
+                className="flex text-sm bg-gray-800 rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 relative"
+                id="user-menu-button"
+                aria-expanded="false"
+                onClick={() => setShowDropdown(!showDropdown)}
+              >
+                <span className="sr-only">Open user menu</span>
+                <img
+                  className="w-10 h-10 rounded-full"
+                  src={
+                    currentUser.avatar ? currentUser.avatar.url : DEFAULT_AVATAR
+                  }
+                  alt={
+                    currentUser.avatar ? currentUser.avatar.alt : 'User avatar'
+                  }
+                />
+              </button>
+              {showDropdown && (
+                <div
+                  className="z-50 absolute top-12 right-1 my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow"
+                  id="user-dropdown"
+                >
+                  <div className="px-4 py-3">
+                    <span className="block text-base font-semibold text-gray-900">
+                      {currentUser.name}
+                    </span>
+                    <span className="block text-sm text-gray-500 truncate">
+                      {currentUser.email}
+                    </span>
+                  </div>
+                  <ul className="py-2" aria-labelledby="user-menu-button">
+                    <li>
+                      <button
+                        to="#"
+                        className="w-full text-left block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                      >
+                        Settings
+                      </button>
+                    </li>
+                    <li>
+                      <button
+                        onClick={handleLogout}
+                        className="w-full text-left block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                      >
+                        Sign out
+                      </button>
+                    </li>
+                  </ul>
+                </div>
+              )}
+            </>
+          ) : (
+            <Link
+              to={ROUTES.LOGIN}
+              className="text-white bg-alizarin-crimson-500 hover:bg-alizarin-crimson-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center"
+            >
+              Sign in
+            </Link>
+          )}
           <button
             data-collapse-toggle="navbar-sticky"
             type="button"

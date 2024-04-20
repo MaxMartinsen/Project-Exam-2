@@ -1,11 +1,13 @@
 /** @type {import('tailwindcss').Config} */
 import flowbitePlugin from 'flowbite/plugin';
+const flowbite = require('flowbite-react/tailwind');
 
 export default {
   content: [
     './index.html',
     './src/**/*.{js,ts,jsx,tsx}',
     'node_modules/flowbite-react/lib/esm/**/*.js',
+    flowbite.content(),
   ],
   Mode: 'media',
   theme: {
@@ -38,5 +40,5 @@ export default {
       poppins: ['"Poppins"', 'sans-serif'],
     },
   },
-  plugins: [flowbitePlugin],
+  plugins: [flowbitePlugin, flowbite.plugin()],
 };
