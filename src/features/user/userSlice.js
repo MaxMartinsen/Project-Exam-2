@@ -1,3 +1,4 @@
+//src/features/user/userSlice.js
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { API_URL } from '../../utils/constans';
 
@@ -70,23 +71,28 @@ export const logoutUser = createAsyncThunk(
   }
 );
 
-const initialState = {
-  currentUser: JSON.parse(localStorage.getItem('user')) || null,
-  token: null,
-  apiKey: null,
-  bookings: [],
-  isLoading: false,
-  formType: 'signup',
-  showForm: false,
-  error: null,
+const saveToLocalStorage = (data) => {
+  localStorage.setItem('user', JSON.stringify(data));
 };
 
 const userSlice = createSlice({
   name: 'user',
-  initialState,
+  initialState: {
+    currentUser: JSON.parse(localStorage.getItem('user')) || null,
+    token: null,
+    apiKey: null,
+    bookings: [],
+    isLoading: false,
+    error: null,
+  },
   reducers: {
     clearCurrentUser: (state) => {
       state.currentUser = null;
+      localStorage.removeItem('user');
+    },
+    updateUser: (state, action) => {
+      state.currentUser = { ...state.currentUser, ...action.payload };
+      saveToLocalStorage(state.currentUser);
     },
   },
   extraReducers: (builder) => {
@@ -95,8 +101,10 @@ const userSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(createUser.fulfilled, (state, action) => {
-        state.currentUser = action.payload.data;
+        const newUser = action.payload.data;
+        state.currentUser = newUser;
         state.isLoading = false;
+        saveToLocalStorage(newUser);
       })
       .addCase(createUser.rejected, (state, action) => {
         state.isLoading = false;
@@ -106,10 +114,12 @@ const userSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(loginUser.fulfilled, (state, action) => {
-        state.currentUser = action.payload.user;
-        state.token = action.payload.user.accessToken;
+        const userData = action.payload.user;
+        state.currentUser = userData;
+        state.token = userData.accessToken;
         state.apiKey = action.payload.apiKey;
         state.isLoading = false;
+        saveToLocalStorage(userData);
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.isLoading = false;
@@ -117,5 +127,5 @@ const userSlice = createSlice({
       });
   },
 });
-export const { clearCurrentUser } = userSlice.actions;
+export const { clearCurrentUser, updateUser } = userSlice.actions;
 export default userSlice.reducer;

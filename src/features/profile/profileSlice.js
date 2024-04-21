@@ -1,3 +1,4 @@
+// src/features/profile/profileSlice.js
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { API_URL } from '../../utils/constans';
 
@@ -31,7 +32,6 @@ export const updateProfile = createAsyncThunk(
   }
 );
 
-// Define initial state for the profile slice
 const initialState = {
   isLoading: false,
   error: null,

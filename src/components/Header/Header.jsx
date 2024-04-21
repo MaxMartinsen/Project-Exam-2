@@ -5,7 +5,7 @@ import { logoutUser } from '../../features/user/userSlice';
 
 import { ROUTES } from '../../utils/routes';
 import LOGO from '/HolidazeLogo.svg';
-import DEFAULT_AVATAR from '../../assets/image/default-avatar.png';
+import DEFAULT_AVATAR from '../../assets/image/default-profile.png';
 
 function Header() {
   const dispatch = useDispatch();
@@ -58,7 +58,7 @@ function Header() {
             <>
               <button
                 type="button"
-                className="flex text-sm bg-gray-800 rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 relative"
+                className="flex text-sm rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 relative"
                 id="user-menu-button"
                 aria-expanded="false"
                 onClick={() => setShowDropdown(!showDropdown)}
