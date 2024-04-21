@@ -2,6 +2,7 @@ import Rating from '../Rating/Rating';
 
 import IMAGE from '../../assets/image/default-image.png';
 import VenuesDetails from './VenuesDetails';
+import VenueBadge from '../Badge/VenueBadge';
 
 function VenuesItem({ venue }) {
   if (!venue) {
@@ -50,6 +51,7 @@ function VenuesItem({ venue }) {
             <p className="mb-6 text-gray-500">{venue.description}</p>
           </div>
         </div>
+        <VenueBadge meta={venue.meta} />
         <div className="lg:grid lg:grid-cols-2 lg:gap-8 xl:gap-16">
           <VenuesDetails owner={venue.owner} maxGuests={venue.maxGuests} />
         </div>
