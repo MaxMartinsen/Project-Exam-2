@@ -17,11 +17,28 @@ export const fetchVenues = createAsyncThunk(
   }
 );
 
+export const fetchVenueById = createAsyncThunk(
+  'venues/fetchVenueById',
+  async (venueId, { rejectWithValue }) => {
+    try {
+      const response = await axios.get(`${API_VENUE_URL}/${venueId}`, {
+        params: { _owner: true, _bookings: true },
+      });
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(
+        error.response ? error.response.data : error.message
+      );
+    }
+  }
+);
+
 const venuesSlice = createSlice({
   name: 'venues',
   initialState: {
     venues: [],
     status: 'idle',
+    selectedVenue: null,
     error: null,
   },
   reducers: {},
@@ -32,11 +49,23 @@ const venuesSlice = createSlice({
       })
       .addCase(fetchVenues.fulfilled, (state, action) => {
         state.status = 'succeeded';
-        state.venues = action.payload.data.sort(
+        const venues = action.payload.data || action.payload;
+        state.venues = venues.sort(
           (a, b) => new Date(b.created) - new Date(a.created)
         );
       })
       .addCase(fetchVenues.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.payload;
+      })
+      .addCase(fetchVenueById.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(fetchVenueById.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        state.selectedVenue = action.payload.data || action.payload;
+      })
+      .addCase(fetchVenueById.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.payload;
       });

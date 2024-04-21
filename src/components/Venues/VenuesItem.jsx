@@ -1,24 +1,27 @@
 import Rating from '../Rating/Rating';
 
 import IMAGE from '../../assets/image/default-image.png';
+import VenuesDetails from './VenuesDetails';
 
 function VenuesItem({ venue }) {
-  console.log(venue);
+  if (!venue) {
+    return <div>No venue data available</div>;
+  }
+
+  const media = venue.media || [];
+  const imageUrl = media.length > 0 ? media[0].url : IMAGE;
 
   return (
     <section className="py-8 bg-white md:py-16 antialiased">
       <div className="max-w-screen-xl px-4 mx-auto 2xl:px-0">
-        <div className="lg:grid lg:grid-cols-2 lg:gap-8 xl:gap-16">
+        <div className="lg:grid lg:grid-cols-2 lg:gap-8 xl:gap-16 mb-5">
           <div className="shrink-0 max-w-md lg:max-w-lg mx-auto">
             <img
               className="w-full"
-              src={venue.media.length > 0 ? venue.media[0].url : IMAGE}
-              alt={
-                venue.media.length > 0 ? venue.media[0].alt : 'Default Image'
-              }
+              src={imageUrl}
+              alt={media.length > 0 ? media[0].alt : 'Default Image'}
             />
           </div>
-
           <div className="mt-6 sm:mt-8 lg:mt-0">
             <h1 className="text-xl font-semibold text-gray-900 sm:text-2xl">
               {venue.name}
@@ -29,7 +32,7 @@ function VenuesItem({ venue }) {
               </p>
             </div>
 
-            <Rating rating={venue.rating} maxRating={5} />
+            <Rating rating={venue.rating || 0} maxRating={5} />
 
             <div className="mt-6 sm:gap-4 sm:items-center sm:flex sm:mt-8">
               <a
@@ -46,6 +49,9 @@ function VenuesItem({ venue }) {
 
             <p className="mb-6 text-gray-500">{venue.description}</p>
           </div>
+        </div>
+        <div className="lg:grid lg:grid-cols-2 lg:gap-8 xl:gap-16">
+          <VenuesDetails owner={venue.owner} maxGuests={venue.maxGuests} />
         </div>
       </div>
     </section>

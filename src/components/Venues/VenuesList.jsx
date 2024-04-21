@@ -28,7 +28,7 @@ function VenuesList() {
             />
             <div className="flex flex-col p-4 leading-normal">
               <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900">
-                {venue.name}
+                {venue.name || 'Unknown Venue'}
               </h5>
               <Rating rating={venue.rating} maxRating={5} />
               {venue.location && venue.location.city && (
@@ -61,7 +61,7 @@ function VenuesList() {
                 </p>
               )}
               <p className="mb-3 font-normal text-gray-700">
-                {venue.description}
+                {venue.description || 'No description'}
               </p>
             </div>
           </Link>
