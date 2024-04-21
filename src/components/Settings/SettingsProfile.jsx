@@ -1,10 +1,12 @@
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { API_URL } from '../../utils/constans';
+import { updateProfile } from '../../features/profile/profileSlice';
 import DEFAULT_AVATAR from '../../assets/image/default-avatar.png';
 
 function SettingsProfile() {
+  const dispatch = useDispatch();
+  const isLoading = useSelector((state) => state.profile.isLoading);
   const currentUser = useSelector((state) => state.user.currentUser);
   const token = useSelector((state) => state.user.token);
   const apiKey = useSelector((state) => state.user.apiKey);
@@ -12,8 +14,7 @@ function SettingsProfile() {
   const [avatarUrl, setAvatarUrl] = useState(
     currentUser.avatar ? currentUser.avatar.url : ''
   );
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState('');
+  const error = useSelector((state) => state.profile.error);
 
   const handleModalToggle = () => {
     setIsModalOpen(!isModalOpen);
@@ -22,44 +23,17 @@ function SettingsProfile() {
     }
   };
 
-  const updateProfile = async () => {
-    setIsLoading(true);
-    setError('');
-
-    try {
-      const response = await fetch(
-        `${API_URL}/holidaze/profiles/${currentUser.name}`,
-        {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`,
-            'X-Noroff-API-Key': apiKey,
-          },
-          body: JSON.stringify({
-            avatar: { url: avatarUrl, alt: 'User avatar' },
-          }),
-        }
-      );
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || 'Failed to update avatar.');
-      }
-
-      const data = await response.json();
-      console.log('Update successful:', data);
-      setIsModalOpen(false);
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
   const handleSubmit = (event) => {
     event.preventDefault();
-    updateProfile();
+    dispatch(
+      updateProfile({
+        username: currentUser.name,
+        token,
+        apiKey,
+        avatarUrl,
+      })
+    );
+    setIsModalOpen(false);
   };
 
   const handleCloseModal = () => {
