@@ -59,15 +59,15 @@ function SettingsProfile() {
 
   return (
     <>
-      <div className="flex flex-col text-center items-center gap-3 m-auto mb-10">
+      <div className="flex flex-col text-center items-center gap-3 m-auto mb-10 mt-36">
         <div className="relative">
           <img
-            className="w-[200px] h-[200px] rounded-full shadow"
+            className="w-[200px] h-[200px] rounded shadow"
             src={currentUser.avatar ? currentUser.avatar.url : DEFAULT_AVATAR}
             alt={currentUser.avatar ? currentUser.avatar.alt : 'User avatar'}
           />
           <button
-            className="btn p-2 rounded-full absolute bottom-2 right-2 shadow bg-blue-gray-100 hover:bg-gray-400"
+            className="btn p-2 rounded absolute bottom-2 right-2 shadow bg-blue-gray-100 hover:bg-gray-400"
             onClick={handleModalToggle}
           >
             <svg

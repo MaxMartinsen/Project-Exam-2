@@ -91,7 +91,7 @@ function UpdateAvatarModal({
 
             <div className="col-span-2">
               <img
-                className="h-[150px] w-[150px] rounded-full my-5 m-auto"
+                className="h-[150px] w-[150px] rounded my-5 m-auto"
                 src={avatarUrl || DEFAULT_AVATAR}
                 alt="Preview of user avatar"
               />
