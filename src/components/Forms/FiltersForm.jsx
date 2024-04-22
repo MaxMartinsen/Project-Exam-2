@@ -1,4 +1,37 @@
-function FiltersForm() {
+import { useState } from 'react';
+
+function FiltersForm({ onFilterChange }) {
+  // State for filter options
+  const [breakfast, setBreakfast] = useState(false);
+  const [pets, setPets] = useState(false);
+  const [wifi, setWifi] = useState(false);
+  const [parking, setParking] = useState(false);
+  const [minPrice, setMinPrice] = useState('');
+  const [maxPrice, setMaxPrice] = useState('');
+
+  // Function to update filters and notify parent
+  const updateFilters = () => {
+    onFilterChange({
+      breakfast,
+      pets,
+      wifi,
+      parking,
+      minPrice,
+      maxPrice,
+    });
+  };
+
+  // Function to handle checkbox change
+  const handleCheckboxChange = (setter) => (e) => {
+    setter(e.target.checked);
+    updateFilters();
+  };
+
+  // Function to handle price change
+  const handlePriceChange = (setter) => (e) => {
+    setter(e.target.value);
+    updateFilters();
+  };
   return (
     <div className="sticky top-24">
       <form className="flex flex-col bg-white border border-gray-200 rounded-lg shadow p-4 leading-normal">
@@ -11,7 +44,8 @@ function FiltersForm() {
               <input
                 id="breakfast-checkbox"
                 type="checkbox"
-                value=""
+                checked={breakfast}
+                onChange={handleCheckboxChange(setBreakfast)}
                 className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
               />
               <label
@@ -27,7 +61,8 @@ function FiltersForm() {
               <input
                 id="pets-checkbox"
                 type="checkbox"
-                value=""
+                checked={pets}
+                onChange={handleCheckboxChange(setPets)}
                 className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
               />
               <label
@@ -43,7 +78,8 @@ function FiltersForm() {
               <input
                 id="wifi-checkbox"
                 type="checkbox"
-                value=""
+                checked={wifi}
+                onChange={handleCheckboxChange(setWifi)}
                 className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
               />
               <label
@@ -59,7 +95,8 @@ function FiltersForm() {
               <input
                 id="parking-checkbox"
                 type="checkbox"
-                value=""
+                checked={parking}
+                onChange={handleCheckboxChange(setParking)}
                 className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
               />
               <label
@@ -164,10 +201,10 @@ function FiltersForm() {
         </label>
         <input
           type="number"
-          id="min-price-input"
-          aria-describedby="helper-text-explanation"
-          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
           placeholder="Min price"
+          value={minPrice}
+          onChange={handlePriceChange(setMinPrice)}
+          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
         />
         <span className="border-2 my-2 mx-14"></span>
         <label
@@ -178,17 +215,11 @@ function FiltersForm() {
         </label>
         <input
           type="number"
-          id="max-price-input"
-          aria-describedby="helper-text-explanation"
-          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
           placeholder="Max price"
+          value={maxPrice}
+          onChange={handlePriceChange(setMaxPrice)}
+          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
         />
-        <button
-          type="button"
-          className="text-white mt-2 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2"
-        >
-          Search
-        </button>
       </form>
     </div>
   );

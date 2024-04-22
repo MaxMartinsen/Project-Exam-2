@@ -4,7 +4,7 @@ import Rating from '../Rating/Rating';
 import IMAGE from '../../assets/image/default-image.png';
 import FiltersForm from '../Forms/FiltersForm';
 
-function VenuesList({ searchQuery }) {
+function VenuesList({ searchQuery, filterOptions, onFilterChange }) {
   // Accept the searchQuery prop
   const { venues, status, error } = useSelector((state) => state.venues);
 
@@ -17,18 +17,28 @@ function VenuesList({ searchQuery }) {
 
   // Filter venues based on the search query
   const filteredVenues = venues.filter((venue) => {
-    return (
+    const matchQuery =
       venue.name.toLowerCase().includes(query) ||
       venue.location.city?.toLowerCase().includes(query) ||
-      venue.location.country?.toLowerCase().includes(query)
-    );
-  });
+      venue.location.country?.toLowerCase().includes(query);
 
+    const matchFacilities =
+      (!filterOptions.breakfast || venue.meta.breakfast) &&
+      (!filterOptions.pets || venue.meta.pets) &&
+      (!filterOptions.wifi || venue.meta.wifi) &&
+      (!filterOptions.parking || venue.meta.parking);
+
+    const matchPrice =
+      (!filterOptions.minPrice || venue.price >= filterOptions.minPrice) &&
+      (!filterOptions.maxPrice || venue.price <= filterOptions.maxPrice);
+
+    return matchQuery && matchFacilities && matchPrice;
+  });
   return (
     <section className="max-w-screen-xl mx-auto p-4">
       <div className="grid grid-cols-12 gap-4">
         <div className="hidden md:block md:col-span-3">
-          <FiltersForm />
+          <FiltersForm onFilterChange={onFilterChange} />
         </div>
         <div className="col-span-12 md:col-span-9">
           <div className="flex flex-col gap-6">

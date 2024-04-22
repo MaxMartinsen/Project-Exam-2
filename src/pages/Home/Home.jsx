@@ -8,6 +8,7 @@ import Hero from '../../components/Hero/Hero';
 function Home() {
   const dispatch = useDispatch();
   const [searchQuery, setSearchQuery] = useState('');
+  const [filterOptions, setFilterOptions] = useState({});
 
   useEffect(() => {
     dispatch(fetchVenues());
@@ -17,10 +18,18 @@ function Home() {
     setSearchQuery(query);
   };
 
+  const handleFilterChange = (newFilters) => {
+    setFilterOptions(newFilters);
+  };
+
   return (
     <>
       <Hero onSearch={handleSearch} />
-      <VenuesList searchQuery={searchQuery} />
+      <VenuesList
+        searchQuery={searchQuery}
+        filterOptions={filterOptions}
+        onFilterChange={handleFilterChange}
+      />
     </>
   );
 }
