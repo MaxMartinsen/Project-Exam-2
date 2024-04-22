@@ -1,5 +1,5 @@
 // src/components/Home/Home.jsx
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { fetchVenues } from '../../features/venues/venuesSlice';
 // import Breadcrumb from '../../components/Breadcrumb/Breadcrumb';
@@ -8,16 +8,21 @@ import Hero from '../../components/Hero/Hero';
 
 function Home() {
   const dispatch = useDispatch();
+  const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
     dispatch(fetchVenues());
   }, [dispatch]);
 
+  const handleSearch = (query) => {
+    setSearchQuery(query);
+  };
+
   return (
     <>
       {/* <Breadcrumb /> */}
-      <Hero />
-      <VenuesList />
+      <Hero onSearch={handleSearch} />
+      <VenuesList searchQuery={searchQuery} />
     </>
   );
 }

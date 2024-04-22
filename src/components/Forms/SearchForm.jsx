@@ -1,8 +1,23 @@
+import { useState } from 'react';
+
 import { IoLocationOutline } from 'react-icons/io5';
 
-function SearchForm() {
+function SearchForm({ onSearch }) {
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const handleChange = (e) => {
+    setSearchQuery(e.target.value);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    onSearch(searchQuery); // Call the onSearch prop with the current query
+  };
   return (
-    <form className="w-full md:w-[448px] mx-auto my-3 px-2">
+    <form
+      onSubmit={handleSubmit}
+      className="w-full md:w-[448px] mx-auto my-3 px-2"
+    >
       <label
         htmlFor="default-search"
         className="mb-2 text-sm font-medium text-gray-900 sr-only"
@@ -15,10 +30,11 @@ function SearchForm() {
         </div>
         <input
           type="search"
-          id="default-search"
+          id="search-input"
+          value={searchQuery}
+          onChange={handleChange}
           className="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-alizarin-crimson-500 focus:border-alizarin-crimson-500"
           placeholder="Search for city, country or venue name"
-          required
         />
         <button
           type="submit"
