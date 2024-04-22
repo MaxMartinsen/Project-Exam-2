@@ -3,8 +3,25 @@ import Rating from '../Rating/Rating';
 import IMAGE from '../../assets/image/default-image.png';
 import VenuesDetails from './VenuesDetails';
 import VenueBadge from '../Badge/VenueBadge';
+import BookingForm from '../Forms/BookingForm';
+
+import { useDispatch, useSelector } from 'react-redux';
+import { createBooking } from '../../features/booking/bookingSlice';
 
 function VenuesItem({ venue }) {
+  const dispatch = useDispatch();
+  const token = useSelector((state) => state.user.token);
+  const apiKey = useSelector((state) => state.user.apiKey);
+
+  const handleBooking = async (bookingData) => {
+    console.log('Handle booking with data:', bookingData);
+    try {
+      await dispatch(createBooking({ bookingData, token, apiKey }));
+    } catch (error) {
+      console.error('Booking error:', error);
+    }
+  };
+
   if (!venue) {
     return <div>No venue data available</div>;
   }
@@ -54,6 +71,15 @@ function VenuesItem({ venue }) {
         <VenueBadge meta={venue.meta} />
         <div className="lg:grid lg:grid-cols-2 lg:gap-8 xl:gap-16">
           <VenuesDetails owner={venue.owner} maxGuests={venue.maxGuests} />
+        </div>
+        <div className="w-fit max-w-[400px] px-5 py-7 mt-7 bg-white rounded-xl shadow-lg lg:p-9">
+          <div className="mb-5 pb-5 border-b">
+            <h2 className="text-center">Book your stay</h2>
+          </div>
+          <p className="text-sm text-center">
+            Select available dates in the calendar below
+          </p>
+          <BookingForm venueId={venue.id} onSubmit={handleBooking} />
         </div>
       </div>
     </section>
