@@ -2,9 +2,9 @@
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { fetchVenues } from '../../features/venues/venuesSlice';
-import Breadcrumb from '../../components/Breadcrumb/Breadcrumb';
+// import Breadcrumb from '../../components/Breadcrumb/Breadcrumb';
 import VenuesList from '../../components/Venues/VenuesList';
-import Search from '../../components/Forms/Search';
+import Hero from '../../components/Hero/Hero';
 
 function Home() {
   const dispatch = useDispatch();
@@ -15,8 +15,8 @@ function Home() {
 
   return (
     <>
-      <Breadcrumb />
-      <Search />
+      {/* <Breadcrumb /> */}
+      <Hero />
       <VenuesList />
     </>
   );

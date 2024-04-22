@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useNavigate } from 'react-router-dom';
 import { fetchVenueById } from '../../features/venues/venuesSlice';
-import Breadcrumb from '../../components/Breadcrumb/Breadcrumb';
+// import Breadcrumb from '../../components/Breadcrumb/Breadcrumb';
 import VenuesItem from '../../components/Venues/VenuesItem';
 import { ROUTES } from '../../utils/routes';
 
@@ -31,7 +31,7 @@ function Venue() {
 
   return (
     <>
-      <Breadcrumb />
+      {/* <Breadcrumb /> */}
       <VenuesItem venue={selectedVenue} />
     </>
   );

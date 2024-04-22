@@ -1,34 +1,40 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
-
 import { API_VENUE_URL } from '../../utils/constans';
 
+// Fetch all venues with fetch
 export const fetchVenues = createAsyncThunk(
   'venues/fetchVenues',
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get(API_VENUE_URL);
-      return response.data;
+      const response = await fetch(API_VENUE_URL);
+      if (!response.ok) {
+        throw new Error(`Error fetching venues: ${response.statusText}`);
+      }
+
+      const data = await response.json();
+      return data;
     } catch (error) {
-      return rejectWithValue(
-        error.response ? error.response.data : error.message
-      );
+      return rejectWithValue(error.message);
     }
   }
 );
 
+// Fetch a single venue by ID with fetch
 export const fetchVenueById = createAsyncThunk(
   'venues/fetchVenueById',
   async (venueId, { rejectWithValue }) => {
     try {
-      const response = await axios.get(`${API_VENUE_URL}/${venueId}`, {
-        params: { _owner: true, _bookings: true },
-      });
-      return response.data;
-    } catch (error) {
-      return rejectWithValue(
-        error.response ? error.response.data : error.message
+      const response = await fetch(
+        `${API_VENUE_URL}/${venueId}?_owner=true&_bookings=true`
       );
+      if (!response.ok) {
+        throw new Error(`Error fetching venue: ${response.statusText}`);
+      }
+
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.message);
     }
   }
 );
