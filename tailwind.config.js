@@ -1,9 +1,8 @@
 /** @type {import('tailwindcss').Config} */
 import flowbitePlugin from 'flowbite/plugin';
 const flowbite = require('flowbite-react/tailwind');
-const withMT = require('@material-tailwind/react/utils/withMT');
 
-export default withMT({
+export default {
   content: [
     './index.html',
     './src/**/*.{js,ts,jsx,tsx}',
@@ -46,4 +45,4 @@ export default withMT({
     flowbite.plugin(),
     require('@tailwindcss/line-clamp'),
   ],
-});
+};
