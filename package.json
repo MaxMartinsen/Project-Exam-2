@@ -10,9 +10,16 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@emotion/react": "^11.11.4",
+    "@emotion/styled": "^11.11.5",
+    "@mui/material": "^5.15.15",
+    "@mui/styled-engine-sc": "^6.0.0-alpha.18",
+    "@mui/x-date-pickers": "^7.2.0",
     "@reduxjs/toolkit": "^2.2.3",
     "@tailwindcss/line-clamp": "^0.4.4",
+    "dayjs": "^1.11.10",
     "flowbite": "^2.3.0",
+    "flowbite-datepicker": "^1.2.6",
     "flowbite-react": "^0.8.0",
     "formik": "^2.4.5",
     "react": "^18.2.0",
@@ -24,6 +31,7 @@
     "react-router-dom": "^6.22.3",
     "redux": "^5.0.1",
     "redux-thunk": "^3.1.0",
+    "styled-components": "^6.1.8",
     "yup": "^1.4.0"
   },
   "devDependencies": {

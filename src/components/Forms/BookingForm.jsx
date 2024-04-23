@@ -1,6 +1,10 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { DateRange } from 'react-date-range';
+
+import dayjs from 'dayjs';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+
+import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 
 function BookingForm({ onSubmit, venueId }) {
   const {
@@ -9,14 +13,8 @@ function BookingForm({ onSubmit, venueId }) {
     formState: { errors },
   } = useForm();
 
-  const [range, setRange] = useState([
-    {
-      startDate: new Date(),
-      endDate: new Date(),
-      key: 'selection',
-    },
-  ]);
-
+  const [startDate, setStartDate] = useState(dayjs());
+  const [endDate, setEndDate] = useState(dayjs().add(1, 'day'));
   const [guests, setGuests] = useState(1);
 
   const submitHandler = async (formData) => {
@@ -26,8 +24,8 @@ function BookingForm({ onSubmit, venueId }) {
     }
 
     const bookingData = {
-      dateFrom: range[0].startDate.toISOString(),
-      dateTo: range[0].endDate.toISOString(),
+      dateFrom: startDate.toISOString(),
+      dateTo: endDate.toISOString(),
       guests: parseInt(formData.guests, 10),
       venueId,
     };
@@ -38,34 +36,31 @@ function BookingForm({ onSubmit, venueId }) {
   return (
     <form
       onSubmit={handleSubmit(submitHandler)}
-      className="flex flex-col gap-3 mt-3"
+      className="flex flex-col gap-3 mt-3 items-center"
     >
-      <div className="calendarWrap" data-testid="venue-calendar">
-        <DateRange
-          onChange={(item) => setRange([item.selection])}
-          editableDateInputs
-          moveRangeOnFirstSelection={false}
-          ranges={range}
-          months={1}
-          direction="horizontal"
-          className="calendarElement w-full"
-          minDate={new Date()}
+      <DemoContainer components={['DatePicker', 'DatePicker']}>
+        <DatePicker
+          label="Check-in"
+          value={startDate}
+          onChange={(date) => setStartDate(date)}
+          format="DD MM YYYY"
         />
-      </div>
+        <DatePicker
+          label="Check-out"
+          value={endDate}
+          onChange={(date) => setEndDate(date)}
+          format="DD MM YYYY"
+        />
+      </DemoContainer>
 
       <div className="relative">
         <input
-          className="floating-input peer"
           type="number"
-          id="guests"
           value={guests}
-          placeholder=" "
           onChange={(e) => setGuests(parseInt(e.target.value, 10))}
+          placeholder="Guests"
           {...register('guests', { required: true, min: 1 })}
         />
-        <label className="floating-label" htmlFor="guests">
-          Guests
-        </label>
         {errors.guests && (
           <p className="text-red-500">Please enter the number of guests.</p>
         )}
