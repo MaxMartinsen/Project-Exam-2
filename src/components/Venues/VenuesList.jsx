@@ -68,7 +68,7 @@ function VenuesList({ searchQuery, filterOptions, onFilterChange }) {
                         {venue.location.city}
                       </p>
                     )}
-                    <p className="mb-3 font-normal text-gray-700">
+                    <p className="mb-3 md:max-w-44 lg:max-w-80 font-normal line-clamp-2 lg:line-clamp-3 text-gray-700">
                       {venue.description || 'No description'}
                     </p>
                   </div>

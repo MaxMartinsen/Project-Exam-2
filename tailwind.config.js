@@ -41,5 +41,9 @@ export default withMT({
       poppins: ['"Poppins"', 'sans-serif'],
     },
   },
-  plugins: [flowbitePlugin, flowbite.plugin()],
+  plugins: [
+    flowbitePlugin,
+    flowbite.plugin(),
+    require('@tailwindcss/line-clamp'),
+  ],
 });
