@@ -4,14 +4,31 @@ import { API_BOOKINGS_URL } from '../../utils/constans';
 // Asynchronous thunk to fetch all bookings
 export const fetchBookings = createAsyncThunk(
   'bookings/fetchBookings',
-  async (_, { rejectWithValue }) => {
+  async ({ bookingData, token, apiKey }, { rejectWithValue }) => {
     try {
-      const response = await fetch(API_BOOKINGS_URL);
-      return response.data;
+      const response = await fetch(API_BOOKINGS_URL, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+          'X-Noroff-API-Key': apiKey,
+        },
+        body: JSON.stringify(bookingData),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Failed to get booking: ${response.statusText}`);
+      }
+
+      const data = await response.json();
+
+      return data;
     } catch (error) {
-      return rejectWithValue(
-        error.response ? error.response.data : error.message
+      console.error(
+        'Error get booking:',
+        error.response?.data || error.message
       );
+      return rejectWithValue(error.response?.data || error.message);
     }
   }
 );
@@ -66,10 +83,12 @@ const bookingsSlice = createSlice({
         state.status = 'loading';
       })
       .addCase(fetchBookings.fulfilled, (state, action) => {
+        console.log('Bookings fetched:', action.payload);
         state.status = 'succeeded';
         state.bookings = action.payload.data || action.payload;
       })
       .addCase(fetchBookings.rejected, (state, action) => {
+        console.error('Error fetching bookings:', action.payload);
         state.status = 'failed';
         state.error = action.payload;
       })
