@@ -4,6 +4,7 @@ import { DateRange } from 'react-date-range';
 import 'react-date-range/dist/styles.css';
 import 'react-date-range/dist/theme/default.css';
 import format from 'date-fns/format';
+import addDays from 'date-fns/addDays';
 
 import { FaDoorOpen, FaDoorClosed } from 'react-icons/fa';
 import { MdOutlineLocationCity } from 'react-icons/md';
@@ -30,7 +31,7 @@ function SearchForm({ onSearch }) {
   const [range, setRange] = useState([
     {
       startDate: new Date(),
-      endDate: new Date(),
+      endDate: addDays(new Date(), 1),
       key: 'selection',
     },
   ]);
@@ -100,11 +101,7 @@ function SearchForm({ onSearch }) {
           <input
             id="checkIn"
             type="text"
-            value={
-              range[0].startDate.getTime() === new Date().getTime()
-                ? 'Check in'
-                : format(range[0].startDate, 'dd MM yyyy')
-            }
+            value={format(range[0].startDate, 'dd.MM.yyyy')}
             onClick={() => setOpen(true)}
             onChange={() => {}}
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5"
@@ -121,12 +118,8 @@ function SearchForm({ onSearch }) {
           <input
             id="checkOut"
             type="text"
-            value={
-              range[0].endDate.getTime() === new Date().getTime()
-                ? 'Check out'
-                : format(range[0].endDate, 'dd MM yyyy')
-            }
-            onClick={() => {}}
+            value={format(range[0].endDate, 'dd.MM.yyyy')}
+            onClick={() => setOpen(true)}
             onChange={() => {}}
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5"
             placeholder="Check out"
