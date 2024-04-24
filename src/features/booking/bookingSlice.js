@@ -4,7 +4,7 @@ import { API_BOOKINGS_URL } from '../../utils/constans';
 // Asynchronous thunk to fetch all bookings
 export const fetchBookings = createAsyncThunk(
   'bookings/fetchBookings',
-  async ({ bookingData, token, apiKey }, { rejectWithValue }) => {
+  async ({ dateFrom, dateTo, token, apiKey }, { rejectWithValue }) => {
     try {
       const response = await fetch(API_BOOKINGS_URL, {
         method: 'GET',
@@ -13,21 +13,30 @@ export const fetchBookings = createAsyncThunk(
           Authorization: `Bearer ${token}`,
           'X-Noroff-API-Key': apiKey,
         },
-        body: JSON.stringify(bookingData),
       });
 
       if (!response.ok) {
-        throw new Error(`Failed to get booking: ${response.statusText}`);
+        throw new Error(`Failed to fetch bookings: ${response.statusText}`);
       }
 
       const data = await response.json();
+      const bookings = data?.data || [];
 
-      return data;
+      const isAvailable = bookings.every((booking) => {
+        const start = new Date(booking.dateFrom).getTime();
+        const end = new Date(booking.dateTo).getTime();
+        const requestedStart = new Date(dateFrom).getTime();
+        const requestedEnd = new Date(dateTo).getTime();
+
+        // Check for no overlap
+        return (
+          requestedEnd <= start || // Requested ends before booking starts
+          requestedStart >= end // Requested starts after booking ends
+        );
+      });
+
+      return { isAvailable, bookings };
     } catch (error) {
-      console.error(
-        'Error get booking:',
-        error.response?.data || error.message
-      );
       return rejectWithValue(error.response?.data || error.message);
     }
   }
