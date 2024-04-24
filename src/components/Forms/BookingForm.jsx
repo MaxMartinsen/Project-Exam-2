@@ -1,10 +1,8 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-
-import dayjs from 'dayjs';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-
-import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
+import { DateRange } from 'react-date-range';
+import 'react-date-range/dist/styles.css';
+import 'react-date-range/dist/theme/default.css';
 
 function BookingForm({ onSubmit, venueId }) {
   const {
@@ -13,22 +11,42 @@ function BookingForm({ onSubmit, venueId }) {
     formState: { errors },
   } = useForm();
 
-  const [startDate, setStartDate] = useState(dayjs());
-  const [endDate, setEndDate] = useState(dayjs().add(1, 'day'));
+  const [range, setRange] = useState([
+    {
+      startDate: new Date(),
+      endDate: new Date(),
+      key: 'selection',
+    },
+  ]);
+
   const [guests, setGuests] = useState(1);
 
   const submitHandler = async (formData) => {
-    if (!onSubmit) {
-      console.error('onSubmit is not provided');
+    const { startDate, endDate } = range[0];
+
+    if (startDate >= endDate) {
+      console.error('Invalid date range: startDate must be before endDate');
       return;
     }
 
+    const startOfDay = new Date(
+      Date.UTC(
+        startDate.getFullYear(),
+        startDate.getMonth(),
+        startDate.getDate()
+      )
+    );
+    const endOfDay = new Date(
+      Date.UTC(endDate.getFullYear(), endDate.getMonth(), endDate.getDate())
+    );
+
     const bookingData = {
-      dateFrom: startDate.toISOString(),
-      dateTo: endDate.toISOString(),
+      dateFrom: startOfDay.toISOString(),
+      dateTo: endOfDay.toISOString(),
       guests: parseInt(formData.guests, 10),
       venueId,
     };
+
     console.log('Booking form data:', bookingData);
     await onSubmit(bookingData);
   };
@@ -38,31 +56,30 @@ function BookingForm({ onSubmit, venueId }) {
       onSubmit={handleSubmit(submitHandler)}
       className="flex flex-col gap-3 mt-3 items-center"
     >
-      <DemoContainer components={['DatePicker', 'DatePicker']}>
-        <DatePicker
-          label="Check-in"
-          value={startDate}
-          onChange={(date) => setStartDate(date)}
-          format="DD MM YYYY"
+      <div className="flex items-center justify-center mb-4 gap-4">
+        <DateRange
+          ranges={range}
+          onChange={(item) => setRange([item.selection])}
+          editableDateInputs={true}
+          moveRangeOnFirstSelection={false}
+          months={1}
+          direction="horizontal"
+          className="calendarElement w-full"
+          rangeColors={['#f27777']}
+          minDate={new Date()}
         />
-        <DatePicker
-          label="Check-out"
-          value={endDate}
-          onChange={(date) => setEndDate(date)}
-          format="DD MM YYYY"
-        />
-      </DemoContainer>
+      </div>
 
-      <div className="relative">
+      <div className="">
         <input
           type="number"
           value={guests}
           onChange={(e) => setGuests(parseInt(e.target.value, 10))}
-          placeholder="Guests"
+          placeholder="Number of guests"
           {...register('guests', { required: true, min: 1 })}
         />
         {errors.guests && (
-          <p className="text-red-500">Please enter the number of guests.</p>
+          <p className="text-red-500">Please enter a valid number of guests.</p>
         )}
       </div>
 

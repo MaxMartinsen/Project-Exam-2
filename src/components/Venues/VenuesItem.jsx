@@ -72,7 +72,7 @@ function VenuesItem({ venue }) {
         <div className="lg:grid lg:grid-cols-2 lg:gap-8 xl:gap-16">
           <VenuesDetails owner={venue.owner} maxGuests={venue.maxGuests} />
         </div>
-        <div className="w-fit max-w-[400px] px-5 py-7 mt-7 bg-white rounded-xl shadow-lg lg:p-9">
+        <div className="px-5 py-7 mt-7 bg-white rounded-xl shadow-lg lg:p-9">
           <div className="mb-5 pb-5 border-b">
             <h2 className="text-center">Book your stay</h2>
           </div>
