@@ -1,3 +1,4 @@
+// src/components/Venues/VenuesList.jsx
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Rating from '../Rating/Rating';

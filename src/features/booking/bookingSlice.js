@@ -1,3 +1,4 @@
+// src/features/booking/bookingSlice.js
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { API_BOOKINGS_URL } from '../../utils/constans';
 
