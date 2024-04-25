@@ -3,13 +3,16 @@ import { useForm } from 'react-hook-form';
 import { DateRange } from 'react-date-range';
 import 'react-date-range/dist/styles.css';
 import 'react-date-range/dist/theme/default.css';
+import { useDisableCalendarDates } from '../../hooks/useDisableCalendarDates';
 
-function BookingForm({ onSubmit, venueId }) {
+function BookingForm({ bookings, onSubmit, venueId }) {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
+
+  const { disabledDates } = useDisableCalendarDates({ bookings });
 
   const [range, setRange] = useState([
     {
@@ -67,6 +70,7 @@ function BookingForm({ onSubmit, venueId }) {
           className="calendarElement w-full"
           rangeColors={['#f27777']}
           minDate={new Date()}
+          disabledDates={disabledDates}
         />
       </div>
 

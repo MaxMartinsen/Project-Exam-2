@@ -8,7 +8,7 @@ import { parseISO, eachDayOfInterval } from 'date-fns';
  * @param {Object} options.bookings - The bookings object containing an array and a boolean.
  * @returns {Object} An object with an array of disabled dates and a function to set them.
  */
-const useDisableCalendarDates = ({ bookings }) => {
+export const useDisableCalendarDates = ({ bookings }) => {
   const [disabledDates, setDisabledDates] = useState([]);
 
   useEffect(() => {
@@ -46,5 +46,3 @@ const useDisableCalendarDates = ({ bookings }) => {
 
   return { disabledDates, setDisabledDates };
 };
-
-export default useDisableCalendarDates;

@@ -12,6 +12,7 @@ function VenuesItem({ venue }) {
   const dispatch = useDispatch();
   const token = useSelector((state) => state.user.token);
   const apiKey = useSelector((state) => state.user.apiKey);
+  const bookings = useSelector((state) => state.bookings.bookings);
 
   const handleBooking = async (bookingData) => {
     console.log('Handle booking with data:', bookingData);
@@ -76,7 +77,11 @@ function VenuesItem({ venue }) {
           <div className="mb-5 pb-5 border-b">
             <h2 className="font-poppins font-bold ">Availability</h2>
           </div>
-          <BookingForm venueId={venue.id} onSubmit={handleBooking} />
+          <BookingForm
+            bookings={bookings}
+            venueId={venue.id}
+            onSubmit={handleBooking}
+          />
         </div>
       </div>
     </section>
