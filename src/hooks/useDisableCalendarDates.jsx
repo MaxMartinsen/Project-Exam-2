@@ -1,48 +1,59 @@
-// src/hooks/useDisableCalendarDates.jsx
 import { useEffect, useState } from 'react';
 import { parseISO, eachDayOfInterval } from 'date-fns';
 
 /**
- * A custom hook to disable calendar dates based on existing bookings.
- * @param {Object} options - Configuration containing the bookings object.
- * @param {Object} options.bookings - The bookings object containing an array and a boolean.
- * @returns {Object} An object with an array of disabled dates and a function to set them.
+ * A custom hook to calculate and return disabled dates based on bookings and venue capacity.
+ * @param {Array} bookings - An array of booking objects.
+ * @param {string} venueId - The ID of the venue.
+ * @param {number} maxGuests - The maximum number of guests allowed.
+ * @returns {Array} An array of disabled dates (as ISO date strings).
  */
-export const useDisableCalendarDates = ({ bookings }) => {
+export const useDisableCalendarDates = ({ bookings, venueId, maxGuests }) => {
   const [disabledDates, setDisabledDates] = useState([]);
 
   useEffect(() => {
-    let actualBookings = [];
+    console.log('Received bookings:', bookings);
+    console.log('Received venueId:', venueId);
+    console.log('Received maxGuests:', maxGuests);
 
-    // Check if bookings contains an array of bookings
-    if (bookings && Array.isArray(bookings.bookings)) {
-      actualBookings = bookings.bookings;
-    } else if (Array.isArray(bookings)) {
-      // If bookings itself is an array, use it
-      actualBookings = bookings;
-    } else {
-      console.error(
-        "Expected 'bookings' to be an array or to contain an array in 'bookings', but got:",
-        bookings
-      );
-      actualBookings = []; // Default to an empty array if the structure is incorrect
+    if (!Array.isArray(bookings)) {
+      console.error('Invalid bookings data');
+      return;
     }
 
-    const disabledDatesArray = actualBookings.flatMap((booking) => {
-      const startDate = parseISO(booking.dateFrom);
-      const endDate = parseISO(booking.dateTo);
+    if (!venueId) {
+      console.error('Invalid venueId');
+      return;
+    }
 
-      const datesBetween = eachDayOfInterval({
-        start: startDate,
-        end: endDate,
+    if (typeof maxGuests !== 'number' || maxGuests <= 0) {
+      console.error('Invalid maxGuests');
+      return;
+    }
+
+    // Map to count total guests for each day
+    const dayGuestCount = {};
+
+    bookings.forEach((booking) => {
+      const { dateFrom, dateTo, guests } = booking;
+      const start = parseISO(dateFrom);
+      const end = parseISO(dateTo);
+
+      const dates = eachDayOfInterval({ start, end });
+
+      dates.forEach((date) => {
+        const dateKey = date.toISOString().split('T')[0];
+        dayGuestCount[dateKey] = (dayGuestCount[dateKey] || 0) + guests;
       });
-
-      // Return the dates as ISO strings, removing the time component
-      return datesBetween.map((date) => date.toISOString().split('T')[0]);
     });
 
-    setDisabledDates(disabledDatesArray);
-  }, [bookings]);
+    // Identify dates where guest count is equal to or greater than maxGuests
+    const fullyBookedDates = Object.entries(dayGuestCount)
+      .filter(([, count]) => count >= maxGuests)
+      .map(([date]) => date);
 
-  return { disabledDates, setDisabledDates };
+    setDisabledDates(fullyBookedDates);
+  }, [bookings, venueId, maxGuests]);
+
+  return { disabledDates };
 };

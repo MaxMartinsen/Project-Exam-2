@@ -1,7 +1,6 @@
 //src/features/user/userSlice.js
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { API_URL } from '../../utils/constans';
-import { fetchBookings } from '../booking/bookingSlice';
 
 export const createUser = createAsyncThunk(
   'user/createUser',
@@ -25,7 +24,7 @@ export const createUser = createAsyncThunk(
 
 export const loginUser = createAsyncThunk(
   'user/loginUser',
-  async (userData, { dispatch, rejectWithValue }) => {
+  async (userData, { rejectWithValue }) => {
     try {
       const loginResponse = await fetch(`${API_URL}/auth/login`, {
         method: 'POST',
@@ -55,14 +54,6 @@ export const loginUser = createAsyncThunk(
 
       // Store user data in local storage
       localStorage.setItem('user', JSON.stringify(loginData.data));
-
-      // After successful login, fetch bookings
-      dispatch(
-        fetchBookings({
-          token: accessToken,
-          apiKey: apiKeyData.data.key,
-        })
-      );
 
       return {
         user: loginData.data,

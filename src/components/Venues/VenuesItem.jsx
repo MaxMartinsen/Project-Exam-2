@@ -1,3 +1,4 @@
+// src/components/Venues/VenuesItem.jsx
 import Rating from '../Rating/Rating';
 
 import IMAGE from '../../assets/image/default-image.png';
@@ -12,7 +13,8 @@ function VenuesItem({ venue }) {
   const dispatch = useDispatch();
   const token = useSelector((state) => state.user.token);
   const apiKey = useSelector((state) => state.user.apiKey);
-  const bookings = useSelector((state) => state.bookings.bookings);
+  const bookings = venue.bookings || [];
+  const maxGuests = venue.maxGuests || 0;
 
   const handleBooking = async (bookingData) => {
     console.log('Handle booking with data:', bookingData);
@@ -73,12 +75,15 @@ function VenuesItem({ venue }) {
         <div className="lg:grid lg:grid-cols-2 lg:gap-8 xl:gap-16">
           <VenuesDetails owner={venue.owner} maxGuests={venue.maxGuests} />
         </div>
-        <div className="px-5 py-7 mt-7 bg-white rounded-xl shadow-lg lg:p-9">
+        <div className="px-5 py-7 mt-7 max-w-96 flex flex-col bg-white rounded-xl shadow-lg lg:p-9">
           <div className="mb-5 pb-5 border-b">
-            <h2 className="font-poppins font-bold ">Availability</h2>
+            <h2 className="h-16 flex items-center justify-center bg-athens-gray-700 w-full text-lg font-bold text-white ">
+              Availability
+            </h2>
           </div>
           <BookingForm
             bookings={bookings}
+            maxGuests={maxGuests}
             venueId={venue.id}
             onSubmit={handleBooking}
           />
