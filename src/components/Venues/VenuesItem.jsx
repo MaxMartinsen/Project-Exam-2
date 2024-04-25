@@ -74,11 +74,8 @@ function VenuesItem({ venue }) {
         </div>
         <div className="px-5 py-7 mt-7 bg-white rounded-xl shadow-lg lg:p-9">
           <div className="mb-5 pb-5 border-b">
-            <h2 className="text-center">Book your stay</h2>
+            <h2 className="font-poppins font-bold ">Availability</h2>
           </div>
-          <p className="text-sm text-center">
-            Select available dates in the calendar below
-          </p>
           <BookingForm venueId={venue.id} onSubmit={handleBooking} />
         </div>
       </div>

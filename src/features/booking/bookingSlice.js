@@ -68,7 +68,7 @@ export const createBooking = createAsyncThunk(
       const data = await response.json();
       console.log('Booking created successfully:', data);
 
-      return data;
+      return data.data || data;
     } catch (error) {
       console.error(
         'Error creating booking:',
@@ -106,7 +106,9 @@ const bookingsSlice = createSlice({
         state.status = 'loading';
       })
       .addCase(createBooking.fulfilled, (state, action) => {
-        state.bookings.push(action.payload);
+        if (Array.isArray(state.bookings)) {
+          state.bookings.push(action.payload);
+        }
         state.status = 'succeeded';
       })
       .addCase(createBooking.rejected, (state, action) => {

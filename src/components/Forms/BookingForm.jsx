@@ -1,4 +1,3 @@
-// src/components/Forms/BookingForm.jsx
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { DateRange } from 'react-date-range';
@@ -53,45 +52,41 @@ function BookingForm({ onSubmit, venueId }) {
   };
 
   return (
-    <div>
-      <form
-        onSubmit={handleSubmit(submitHandler)}
-        className="flex flex-col gap-3 mt-3 items-center"
-      >
-        <div className="flex items-center justify-center mb-4 gap-4">
-          <DateRange
-            ranges={range}
-            onChange={(item) => setRange([item.selection])}
-            editableDateInputs={true}
-            moveRangeOnFirstSelection={false}
-            months={1}
-            direction="horizontal"
-            className="calendarElement w-full"
-            rangeColors={['#f27777']}
-            minDate={new Date()}
-          />
-        </div>
+    <form
+      onSubmit={handleSubmit(submitHandler)}
+      className="flex flex-col gap-3 mt-3 items-center"
+    >
+      <div className="flex items-center justify-center mb-4 gap-4">
+        <DateRange
+          ranges={range}
+          onChange={(item) => setRange([item.selection])}
+          editableDateInputs={true}
+          moveRangeOnFirstSelection={false}
+          months={1}
+          direction="horizontal"
+          className="calendarElement w-full"
+          rangeColors={['#f27777']}
+          minDate={new Date()}
+        />
+      </div>
 
-        <div className="">
-          <input
-            type="number"
-            value={guests}
-            onChange={(e) => setGuests(parseInt(e.target.value, 10))}
-            placeholder="Number of guests"
-            {...register('guests', { required: true, min: 1 })}
-          />
-          {errors.guests && (
-            <p className="text-red-500">
-              Please enter a valid number of guests.
-            </p>
-          )}
-        </div>
+      <div className="">
+        <input
+          type="number"
+          value={guests}
+          onChange={(e) => setGuests(parseInt(e.target.value, 10))}
+          placeholder="Number of guests"
+          {...register('guests', { required: true, min: 1 })}
+        />
+        {errors.guests && (
+          <p className="text-red-500">Please enter a valid number of guests.</p>
+        )}
+      </div>
 
-        <button type="submit" className="btn">
-          Book
-        </button>
-      </form>
-    </div>
+      <button type="submit" className="btn">
+        Book
+      </button>
+    </form>
   );
 }
 
