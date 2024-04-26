@@ -1,6 +1,22 @@
 // src/components/Forms/NumberForm.jsx
 
 function NumberForm({ guests, setGuests, register, maxGuests }) {
+  const handleDecrease = () => {
+    setGuests((g) => Math.max(1, g - 1));
+    console.log('Decreased guests count:', Math.max(1, guests - 1));
+  };
+
+  const handleIncrease = () => {
+    setGuests((g) => Math.min(maxGuests, g + 1));
+    console.log('Increased guests count:', Math.min(maxGuests, guests + 1));
+  };
+
+  const handleChange = (e) => {
+    const newGuests = parseInt(e.target.value, 10);
+    const validGuests = Math.min(Math.max(1, newGuests), maxGuests);
+    setGuests(validGuests);
+    console.log('Changed guests count:', validGuests);
+  };
   return (
     <>
       <label htmlFor="guests-input" className="sr-only">
@@ -9,7 +25,7 @@ function NumberForm({ guests, setGuests, register, maxGuests }) {
       <div className="relative flex items-center">
         <button
           type="button"
-          onClick={() => setGuests((g) => Math.max(1, g - 1))}
+          onClick={handleDecrease}
           className="bg-gray-100 hover:bg-gray-200 border border-gray-300 rounded-s-lg p-3 h-11 focus:ring-gray-100  focus:ring-2 focus:outline-none"
         >
           <svg
@@ -31,11 +47,7 @@ function NumberForm({ guests, setGuests, register, maxGuests }) {
         <input
           type="number"
           value={guests}
-          onChange={(e) =>
-            setGuests(
-              Math.min(Math.max(1, parseInt(e.target.value, 99)), maxGuests)
-            )
-          }
+          onChange={handleChange}
           {...register('guests', { required: true, min: 1 })}
           className="bg-gray-50 border-x-0 border-gray-300 h-11 font-medium text-center text-gray-900 text-base focus:ring-none focus:border-none block w-full pb-6"
           required
@@ -60,7 +72,7 @@ function NumberForm({ guests, setGuests, register, maxGuests }) {
         </div>
         <button
           type="button"
-          onClick={() => setGuests((g) => Math.min(maxGuests, g + 1))}
+          onClick={handleIncrease}
           className="bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-600 hover:bg-gray-200 border border-gray-300 rounded-e-lg p-3 h-11 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none"
         >
           <svg

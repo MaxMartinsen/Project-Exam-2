@@ -18,6 +18,12 @@ function BookingForm({
   maxGuests,
   pricePerNight,
 }) {
+  const navigate = useNavigate();
+  const currentUser = useSelector((state) => state.user.currentUser);
+  const isLoggedIn = Boolean(currentUser);
+  const [guests, setGuests] = useState(1);
+  const [bookingError, setBookingError] = useState('');
+
   const {
     register,
     handleSubmit,
@@ -30,10 +36,6 @@ function BookingForm({
     maxGuests,
   });
 
-  const navigate = useNavigate();
-  const currentUser = useSelector((state) => state.user.currentUser);
-  const isLoggedIn = Boolean(currentUser);
-
   const [range, setRange] = useState([
     {
       startDate: new Date(),
@@ -42,24 +44,20 @@ function BookingForm({
     },
   ]);
 
-  const [guests, setGuests] = useState(1);
-
   const totalPrice = useTotalPrice({
     pricePerNight,
     startDate: range[0].startDate,
     endDate: range[0].endDate,
   });
 
-  const [bookingError, setBookingError] = useState('');
-
-  const submitHandler = async (formData) => {
+  const submitHandler = async () => {
     const { startDate, endDate } = range[0];
 
     const numberOfNights = (endDate - startDate) / (1000 * 60 * 60 * 24);
 
     if (numberOfNights === 0) {
-      setBookingError('You need to select both check in and check out dates.'); // Display error message
-      return; // Prevent form submission
+      setBookingError('You need to select both check in and check out dates.');
+      return;
     }
 
     if (startDate >= endDate) {
@@ -81,7 +79,7 @@ function BookingForm({
     const bookingData = {
       dateFrom: startOfDay.toISOString(),
       dateTo: endOfDay.toISOString(),
-      guests: parseInt(formData.guests, 10),
+      guests,
       venueId,
     };
 
@@ -152,6 +150,10 @@ function BookingForm({
       <div className="flex items-start justify-between mt-4">
         <h2>Number of nights</h2>
         <span>{totalPrice / pricePerNight}</span>
+      </div>
+      <div className="flex items-start justify-between mt-4">
+        <h2>Number of guest&apos;s</h2>
+        <span>{guests}</span>
       </div>
       <div className="flex items-start justify-between mt-2 pt-4 border-t-4">
         <h2 className="">Total price</h2>
