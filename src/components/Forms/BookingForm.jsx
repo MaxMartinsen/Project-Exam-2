@@ -50,8 +50,17 @@ function BookingForm({
     endDate: range[0].endDate,
   });
 
+  const [bookingError, setBookingError] = useState('');
+
   const submitHandler = async (formData) => {
     const { startDate, endDate } = range[0];
+
+    const numberOfNights = (endDate - startDate) / (1000 * 60 * 60 * 24);
+
+    if (numberOfNights === 0) {
+      setBookingError('You need to select both check in and check out dates.'); // Display error message
+      return; // Prevent form submission
+    }
 
     if (startDate >= endDate) {
       console.error('Invalid date range: startDate must be before endDate');
@@ -114,6 +123,7 @@ function BookingForm({
       {errors.guests && (
         <p className="text-red-500">Please enter a valid number of guests.</p>
       )}
+      {bookingError && <p className="text-red-500">{bookingError}</p>}
 
       {isLoggedIn ? (
         <button
