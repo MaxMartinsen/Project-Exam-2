@@ -1,5 +1,5 @@
 // src/components/Forms/BookingForm.jsx
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { DateRange } from 'react-date-range';
 import 'react-date-range/dist/styles.css';
@@ -23,6 +23,15 @@ function BookingForm({
   const isLoggedIn = Boolean(currentUser);
   const [guests, setGuests] = useState(1);
   const [bookingError, setBookingError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [localError, setLocalError] = useState('');
+  const bookingSliceError = useSelector((state) => state.bookings.error);
+
+  useEffect(() => {
+    if (bookingSliceError) {
+      setBookingError(bookingSliceError);
+    }
+  }, [bookingSliceError]);
 
   const {
     register,
@@ -55,6 +64,9 @@ function BookingForm({
 
     const numberOfNights = (endDate - startDate) / (1000 * 60 * 60 * 24);
 
+    startDate.setUTCHours(15, 0, 0, 0);
+    endDate.setUTCHours(12, 0, 0, 0);
+
     if (numberOfNights === 0) {
       setBookingError('You need to select both check in and check out dates.');
       return;
@@ -65,27 +77,41 @@ function BookingForm({
       return;
     }
 
-    const startOfDay = new Date(
-      Date.UTC(
-        startDate.getFullYear(),
-        startDate.getMonth(),
-        startDate.getDate()
-      )
-    );
-    const endOfDay = new Date(
-      Date.UTC(endDate.getFullYear(), endDate.getMonth(), endDate.getDate())
-    );
+    const startOfDay = startDate.toISOString();
+    const endOfDay = endDate.toISOString();
 
     const bookingData = {
-      dateFrom: startOfDay.toISOString(),
-      dateTo: endOfDay.toISOString(),
+      dateFrom: startOfDay,
+      dateTo: endOfDay,
       guests,
       venueId,
     };
 
-    console.log('Booking form data:', bookingData);
-    await onSubmit(bookingData);
+    try {
+      setIsLoading(true);
+      await onSubmit(bookingData);
+      setBookingError('');
+      setLocalError('');
+    } catch (error) {
+      const errorMessage = error.response?.data || error.message;
+      setBookingError('Failed to create booking. Please try again later.');
+      if (error.response?.status === 409) {
+        setLocalError(
+          'Booking conflict detected. Please select different dates or reduce the number of guests.'
+        );
+      } else {
+        setLocalError(errorMessage);
+      }
+    } finally {
+      setIsLoading(false);
+    }
   };
+
+  useEffect(() => {
+    if (bookingError) {
+      setLocalError(bookingError);
+    }
+  }, [bookingError]);
 
   return (
     <form
@@ -118,27 +144,6 @@ function BookingForm({
         register={register}
         maxGuests={maxGuests}
       />
-      {errors.guests && (
-        <p className="text-red-500">Please enter a valid number of guests.</p>
-      )}
-      {bookingError && <p className="text-red-500">{bookingError}</p>}
-
-      {isLoggedIn ? (
-        <button
-          type="submit"
-          className="w-full mt-4 px-2.5 py-4 rounded text-white font-bold text-xl bg-athens-gray-700 hover:bg-athens-gray-800 active:bg-athens-gray-900"
-        >
-          Book
-        </button>
-      ) : (
-        <button
-          type="button"
-          className="w-full mt-4 px-2.5 py-4 rounded text-white font-bold text-xl bg-athens-gray-700 hover:bg-athens-gray-800 active:bg-athens-gray-900"
-          onClick={() => navigate(ROUTES.LOGIN)}
-        >
-          Sign in
-        </button>
-      )}
 
       <div className="flex items-start justify-between mt-4">
         <h2>Price per night</h2>
@@ -155,6 +160,33 @@ function BookingForm({
         <h2>Number of guest&apos;s</h2>
         <span>{guests}</span>
       </div>
+
+      {isLoggedIn ? (
+        <button
+          type="submit"
+          className={`w-full mt-4 px-2.5 py-4 rounded text-white font-bold text-xl ${
+            isLoading
+              ? 'bg-gray-400 cursor-not-allowed'
+              : 'bg-athens-gray-700 hover:bg-athens-gray-800 active:bg-athens-gray-900'
+          }`}
+          disabled={isLoading}
+        >
+          {isLoading ? 'Booking...' : 'Book'}
+        </button>
+      ) : (
+        <button
+          type="button"
+          className="w-full mt-4 px-2.5 py-4 rounded text-white font-bold text-xl bg-athens-gray-700 hover:bg-athens-gray-800 active:bg-athens-gray-900"
+          onClick={() => navigate(ROUTES.LOGIN)}
+        >
+          Sign in
+        </button>
+      )}
+      {errors.guests && (
+        <p className="text-red-500">Please enter a valid number of guests.</p>
+      )}
+      {bookingError && <p className="text-red-500">{bookingError}</p>}
+      {localError && <p className="text-red-500">{localError}</p>}
       <div className="flex items-start justify-between mt-2 pt-4 border-t-4">
         <h2 className="">Total price</h2>
         <p>
