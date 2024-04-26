@@ -7,6 +7,9 @@ import 'react-date-range/dist/theme/default.css';
 import { useDisableCalendarDates } from '../../hooks/useDisableCalendarDates';
 import NumberForm from './NumberForm';
 import { useTotalPrice } from '../../hooks/useTotalPrice';
+import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { ROUTES } from '../../utils/routes';
 
 function BookingForm({
   bookings,
@@ -26,6 +29,10 @@ function BookingForm({
     venueId,
     maxGuests,
   });
+
+  const navigate = useNavigate();
+  const currentUser = useSelector((state) => state.user.currentUser);
+  const isLoggedIn = Boolean(currentUser);
 
   const [range, setRange] = useState([
     {
@@ -108,12 +115,22 @@ function BookingForm({
         <p className="text-red-500">Please enter a valid number of guests.</p>
       )}
 
-      <button
-        type="submit"
-        className="w-full mt-4 px-2.5 py-4 rounded text-white font-bold text-xl bg-athens-gray-700 hover:bg-athens-gray-800 active:bg-athens-gray-900"
-      >
-        Book
-      </button>
+      {isLoggedIn ? (
+        <button
+          type="submit"
+          className="w-full mt-4 px-2.5 py-4 rounded text-white font-bold text-xl bg-athens-gray-700 hover:bg-athens-gray-800 active:bg-athens-gray-900"
+        >
+          Book
+        </button>
+      ) : (
+        <button
+          type="button"
+          className="w-full mt-4 px-2.5 py-4 rounded text-white font-bold text-xl bg-athens-gray-700 hover:bg-athens-gray-800 active:bg-athens-gray-900"
+          onClick={() => navigate(ROUTES.LOGIN)}
+        >
+          Sign in
+        </button>
+      )}
 
       <div className="flex items-start justify-between mt-4">
         <h2>Price per night</h2>
