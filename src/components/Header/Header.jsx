@@ -7,6 +7,10 @@ import { ROUTES } from '../../utils/routes';
 import LOGO from '/HolidazeLogo.svg';
 import DEFAULT_AVATAR from '../../assets/image/default-profile.png';
 
+import { LuSettings } from 'react-icons/lu';
+import { BsFillLuggageFill } from 'react-icons/bs';
+import { LuLogOut } from 'react-icons/lu';
+
 function Header() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -111,18 +115,26 @@ function Header() {
                   </div>
                   <ul className="py-2" aria-labelledby="user-menu-button">
                     <li>
+                      <button className="w-full flex items-center text-left  px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                        <BsFillLuggageFill className="mr-2" />
+                        Bookings
+                      </button>
+                    </li>
+                    <li>
                       <button
                         onClick={handleSettings}
-                        className="w-full text-left block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                        className="w-full text-left flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                       >
+                        <LuSettings className="mr-2" />
                         Settings
                       </button>
                     </li>
                     <li>
                       <button
                         onClick={handleLogout}
-                        className="w-full text-left block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                        className="w-full text-left flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                       >
+                        <LuLogOut className="mr-2" />
                         Sign out
                       </button>
                     </li>

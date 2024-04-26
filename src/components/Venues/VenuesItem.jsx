@@ -15,6 +15,7 @@ function VenuesItem({ venue }) {
   const apiKey = useSelector((state) => state.user.apiKey);
   const bookings = venue.bookings || [];
   const maxGuests = venue.maxGuests || 0;
+  const pricePerNight = venue.price;
 
   const handleBooking = async (bookingData) => {
     console.log('Handle booking with data:', bookingData);
@@ -86,6 +87,7 @@ function VenuesItem({ venue }) {
             maxGuests={maxGuests}
             venueId={venue.id}
             onSubmit={handleBooking}
+            pricePerNight={pricePerNight}
           />
         </div>
       </div>
