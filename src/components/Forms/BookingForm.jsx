@@ -24,7 +24,6 @@ function BookingForm({
   const [guests, setGuests] = useState(1);
   const [bookingError, setBookingError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [localError, setLocalError] = useState('');
   const bookingSliceError = useSelector((state) => state.bookings.error);
 
   useEffect(() => {
@@ -59,6 +58,8 @@ function BookingForm({
     endDate: range[0].endDate,
   });
 
+  const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
   const submitHandler = async () => {
     const { startDate, endDate } = range[0];
 
@@ -89,27 +90,30 @@ function BookingForm({
 
     try {
       setIsLoading(true);
-      await onSubmit(bookingData);
-      setBookingError('');
-      setLocalError('');
-    } catch (error) {
-      const errorMessage = error.response?.data || error.message;
-      setBookingError('Failed to create booking. Please try again later.');
-      if (error.response?.status === 409) {
-        setLocalError(
-          'Booking conflict detected. Please select different dates or reduce the number of guests.'
-        );
-      } else {
-        setLocalError(errorMessage);
+
+      const result = await onSubmit(bookingData);
+
+      if (result?.error) {
+        setBookingError(`Booking failed: ${result.error.message}`);
+        return; // Avoid navigation if there's an error
       }
+
+      // If no error, clear errors and navigate to BOOKINGS
+      setBookingError('');
+      await delay(2000); // Optional delay
+      navigate(ROUTES.BOOKINGS); // Only navigate if there's no error
+    } catch (error) {
+      const errorMessage =
+        error.response?.data?.errors?.[0]?.message || error.message;
+      setBookingError(`Failed to create booking: ${errorMessage}`);
     } finally {
-      setIsLoading(false);
+      setIsLoading(false); // Reset loading state
     }
   };
 
   useEffect(() => {
     if (bookingError) {
-      setLocalError(bookingError);
+      setBookingError(bookingError);
     }
   }, [bookingError]);
 
@@ -186,7 +190,6 @@ function BookingForm({
         <p className="text-red-500">Please enter a valid number of guests.</p>
       )}
       {bookingError && <p className="text-red-500">{bookingError}</p>}
-      {localError && <p className="text-red-500">{localError}</p>}
       <div className="flex items-start justify-between mt-2 pt-4 border-t-4">
         <h2 className="">Total price</h2>
         <p>

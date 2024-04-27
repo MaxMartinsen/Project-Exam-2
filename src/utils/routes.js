@@ -6,4 +6,5 @@ export const ROUTES = {
   REGISTER: '/Register',
   SETTINGS: '/Settings',
   VENUE: '/Venue/:id',
+  BOOKINGS: '/Bookings',
 };

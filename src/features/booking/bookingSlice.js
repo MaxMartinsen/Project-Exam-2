@@ -49,6 +49,7 @@ export const createBooking = createAsyncThunk(
       }
 
       const data = await response.json();
+      console.log('Booking response:', response);
       console.log('Booking created successfully:', data);
 
       return data.data || data;

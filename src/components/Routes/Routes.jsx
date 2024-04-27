@@ -9,6 +9,7 @@ import Venue from '../../pages/Venue/Venue';
 import Login from '../../pages/Login/Login';
 import Register from '../../pages/Register/Register';
 import Settings from '../../pages/Settings/Settings';
+import Bookings from '../../pages/Bookings/Bookings';
 
 function AppRoutes() {
   return (
@@ -21,6 +22,7 @@ function AppRoutes() {
         <Route path={ROUTES.LOGIN} element={<Login />} />
         <Route path={ROUTES.REGISTER} element={<Register />} />
         <Route path={ROUTES.SETTINGS} element={<Settings />} />
+        <Route path={ROUTES.BOOKINGS} element={<Bookings />} />
       </Route>
     </Routes>
   );

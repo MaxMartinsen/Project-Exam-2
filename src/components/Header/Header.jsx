@@ -29,6 +29,11 @@ function Header() {
     navigate(ROUTES.SETTINGS);
   };
 
+  const handleBookins = () => {
+    setShowDropdown(false);
+    navigate(ROUTES.BOOKINGS);
+  };
+
   useEffect(() => {
     const closeDropdown = (event) => {
       if (
@@ -115,7 +120,10 @@ function Header() {
                   </div>
                   <ul className="py-2" aria-labelledby="user-menu-button">
                     <li>
-                      <button className="w-full flex items-center text-left  px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                      <button
+                        onClick={handleBookins}
+                        className="w-full flex items-center text-left  px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                      >
                         <BsFillLuggageFill className="mr-2" />
                         Bookings
                       </button>

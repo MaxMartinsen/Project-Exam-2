@@ -24,6 +24,7 @@ function VenuesItem({ venue }) {
     } catch (error) {
       console.error('Booking error:', error);
     }
+    return dispatch(createBooking({ bookingData, token, apiKey }));
   };
 
   if (!venue) {

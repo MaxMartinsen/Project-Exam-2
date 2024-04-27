@@ -12,10 +12,6 @@ export const useDisableCalendarDates = ({ bookings, venueId, maxGuests }) => {
   const [disabledDates, setDisabledDates] = useState([]);
 
   useEffect(() => {
-    console.log('Received bookings:', bookings);
-    console.log('Received venueId:', venueId);
-    console.log('Received maxGuests:', maxGuests);
-
     if (!Array.isArray(bookings)) {
       console.error('Invalid bookings data');
       return;
