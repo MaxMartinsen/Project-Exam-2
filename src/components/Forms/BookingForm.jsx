@@ -95,19 +95,23 @@ function BookingForm({
 
       if (result?.error) {
         setBookingError(`Booking failed: ${result.error.message}`);
-        return; // Avoid navigation if there's an error
+        return;
       }
 
-      // If no error, clear errors and navigate to BOOKINGS
       setBookingError('');
-      await delay(2000); // Optional delay
-      navigate(ROUTES.BOOKINGS); // Only navigate if there's no error
+      await delay(2000);
+      navigate(ROUTES.BOOKINGS);
     } catch (error) {
       const errorMessage =
         error.response?.data?.errors?.[0]?.message || error.message;
       setBookingError(`Failed to create booking: ${errorMessage}`);
     } finally {
       setIsLoading(false); // Reset loading state
+
+      // Optionally clear system errors here if needed to allow for resubmission
+      if (bookingError) {
+        setBookingError(''); // Clear system errors after displaying to the user
+      }
     }
   };
 
