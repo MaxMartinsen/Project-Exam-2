@@ -106,11 +106,9 @@ function BookingForm({
         error.response?.data?.errors?.[0]?.message || error.message;
       setBookingError(`Failed to create booking: ${errorMessage}`);
     } finally {
-      setIsLoading(false); // Reset loading state
-
-      // Optionally clear system errors here if needed to allow for resubmission
+      setIsLoading(false);
       if (bookingError) {
-        setBookingError(''); // Clear system errors after displaying to the user
+        setBookingError('');
       }
     }
   };
