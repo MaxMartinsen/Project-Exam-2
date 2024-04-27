@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateProfile } from '../../features/profile/profileSlice';
 import { updateUser } from '../../features/user/userSlice';
-import UpdateAvatarModal from '../Modal/updateAvatar';
+import UpdateAvatarModal from '../Modal/UpdateAvatar';
 import DEFAULT_AVATAR from '../../assets/image/default-profile.png';
 import { DEFAULT_AVATAR_URL } from '../../utils/constans';
 

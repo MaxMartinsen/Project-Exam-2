@@ -10,6 +10,7 @@ import { useTotalPrice } from '../../hooks/useTotalPrice';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { ROUTES } from '../../utils/routes';
+import BookingConfirmation from '../Modal/BookingConfirmation';
 
 function BookingForm({
   bookings,
@@ -25,6 +26,7 @@ function BookingForm({
   const [bookingError, setBookingError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const bookingSliceError = useSelector((state) => state.bookings.error);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     if (bookingSliceError) {
@@ -100,7 +102,7 @@ function BookingForm({
 
       setBookingError('');
       await delay(2000);
-      navigate(ROUTES.BOOKINGS);
+      setIsModalOpen(true);
     } catch (error) {
       const errorMessage =
         error.response?.data?.errors?.[0]?.message || error.message;
@@ -120,86 +122,91 @@ function BookingForm({
   }, [bookingError]);
 
   return (
-    <form
-      onSubmit={handleSubmit(submitHandler)}
-      className="flex flex-col gap-3 mt-3"
-    >
-      <div className="flex flex-col justify-center mb-4 gap-4">
-        <div className="flex justify-around">
-          <h2>Check in</h2>
-          <h2>Check out</h2>
+    <>
+      <form
+        onSubmit={handleSubmit(submitHandler)}
+        className="flex flex-col gap-3 mt-3"
+      >
+        <div className="flex flex-col justify-center mb-4 gap-4">
+          <div className="flex justify-around">
+            <h2>Check in</h2>
+            <h2>Check out</h2>
+          </div>
+          <div>
+            <DateRange
+              ranges={range}
+              onChange={(item) => setRange([item.selection])}
+              editableDateInputs={true}
+              moveRangeOnFirstSelection={false}
+              months={1}
+              direction="horizontal"
+              className="calendarElement w-full"
+              rangeColors={['#4e577f']}
+              minDate={new Date()}
+              disabledDates={disabledDates}
+            />
+          </div>
         </div>
-        <div>
-          <DateRange
-            ranges={range}
-            onChange={(item) => setRange([item.selection])}
-            editableDateInputs={true}
-            moveRangeOnFirstSelection={false}
-            months={1}
-            direction="horizontal"
-            className="calendarElement w-full"
-            rangeColors={['#4e577f']}
-            minDate={new Date()}
-            disabledDates={disabledDates}
-          />
+        <NumberForm
+          guests={guests}
+          setGuests={setGuests}
+          register={register}
+          maxGuests={maxGuests}
+        />
+
+        <div className="flex items-start justify-between mt-4">
+          <h2>Price per night</h2>
+          <p>
+            {pricePerNight}
+            <span className="ml-1">$</span>
+          </p>
         </div>
-      </div>
-      <NumberForm
-        guests={guests}
-        setGuests={setGuests}
-        register={register}
-        maxGuests={maxGuests}
-      />
+        <div className="flex items-start justify-between mt-4">
+          <h2>Number of nights</h2>
+          <span>{totalPrice / pricePerNight}</span>
+        </div>
+        <div className="flex items-start justify-between mt-4">
+          <h2>Number of guest&apos;s</h2>
+          <span>{guests}</span>
+        </div>
 
-      <div className="flex items-start justify-between mt-4">
-        <h2>Price per night</h2>
-        <p>
-          {pricePerNight}
-          <span className="ml-1">$</span>
-        </p>
-      </div>
-      <div className="flex items-start justify-between mt-4">
-        <h2>Number of nights</h2>
-        <span>{totalPrice / pricePerNight}</span>
-      </div>
-      <div className="flex items-start justify-between mt-4">
-        <h2>Number of guest&apos;s</h2>
-        <span>{guests}</span>
-      </div>
-
-      {isLoggedIn ? (
-        <button
-          type="submit"
-          className={`w-full mt-4 px-2.5 py-4 rounded text-white font-bold text-xl ${
-            isLoading
-              ? 'bg-gray-400 cursor-not-allowed'
-              : 'bg-athens-gray-700 hover:bg-athens-gray-800 active:bg-athens-gray-900'
-          }`}
-          disabled={isLoading}
-        >
-          {isLoading ? 'Booking...' : 'Book'}
-        </button>
-      ) : (
-        <button
-          type="button"
-          className="w-full mt-4 px-2.5 py-4 rounded text-white font-bold text-xl bg-athens-gray-700 hover:bg-athens-gray-800 active:bg-athens-gray-900"
-          onClick={() => navigate(ROUTES.LOGIN)}
-        >
-          Sign in
-        </button>
+        {isLoggedIn ? (
+          <button
+            type="submit"
+            className={`w-full mt-4 px-2.5 py-4 rounded text-white font-bold text-xl ${
+              isLoading
+                ? 'bg-gray-400 cursor-not-allowed'
+                : 'bg-athens-gray-700 hover:bg-athens-gray-800 active:bg-athens-gray-900'
+            }`}
+            disabled={isLoading}
+          >
+            {isLoading ? 'Booking...' : 'Book'}
+          </button>
+        ) : (
+          <button
+            type="button"
+            className="w-full mt-4 px-2.5 py-4 rounded text-white font-bold text-xl bg-athens-gray-700 hover:bg-athens-gray-800 active:bg-athens-gray-900"
+            onClick={() => navigate(ROUTES.LOGIN)}
+          >
+            Sign in
+          </button>
+        )}
+        {errors.guests && (
+          <p className="text-red-500">Please enter a valid number of guests.</p>
+        )}
+        {bookingError && <p className="text-red-500">{bookingError}</p>}
+        <div className="flex items-start justify-between mt-2 pt-4 border-t-4">
+          <h2 className="">Total price</h2>
+          <p>
+            {totalPrice}
+            <span className="ml-1">$</span>
+          </p>
+        </div>
+      </form>
+      {isModalOpen && (
+        <BookingConfirmation onClose={() => setIsModalOpen(false)} />
       )}
-      {errors.guests && (
-        <p className="text-red-500">Please enter a valid number of guests.</p>
-      )}
-      {bookingError && <p className="text-red-500">{bookingError}</p>}
-      <div className="flex items-start justify-between mt-2 pt-4 border-t-4">
-        <h2 className="">Total price</h2>
-        <p>
-          {totalPrice}
-          <span className="ml-1">$</span>
-        </p>
-      </div>
-    </form>
+    </>
   );
 }
 
