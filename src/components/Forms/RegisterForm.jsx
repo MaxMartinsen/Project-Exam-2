@@ -22,18 +22,10 @@ function RegisterForm() {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    const avatarObject = values.avatar
-      ? {
-          url: values.avatar,
-          alt: 'User avatar',
-        }
-      : undefined;
-
     const userData = {
       name: values.name,
       email: values.email,
       password: values.password,
-      avatar: avatarObject,
     };
     dispatch(createUser(userData));
     navigate(ROUTES.LOGIN);

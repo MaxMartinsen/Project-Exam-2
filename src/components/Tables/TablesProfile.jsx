@@ -2,8 +2,25 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchBookingsByProfile } from '../../features/profile/profileSlice';
+import Rating from '../Rating/Rating';
+import { format } from 'date-fns';
 
-import { HiMiniUsers } from 'react-icons/hi2';
+function calculateTotalPrice(dateFrom, dateTo, pricePerNight) {
+  if (!dateFrom || !dateTo || pricePerNight <= 0) return 0;
+
+  const timeDiff = Math.abs(dateTo - dateFrom);
+  const dayCount = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
+  return dayCount * pricePerNight;
+}
+
+// Function to calculate total nights
+function calculateTotalNights(dateFrom, dateTo) {
+  if (!dateFrom || !dateTo) return 0;
+
+  const timeDiff = Math.abs(dateTo - dateFrom);
+  const totalNights = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
+  return totalNights;
+}
 
 function TabletsProfile() {
   const dispatch = useDispatch();
@@ -23,11 +40,11 @@ function TabletsProfile() {
   }, [dispatch, currentUser, token, apiKey]);
 
   if (isLoading) {
-    return <p>Loading bookings...</p>;
+    return <div>Loading bookings...</div>;
   }
 
   if (error) {
-    return <p>Error: {error}</p>;
+    return <div>Error: {error}</div>;
   }
   return (
     <section className="container px-4 mx-auto my-5">
@@ -44,13 +61,13 @@ function TabletsProfile() {
       <div className="flex flex-col mt-6">
         <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
           <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
-            <div className="overflow-hidden border border-gray-200 dark:border-gray-700 md:rounded-lg">
-              <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-                <thead className="bg-gray-50 dark:bg-gray-800">
+            <div className="overflow-hidden border border-gray-200 md:rounded-lg">
+              <table className="min-w-full divide-y divide-gray-200">
+                <thead className="bg-gray-50">
                   <tr>
                     <th
                       scope="col"
-                      className="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                      className="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500"
                     >
                       <div className="flex items-center gap-x-3">
                         <span>Name Venue</span>
@@ -96,7 +113,6 @@ function TabletsProfile() {
                       className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
                     >
                       <button className="flex items-center gap-x-2">
-                        <HiMiniUsers />
                         <span>Guests</span>
                       </button>
                     </th>
@@ -114,65 +130,85 @@ function TabletsProfile() {
                     >
                       Price
                     </th>
-
-                    <th
-                      scope="col"
-                      className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
-                    >
-                      Facilities
-                    </th>
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
-                  {bookings.map((booking, index) => (
-                    <tr key={booking.id || index}>
-                      <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                        <div className="inline-flex items-center gap-x-3">
-                          <div className="flex items-center gap-x-2">
-                            <img
-                              className="object-cover w-10 h-10 rounded"
-                              src={booking.venue.media[0].url}
-                              alt={booking.venue.media[0].alt}
-                            />
-                            <div>
-                              <h2 className="font-medium text-gray-800 dark:text-white ">
-                                {booking.venue.name}
-                              </h2>
-                              <p className="text-sm font-normal text-gray-600 dark:text-gray-400">
-                                {/* {venue.rating} */}
-                              </p>
+                  {bookings.map((booking, index) => {
+                    const dateFrom = new Date(booking.dateFrom);
+                    const dateTo = new Date(booking.dateTo);
+
+                    const totalPrice = calculateTotalPrice(
+                      dateFrom,
+                      dateTo,
+                      booking.venue.price
+                    );
+
+                    const totalNights = calculateTotalNights(dateFrom, dateTo);
+
+                    return (
+                      <tr key={booking.id || index}>
+                        <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
+                          <div className="inline-flex items-center gap-x-3">
+                            <div className="flex items-center gap-x-2">
+                              <img
+                                className="object-cover w-20 h-20 rounded"
+                                src={booking.venue.media[0].url}
+                                alt={booking.venue.media[0].alt}
+                              />
+                              <div>
+                                <h2 className="font-medium text-gray-800">
+                                  {booking.venue.name}
+                                </h2>
+                                <div className="text-sm font-normal text-gray-600">
+                                  <Rating
+                                    rating={booking.venue.rating || 0}
+                                    maxRating={5}
+                                  />
+                                </div>
+                                <p className="text-sm font-normal text-gray-600">
+                                  {format(
+                                    new Date(booking.dateFrom),
+                                    'dd.MM.yyyy'
+                                  )}{' '}
+                                  -{' '}
+                                  {format(
+                                    new Date(booking.dateTo),
+                                    'dd.MM.yyyy'
+                                  )}
+                                </p>
+                              </div>
                             </div>
                           </div>
-                        </div>
-                      </td>
-                      <td className="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                        <div className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-emerald-100/60 dark:bg-gray-800">
-                          <span className="h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+                        </td>
+                        <td className="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
+                          <div className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-emerald-100/60 dark:bg-gray-800">
+                            <span className="h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
 
-                          <h2 className="text-sm font-normal text-emerald-500">
-                            Active
-                          </h2>
-                        </div>
-                      </td>
-                      <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                        {booking.guests}
-                      </td>
-                      <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                        {booking.venue.location.address},{' '}
-                        {booking.venue.location.city}
-                      </td>
-                      <td className="px-4 py-4 text-sm whitespace-nowrap">
-                        <div className="flex items-center gap-x-2">
-                          <p className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                            {booking.venue.price} $
-                          </p>
-                        </div>
-                      </td>
-                      <td className="px-4 py-4 text-sm whitespace-nowrap">
-                        <div className="flex items-center gap-x-2"></div>
-                      </td>
-                    </tr>
-                  ))}
+                            <h2 className="text-sm font-normal text-emerald-500">
+                              Active
+                            </h2>
+                          </div>
+                        </td>
+                        <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                          {booking.guests}
+                        </td>
+                        <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                          {booking.venue.location.address},{' '}
+                          {booking.venue.location.city}
+                        </td>
+                        <td className="px-4 py-4 text-sm whitespace-nowrap">
+                          <div className="flex flex-col items-start gap-x-2">
+                            <p className=" text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                              {totalPrice} $
+                            </p>
+                            <p className="text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                              {totalNights} Nights
+                            </p>
+                          </div>
+                        </td>
+                      </tr>
+                    );
+                  })}
                 </tbody>
               </table>
             </div>
