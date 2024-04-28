@@ -110,12 +110,13 @@ function FiltersForm({ onFilterChange }) {
         </ul>
         <h3 className="font-semibold text-gray-90 mb-2">Price Range</h3>
         <label
-          htmlFor="min-price-input"
+          htmlFor="min-price"
           className="block mb-2 text-sm font-medium text-gray-900 sr-only"
         >
           Select a min price:
         </label>
         <input
+          id="min-price"
           type="number"
           placeholder="Min price"
           value={minPrice}
@@ -124,12 +125,13 @@ function FiltersForm({ onFilterChange }) {
         />
         <span className="border-2 my-2 mx-14"></span>
         <label
-          htmlFor="max-price-input"
+          htmlFor="max-price"
           className="block mb-2 text-sm font-medium text-gray-900 sr-only"
         >
           Select a max price:
         </label>
         <input
+          id="max-price"
           type="number"
           placeholder="Max price"
           value={maxPrice}

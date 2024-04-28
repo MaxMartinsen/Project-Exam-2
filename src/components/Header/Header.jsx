@@ -117,6 +117,11 @@ function Header() {
                     <span className="block text-sm text-gray-500 truncate">
                       {currentUser.email}
                     </span>
+                    {currentUser.venueManager && (
+                      <span className="block text-sm text-blue-700 truncate">
+                        Venue Manager
+                      </span>
+                    )}
                   </div>
                   <ul className="py-2" aria-labelledby="user-menu-button">
                     <li>

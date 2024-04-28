@@ -53,6 +53,7 @@ function LoginForm() {
                   placeholder="name@stud.noroff.no"
                   value={values.email}
                   onChange={handleChange}
+                  autoComplete="given-email"
                 />
               </div>
               <div>

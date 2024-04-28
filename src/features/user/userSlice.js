@@ -55,9 +55,9 @@ export const loginUser = createAsyncThunk(
         apiKey: apiKeyData.data.key,
       };
 
-      localStorage.setItem('user', JSON.stringify(user)); // Save the complete user data
+      localStorage.setItem('user', JSON.stringify(user));
 
-      return user; // Return the complete user data
+      return user;
     } catch (error) {
       return rejectWithValue(error.toString());
     }
