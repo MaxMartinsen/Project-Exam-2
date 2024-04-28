@@ -8,25 +8,23 @@ import { useDisableCalendarDates } from '../../hooks/useDisableCalendarDates';
 import NumberForm from './NumberForm';
 import { useTotalPrice } from '../../hooks/useTotalPrice';
 import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { createBooking } from '../../features/booking/bookingSlice';
 import { ROUTES } from '../../utils/routes';
 import BookingConfirmation from '../Modal/BookingConfirmation';
 
-function BookingForm({
-  bookings,
-  onSubmit,
-  venueId,
-  maxGuests,
-  pricePerNight,
-}) {
+function BookingForm({ bookings, venueId, maxGuests, pricePerNight }) {
   const navigate = useNavigate();
   const currentUser = useSelector((state) => state.user.currentUser);
+  const token = useSelector((state) => state.user.token);
+  const apiKey = useSelector((state) => state.user.apiKey);
   const isLoggedIn = Boolean(currentUser);
   const [guests, setGuests] = useState(1);
   const [bookingError, setBookingError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const bookingSliceError = useSelector((state) => state.bookings.error);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (bookingSliceError) {
@@ -63,6 +61,10 @@ function BookingForm({
   const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
   const submitHandler = async () => {
+    if (isLoading) return;
+
+    setIsLoading(true);
+
     let { startDate, endDate } = range[0];
 
     // Set hours for UTC
@@ -127,16 +129,8 @@ function BookingForm({
     };
 
     try {
-      setIsLoading(true);
+      dispatch(createBooking({ bookingData, token, apiKey }));
 
-      const result = await onSubmit(bookingData);
-
-      if (result?.error) {
-        setBookingError(`Booking failed: ${result.error.message}`);
-        return;
-      }
-
-      setBookingError('');
       await delay(2000);
       setIsModalOpen(true);
     } catch (error) {
