@@ -15,8 +15,7 @@ function TabletsProfile() {
 
   useEffect(() => {
     if (currentUser && token && apiKey) {
-      // Ensure these are not null
-      const { name } = currentUser; // Extract username
+      const { name } = currentUser;
       dispatch(fetchBookingsByProfile({ username: name, token, apiKey }));
     } else {
       console.error('User information is missing');
@@ -31,7 +30,7 @@ function TabletsProfile() {
     return <p>Error: {error}</p>;
   }
   return (
-    <section className="container px-4 mx-auto mt-5">
+    <section className="container px-4 mx-auto my-5">
       <div className="flex items-center gap-x-3">
         <h2 className="text-lg font-medium text-gray-800 dark:text-white">
           Upcoming bookings
