@@ -63,29 +63,65 @@ function BookingForm({
   const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
   const submitHandler = async () => {
-    const { startDate, endDate } = range[0];
+    let { startDate, endDate } = range[0];
+
+    // Set hours for UTC
+    startDate = new Date(
+      Date.UTC(
+        startDate.getUTCFullYear(),
+        startDate.getUTCMonth(),
+        startDate.getUTCDate(),
+        15,
+        0,
+        0,
+        0
+      )
+    );
+
+    endDate = new Date(
+      Date.UTC(
+        endDate.getUTCFullYear(),
+        endDate.getUTCMonth(),
+        endDate.getUTCDate(),
+        12,
+        0,
+        0,
+        0
+      )
+    );
 
     const numberOfNights = (endDate - startDate) / (1000 * 60 * 60 * 24);
 
-    startDate.setUTCHours(15, 0, 0, 0);
-    endDate.setUTCHours(12, 0, 0, 0);
-
-    if (numberOfNights === 0) {
-      setBookingError('You need to select both check in and check out dates.');
+    if (numberOfNights <= 0) {
+      setBookingError('Check-out date must be later than check-in date.');
       return;
     }
-
-    if (startDate >= endDate) {
-      console.error('Invalid date range: startDate must be before endDate');
-      return;
-    }
-
-    const startOfDay = startDate.toISOString();
-    const endOfDay = endDate.toISOString();
 
     const bookingData = {
-      dateFrom: startOfDay,
-      dateTo: endOfDay,
+      dateFrom: new Date(
+        Date.UTC(
+          range[0].startDate.getFullYear(),
+          range[0].startDate.getMonth(),
+          range[0].startDate.getDate(),
+          15,
+          0,
+          0,
+          0
+        )
+      ).toISOString(),
+
+      dateTo: new Date(
+        Date.UTC(
+          range[0].endDate.getFullYear(),
+          range[0].endDate.getMonth(),
+          range[0].endDate.getDate(),
+          12,
+          0,
+          0,
+          0
+        )
+      ).toISOString(),
+
       guests,
       venueId,
     };
@@ -104,9 +140,7 @@ function BookingForm({
       await delay(2000);
       setIsModalOpen(true);
     } catch (error) {
-      const errorMessage =
-        error.response?.data?.errors?.[0]?.message || error.message;
-      setBookingError(`Failed to create booking: ${errorMessage}`);
+      setBookingError(`Failed to create booking: ${error.message}`);
     } finally {
       setIsLoading(false);
       if (bookingError) {
@@ -140,7 +174,7 @@ function BookingForm({
               moveRangeOnFirstSelection={false}
               months={1}
               direction="horizontal"
-              className="calendarElement w-full"
+              className="w-full"
               rangeColors={['#4e577f']}
               minDate={new Date()}
               disabledDates={disabledDates}
