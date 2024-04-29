@@ -22,7 +22,7 @@ function calculateTotalNights(dateFrom, dateTo) {
   return totalNights;
 }
 
-function TabletsProfile() {
+function TabletsBookings() {
   const dispatch = useDispatch();
   const currentUser = useSelector((state) => state.user.currentUser);
   const token = useSelector((state) => state.user.token);
@@ -310,4 +310,4 @@ function TabletsProfile() {
   );
 }
 
-export default TabletsProfile;
+export default TabletsBookings;

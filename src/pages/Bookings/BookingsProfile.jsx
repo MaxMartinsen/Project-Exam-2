@@ -1,8 +1,8 @@
 // src/pages/Bookings/BookingsProfile.jsx
-import TabletsProfile from '../../components/Tables/TablesProfile';
+import TabletsBookings from '../../components/Tables/TabletsBookings';
 
 function BookingsProfile() {
-  return <TabletsProfile />;
+  return <TabletsBookings />;
 }
 
 export default BookingsProfile;
