@@ -80,20 +80,26 @@ const userSlice = createSlice({
   name: 'user',
   initialState: {
     currentUser: JSON.parse(localStorage.getItem('user')) || null,
+    name: null,
+    email: null,
     token: null,
     apiKey: null,
-    bookings: [],
     isLoading: false,
     error: null,
   },
   reducers: {
     clearCurrentUser: (state) => {
       state.currentUser = null;
+      state.name = null;
+      state.email = null;
       localStorage.removeItem('user');
     },
     updateUser: (state, action) => {
-      state.currentUser = { ...state.currentUser, ...action.payload };
-      saveToLocalStorage(state.currentUser);
+      const { name, email, ...rest } = action.payload;
+      state.currentUser = { ...state.currentUser, ...rest };
+      state.name = name;
+      state.email = email;
+      saveToLocalStorage({ ...state.currentUser, name, email });
     },
   },
   extraReducers: (builder) => {
@@ -102,10 +108,12 @@ const userSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(createUser.fulfilled, (state, action) => {
-        const newUser = action.payload.data;
-        state.currentUser = newUser;
+        const { name, email } = action.payload.data;
+        state.currentUser = action.payload.data;
+        state.name = name;
+        state.email = email;
         state.isLoading = false;
-        saveToLocalStorage(newUser);
+        saveToLocalStorage(action.payload.data);
       })
       .addCase(createUser.rejected, (state, action) => {
         state.isLoading = false;
@@ -116,12 +124,14 @@ const userSlice = createSlice({
         state.error = null;
       })
       .addCase(loginUser.fulfilled, (state, action) => {
-        const userData = action.payload.user;
-        state.currentUser = userData;
-        state.token = userData.accessToken;
-        state.apiKey = action.payload.apiKey;
+        const { user, apiKey } = action.payload;
+        state.currentUser = user;
+        state.name = user.name;
+        state.email = user.email;
+        state.token = user.accessToken;
+        state.apiKey = apiKey.key;
         state.isLoading = false;
-        saveToLocalStorage(userData);
+        saveToLocalStorage(user);
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.isLoading = false;
