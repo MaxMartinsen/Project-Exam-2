@@ -9,6 +9,7 @@ import DEFAULT_AVATAR from '../../assets/image/default-profile.png';
 
 import { LuSettings } from 'react-icons/lu';
 import { BsFillLuggageFill } from 'react-icons/bs';
+import { GrUserManager } from 'react-icons/gr';
 import { LuLogOut } from 'react-icons/lu';
 
 function Header() {
@@ -30,9 +31,14 @@ function Header() {
     navigate(ROUTES.SETTINGS);
   };
 
-  const handleBookins = () => {
+  const handleBookings = () => {
     setShowDropdown(false);
     navigate(ROUTES.BOOKINGS);
+  };
+
+  const handleManager = () => {
+    setShowDropdown(false);
+    navigate(ROUTES.MANAGER);
   };
 
   useEffect(() => {
@@ -127,13 +133,24 @@ function Header() {
                   <ul className="py-2" aria-labelledby="user-menu-button">
                     <li>
                       <button
-                        onClick={handleBookins}
+                        onClick={handleBookings}
                         className="w-full flex items-center text-left  px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                       >
                         <BsFillLuggageFill className="mr-2" />
                         Bookings
                       </button>
                     </li>
+                    {profile && profile.venueManager && (
+                      <li>
+                        <button
+                          onClick={handleManager}
+                          className="w-full text-left flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                        >
+                          <GrUserManager className="mr-2" />
+                          Manager
+                        </button>
+                      </li>
+                    )}
                     <li>
                       <button
                         onClick={handleSettings}
