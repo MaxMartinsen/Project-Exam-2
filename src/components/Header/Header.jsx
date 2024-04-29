@@ -15,6 +15,7 @@ function Header() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const currentUser = useSelector((state) => state.user.currentUser);
+  const profile = useSelector((state) => state.profile.profile);
   const isLoggedIn = Boolean(currentUser);
 
   const [showDropdown, setShowDropdown] = useState(false);
@@ -114,14 +115,14 @@ function Header() {
                     <span className="block text-base font-semibold text-gray-900">
                       {currentUser.name}
                     </span>
-                    <span className="block text-sm text-gray-500 truncate">
-                      {currentUser.email}
-                    </span>
-                    {currentUser.venueManager && (
+                    {profile && profile.venueManager && (
                       <span className="block text-sm text-blue-700 truncate">
                         Venue Manager
                       </span>
                     )}
+                    <span className="block text-sm text-gray-500 truncate">
+                      {currentUser.email}
+                    </span>
                   </div>
                   <ul className="py-2" aria-labelledby="user-menu-button">
                     <li>
