@@ -90,16 +90,11 @@ const userSlice = createSlice({
   reducers: {
     clearCurrentUser: (state) => {
       state.currentUser = null;
-      state.name = null;
-      state.email = null;
       localStorage.removeItem('user');
     },
     updateUser: (state, action) => {
-      const { name, email, ...rest } = action.payload;
-      state.currentUser = { ...state.currentUser, ...rest };
-      state.name = name;
-      state.email = email;
-      saveToLocalStorage({ ...state.currentUser, name, email });
+      state.currentUser = { ...state.currentUser, ...action.payload };
+      saveToLocalStorage(state.currentUser);
     },
   },
   extraReducers: (builder) => {
@@ -108,12 +103,10 @@ const userSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(createUser.fulfilled, (state, action) => {
-        const { name, email } = action.payload.data;
-        state.currentUser = action.payload.data;
-        state.name = name;
-        state.email = email;
+        const newUser = action.payload.data;
+        state.currentUser = newUser;
         state.isLoading = false;
-        saveToLocalStorage(action.payload.data);
+        saveToLocalStorage(newUser);
       })
       .addCase(createUser.rejected, (state, action) => {
         state.isLoading = false;
@@ -124,14 +117,12 @@ const userSlice = createSlice({
         state.error = null;
       })
       .addCase(loginUser.fulfilled, (state, action) => {
-        const { user, apiKey } = action.payload;
-        state.currentUser = user;
-        state.name = user.name;
-        state.email = user.email;
-        state.token = user.accessToken;
-        state.apiKey = apiKey.key;
+        const userData = action.payload.user;
+        state.currentUser = userData;
+        state.token = userData.accessToken;
+        state.apiKey = action.payload.apiKey;
         state.isLoading = false;
-        saveToLocalStorage(user);
+        saveToLocalStorage(userData);
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.isLoading = false;
