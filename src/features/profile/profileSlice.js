@@ -2,6 +2,31 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { API_URL } from '../../utils/constans';
 
+// Asynchronous thunk to fetch profile details
+export const fetchUserProfile = createAsyncThunk(
+  'profile/fetchUserProfile',
+  async ({ username, token, apiKey }, { rejectWithValue }) => {
+    try {
+      const response = await fetch(`${API_URL}/holidaze/profiles/${username}`, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+          'X-Noroff-API-Key': apiKey,
+        },
+      });
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(`Failed to fetch profile: ${errorData.message}`);
+      }
+      const data = await response.json();
+      return data.data;
+    } catch (err) {
+      console.error('Error fetching profile:', err.message);
+      return rejectWithValue(err.message);
+    }
+  }
+);
+
 // Asynchronous thunk for updating profile
 export const updateProfile = createAsyncThunk(
   'profile/updateProfile',
@@ -38,25 +63,25 @@ export const fetchBookingsByProfile = createAsyncThunk(
   async ({ username, token, apiKey }, { rejectWithValue }) => {
     try {
       const response = await fetch(
-        `${API_URL}/holidaze/profiles/${username}/bookings?_customer=true&_venue=true`, // Ensure this endpoint is correct
+        `${API_URL}/holidaze/profiles/${username}/bookings?_customer=true&_venue=true`,
         {
           headers: {
             'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`, // Ensure the token is valid
-            'X-Noroff-API-Key': apiKey, // Ensure the API key is valid
+            Authorization: `Bearer ${token}`,
+            'X-Noroff-API-Key': apiKey,
           },
         }
       );
 
       if (!response.ok) {
-        const errorData = await response.json(); // Log error data if response is not ok
+        const errorData = await response.json();
         throw new Error(`Failed to fetch bookings: ${errorData.message}`);
       }
 
-      const data = await response.json(); // Log if data is as expected
+      const data = await response.json();
       return data?.data || [];
     } catch (err) {
-      console.error('Error fetching bookings:', err.message); // Log the error
+      console.error('Error fetching bookings:', err.message);
       return rejectWithValue(err.message);
     }
   }
@@ -96,6 +121,17 @@ const profileSlice = createSlice({
         state.bookings = action.payload;
       })
       .addCase(fetchBookingsByProfile.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      })
+      .addCase(fetchUserProfile.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(fetchUserProfile.fulfilled, (state, action) => {
+        state.profile = action.payload;
+        state.isLoading = false;
+      })
+      .addCase(fetchUserProfile.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
       });
