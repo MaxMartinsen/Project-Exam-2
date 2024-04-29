@@ -9,31 +9,29 @@ import { createUser } from '../../features/user/userSlice';
 function RegisterForm() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [isVenueManager, setIsVenueManager] = useState(false);
+
   const [values, setValues] = useState({
     name: '',
     email: '',
     password: '',
-    avatar: '',
   });
-  const handleChange = ({ target: { value, name } }) => {
-    setValues({ ...values, [name]: value });
+  const handleChange = ({ target: { name, value, checked } }) => {
+    if (name === 'venueManager') {
+      setIsVenueManager(checked);
+    } else {
+      setValues({ ...values, [name]: value });
+    }
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    const avatarObject = values.avatar
-      ? {
-          url: values.avatar,
-          alt: 'User avatar',
-        }
-      : undefined;
-
     const userData = {
       name: values.name,
       email: values.email,
       password: values.password,
-      avatar: avatarObject,
+      venueManager: isVenueManager,
     };
     dispatch(createUser(userData));
     navigate(ROUTES.LOGIN);
@@ -64,6 +62,7 @@ function RegisterForm() {
                   placeholder="Your_username"
                   required
                   onChange={handleChange}
+                  autoComplete="given-name"
                 />
               </div>
               <div>
@@ -81,6 +80,7 @@ function RegisterForm() {
                   placeholder="name@stud.noroff.no"
                   required
                   onChange={handleChange}
+                  autoComplete="given-email"
                 />
               </div>
               <div>
@@ -104,15 +104,15 @@ function RegisterForm() {
                 <div className="flex items-start">
                   <div className="flex items-center h-5">
                     <input
-                      id="remember"
+                      id="manager"
+                      name="venueManager"
                       type="checkbox"
-                      value=""
                       className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300"
                       onChange={handleChange}
                     />
                   </div>
                   <label
-                    htmlFor="remember"
+                    htmlFor="manager"
                     className="ms-2 text-sm font-medium text-gray-900"
                   >
                     Venue Manager

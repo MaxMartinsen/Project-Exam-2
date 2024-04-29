@@ -2,13 +2,11 @@ import { Link } from 'react-router-dom';
 
 import { ROUTES } from '../../utils/routes';
 
-import styles from '../../styles/Footer.module.css';
-
 import LOGO from '/HolidazeLogo.svg';
 
 function Footer() {
   return (
-    <footer className={styles.footer}>
+    <footer className="mt-auto">
       <div className="bg-alizarin-crimson-50">
         <div className="w-full max-w-screen-xl mx-auto p-4 md:py-8">
           <div className="sm:flex sm:items-center sm:justify-between">

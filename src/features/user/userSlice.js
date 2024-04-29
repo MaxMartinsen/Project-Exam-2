@@ -50,13 +50,14 @@ export const loginUser = createAsyncThunk(
       if (!apiKeyResponse.ok) throw new Error('API Key creation failed');
       const apiKeyData = await apiKeyResponse.json();
 
-      // Store user data in local storage
-      localStorage.setItem('user', JSON.stringify(loginData.data));
-
-      return {
+      const user = {
         user: loginData.data,
         apiKey: apiKeyData.data.key,
       };
+
+      localStorage.setItem('user', JSON.stringify(user));
+
+      return user;
     } catch (error) {
       return rejectWithValue(error.toString());
     }
@@ -79,9 +80,10 @@ const userSlice = createSlice({
   name: 'user',
   initialState: {
     currentUser: JSON.parse(localStorage.getItem('user')) || null,
+    name: null,
+    email: null,
     token: null,
     apiKey: null,
-    bookings: [],
     isLoading: false,
     error: null,
   },
@@ -112,6 +114,7 @@ const userSlice = createSlice({
       })
       .addCase(loginUser.pending, (state) => {
         state.isLoading = true;
+        state.error = null;
       })
       .addCase(loginUser.fulfilled, (state, action) => {
         const userData = action.payload.user;
