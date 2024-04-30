@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateProfile } from '../../features/profile/profileSlice';
 import { updateUser } from '../../features/user/userSlice';
-import UpdateAvatarModal from '../Modal/UpdateAvatar';
+import AvatarForm from '../Forms/AvatarForm.jsx';
 import DEFAULT_AVATAR from '../../assets/image/default-profile.png';
 import { DEFAULT_AVATAR_URL } from '../../utils/constans';
 
@@ -101,7 +101,7 @@ function SettingsProfile() {
       </div>
 
       {isModalOpen && (
-        <UpdateAvatarModal
+        <AvatarForm
           avatarUrl={avatarUrl}
           isLoading={isLoading}
           error={error}
