@@ -56,20 +56,17 @@ export const createVenue = createAsyncThunk(
       });
 
       if (!response.ok) {
-        throw new Error(`Failed to create Venue: ${response.statusText}`);
+        const errorData = await response.json(); // Get detailed error message from server
+        throw new Error(
+          `Failed to create Venue: ${errorData.message || response.statusText}`
+        );
       }
 
       const data = await response.json();
-      console.log('Venue response:', response);
-      console.log('Venue created successfully:', data);
-
       return data.data || data;
     } catch (error) {
-      console.error(
-        'Error creating booking:',
-        error.response?.data || error.message
-      );
-      return rejectWithValue(error.response?.data || error.message);
+      console.error('Error creating venue:', error);
+      return rejectWithValue(error.toString());
     }
   }
 );

@@ -1,9 +1,93 @@
+// src/components/Forms/VenuesForm.jsx
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { createVenue } from '../../features/venues/venuesSlice';
 import { IoIosPersonAdd } from 'react-icons/io';
 import { FaStarHalfAlt } from 'react-icons/fa';
 import { FaMoneyBill1Wave } from 'react-icons/fa6';
 import ImageForm from './ImageForm';
 
 function VenuesForm() {
+  const dispatch = useDispatch();
+  const { token, apiKey } = useSelector((state) => state.user);
+  const [formData, setFormData] = useState({
+    name: '',
+    description: '',
+    address: '',
+    city: '',
+    zip: '',
+    country: '',
+    continent: '',
+    maxGuests: '',
+    price: '',
+    rating: '',
+    wifi: false,
+    parking: false,
+    breakfast: false,
+    pets: false,
+    images: [{ url: '', alt: '' }],
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState('');
+
+  const handleChange = (e) => {
+    const { name, value, type, checked } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: type === 'checkbox' ? checked : value,
+    }));
+  };
+
+  const handleImagesChange = (newImages) => {
+    setFormData((prev) => ({ ...prev, images: newImages }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+
+    const media = formData.images.map((img) => ({
+      url: img.url,
+      alt: img.alt || 'Venue image',
+    }));
+
+    const venueData = {
+      name: formData.name.trim(),
+      description: formData.description.trim(),
+      media: media,
+      price: parseFloat(formData.price),
+      maxGuests: parseInt(formData.maxGuests),
+      rating: formData.rating ? parseInt(formData.rating) : 0,
+      meta: {
+        wifi: formData.wifi,
+        parking: formData.parking,
+        breakfast: formData.breakfast,
+        pets: formData.pets,
+      },
+      location: {
+        address: formData.address.trim(),
+        city: formData.city.trim(),
+        zip: formData.zip.trim(),
+        country: formData.country.trim(),
+        continent: formData.continent.trim(),
+        lat: formData.lat || 0,
+        lng: formData.lng || 0,
+      },
+    };
+
+    console.log('Final venue data being sent:', venueData); // Log data here
+
+    try {
+      await dispatch(createVenue({ venueData, token, apiKey }));
+      // Additional actions after successful creation, like redirecting the user
+    } catch (error) {
+      setError('Failed to create venue: ' + error.message);
+      console.error('Creation error:', error);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <section className="container px-4 mx-auto">
       <div className="flex items-center gap-x-3">
@@ -12,7 +96,7 @@ function VenuesForm() {
         </h2>
       </div>
       <div>
-        <form className="w-full h-full space-y-5">
+        <form onSubmit={handleSubmit} className="w-full h-full space-y-5">
           <div className="mt-4 md:max-w-64">
             <label
               htmlFor="name"
@@ -22,10 +106,12 @@ function VenuesForm() {
             </label>
 
             <input
-              id="name"
               type="text"
-              minLength="4"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
               required
+              minLength="4"
               className="bg-gray-50 mt-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 block w-full ps-4 p-2.5"
             />
 
@@ -44,9 +130,12 @@ function VenuesForm() {
               </label>
 
               <input
+                name="address"
+                value={formData.address}
+                onChange={handleChange}
+                required
                 id="address"
                 type="text"
-                required
                 className="bg-gray-50 mt-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 block w-full ps-4 p-2.5"
               />
 
@@ -63,9 +152,12 @@ function VenuesForm() {
               </label>
 
               <input
+                name="city"
+                value={formData.city}
+                onChange={handleChange}
+                required
                 id="city"
                 type="text"
-                required
                 className="bg-gray-50 mt-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 block w-full ps-4 p-2.5"
               />
 
@@ -82,9 +174,12 @@ function VenuesForm() {
               </label>
 
               <input
+                name="zip"
+                value={formData.zip}
+                onChange={handleChange}
+                required
                 id="zip"
                 type="text"
-                required
                 className="bg-gray-50 mt-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 block w-full ps-4 p-2.5"
               />
 
@@ -101,9 +196,12 @@ function VenuesForm() {
               </label>
 
               <input
+                name="country"
+                value={formData.country}
+                onChange={handleChange}
+                required
                 id="country"
                 type="text"
-                required
                 className="bg-gray-50 mt-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 block w-full ps-4 p-2.5"
               />
 
@@ -120,9 +218,12 @@ function VenuesForm() {
               </label>
 
               <input
+                name="continent"
+                value={formData.continent}
+                onChange={handleChange}
+                required
                 id="continent"
                 type="text"
-                required
                 className="bg-gray-50 mt-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 block w-full ps-4 p-2.5"
               />
 
@@ -137,8 +238,11 @@ function VenuesForm() {
             <li className="w-full border-b sm:border-b-0 sm:border-r border-gray-300">
               <div className="flex items-center ps-3">
                 <input
-                  id="meta-checkbox-wifi"
                   type="checkbox"
+                  name="wifi"
+                  checked={formData.wifi}
+                  onChange={handleChange}
+                  id="meta-checkbox-wifi"
                   className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
                 />
                 <label
@@ -152,8 +256,11 @@ function VenuesForm() {
             <li className="w-full border-b sm:border-b-0 sm:border-r border-gray-300">
               <div className="flex items-center ps-3">
                 <input
-                  id="meta-checkbox-parking"
                   type="checkbox"
+                  name="parking"
+                  checked={formData.parking}
+                  onChange={handleChange}
+                  id="meta-checkbox-parking"
                   className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
                 />
                 <label
@@ -167,8 +274,11 @@ function VenuesForm() {
             <li className="w-full border-b sm:border-b-0 sm:border-r border-gray-300">
               <div className="flex items-center ps-3">
                 <input
-                  id="meta-checkbox-breakfast"
                   type="checkbox"
+                  name="breakfast"
+                  checked={formData.breakfast}
+                  onChange={handleChange}
+                  id="meta-checkbox-breakfast"
                   className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
                 />
                 <label
@@ -182,8 +292,11 @@ function VenuesForm() {
             <li className="w-full border-gray-300">
               <div className="flex items-center ps-3">
                 <input
-                  id="meta-checkbox-pets"
                   type="checkbox"
+                  name="pets"
+                  checked={formData.pets}
+                  onChange={handleChange}
+                  id="meta-checkbox-pets"
                   className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
                 />
                 <label
@@ -210,12 +323,15 @@ function VenuesForm() {
                   <IoIosPersonAdd className="h-5 w-5 text-gray-500" />
                 </div>
                 <input
-                  type="text"
+                  type="number"
                   id="max-guests"
-                  aria-describedby="helper-text-explanation"
+                  name="maxGuests"
+                  value={formData.maxGuests}
+                  onChange={handleChange}
                   className="bg-gray-50 mt-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 block w-full ps-10 p-2.5"
+                  min="1"
+                  max="999"
                   placeholder="1 - 999"
-                  pattern="^\d{5}(-\d{4})?$"
                   required
                 />
               </div>
@@ -236,12 +352,15 @@ function VenuesForm() {
                     <FaStarHalfAlt className="h-5 w-5 text-gray-500" />
                   </div>
                   <input
-                    type="text"
+                    type="number"
                     id="rating"
-                    aria-describedby="helper-text-explanation"
+                    name="rating"
+                    value={formData.rating}
+                    onChange={handleChange}
                     className="bg-gray-50 mt-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5"
                     placeholder="1 - 5"
-                    pattern="^\d{5}(-\d{4})?$"
+                    min="1"
+                    max="5"
                     required
                   />
                 </div>
@@ -263,12 +382,15 @@ function VenuesForm() {
                     <FaMoneyBill1Wave className="h-5 w-5 text-gray-500" />
                   </div>
                   <input
-                    type="text"
+                    type="number"
                     id="price"
+                    name="price"
+                    value={formData.price}
+                    onChange={handleChange}
                     aria-describedby="helper-text-explanation"
                     className="bg-gray-50 mt-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5"
-                    placeholder=""
-                    pattern="^\d{5}(-\d{4})?$"
+                    placeholder="Enter price per night"
+                    min="1"
                     required
                   />
                 </div>
@@ -290,6 +412,10 @@ function VenuesForm() {
               Description
             </label>
             <textarea
+              name="description"
+              value={formData.description}
+              onChange={handleChange}
+              required
               id="description"
               rows="4"
               className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
@@ -302,11 +428,15 @@ function VenuesForm() {
           </div>
           <h2 className="mb-4 font-semibold text-gray-900">Gallery</h2>
           <div>
-            <ImageForm />
+            <ImageForm
+              images={formData.images}
+              onImagesChange={handleImagesChange}
+            />
           </div>
           <div>
             <button
               type="submit"
+              disabled={isSubmitting}
               className="text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
             >
               <svg
@@ -321,8 +451,9 @@ function VenuesForm() {
                   clipRule="evenodd"
                 ></path>
               </svg>
-              Create Venue
+              {isSubmitting ? 'Creating...' : 'Create Venue'}
             </button>
+            {error && <div className="text-red-500">{error}</div>}
           </div>
         </form>
       </div>
