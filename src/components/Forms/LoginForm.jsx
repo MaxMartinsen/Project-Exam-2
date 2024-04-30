@@ -1,6 +1,8 @@
-import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+// src/components/Forms/LoginForm.jsx
+import { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { loginUser } from '../../features/user/userSlice';
+import { fetchUserProfile } from '../../features/profile/profileSlice';
 import { Link, useNavigate } from 'react-router-dom';
 import { ROUTES } from '../../utils/routes';
 
@@ -11,20 +13,42 @@ function LoginForm() {
     email: '',
     password: '',
   });
+
+  const currentUser = useSelector((state) => state.user.currentUser);
+  const token = useSelector((state) => state.user.token);
+  const apiKey = useSelector((state) => state.user.apiKey);
+
   const handleChange = ({ target: { value, name } }) => {
     setValues({ ...values, [name]: value });
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-
     const userData = {
       email: values.email,
       password: values.password,
     };
-    dispatch(loginUser(userData));
-    navigate(ROUTES.HOME);
+
+    try {
+      await dispatch(loginUser(userData));
+      // Navigation moved to useEffect to ensure profile is fetched first
+    } catch (error) {
+      console.error('Login failed:', error);
+    }
   };
+
+  // Effect to fetch profile after successful login
+  useEffect(() => {
+    if (currentUser && token && apiKey) {
+      dispatch(
+        fetchUserProfile({
+          username: currentUser.name,
+          token,
+          apiKey,
+        })
+      ).then(() => navigate(ROUTES.HOME));
+    }
+  }, [dispatch, currentUser, token, apiKey, navigate]);
 
   return (
     <div className="justify-center items-center">

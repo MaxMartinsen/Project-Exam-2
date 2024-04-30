@@ -54,10 +54,5 @@ export default {
       poppins: ['"Poppins"', 'sans-serif'],
     },
   },
-  plugins: [
-    flowbitePlugin,
-    flowbite.plugin(),
-    require('@tailwindcss/line-clamp'),
-    require('flowbite/plugin'),
-  ],
+  plugins: [flowbitePlugin, flowbite.plugin(), require('flowbite/plugin')],
 };

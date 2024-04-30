@@ -10,6 +10,7 @@ import Login from '../../pages/Login/Login';
 import Register from '../../pages/Register/Register';
 import Settings from '../../pages/Settings/Settings';
 import BookingsProfile from '../../pages/Bookings/BookingsProfile';
+import ManagerProfile from '../../pages/Manager/ManagerProfile';
 
 function AppRoutes() {
   return (
@@ -23,6 +24,7 @@ function AppRoutes() {
         <Route path={ROUTES.REGISTER} element={<Register />} />
         <Route path={ROUTES.SETTINGS} element={<Settings />} />
         <Route path={ROUTES.BOOKINGS} element={<BookingsProfile />} />
+        <Route path={ROUTES.MANAGER} element={<ManagerProfile />} />
       </Route>
     </Routes>
   );
