@@ -41,6 +41,39 @@ export const fetchVenueById = createAsyncThunk(
   }
 );
 
+export const createVenue = createAsyncThunk(
+  'venues/createVenue',
+  async ({ venueData, token, apiKey }, { rejectWithValue }) => {
+    try {
+      const response = await fetch(API_VENUE_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+          'X-Noroff-API-Key': apiKey,
+        },
+        body: JSON.stringify(venueData),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Failed to create Venue: ${response.statusText}`);
+      }
+
+      const data = await response.json();
+      console.log('Venue response:', response);
+      console.log('Venue created successfully:', data);
+
+      return data.data || data;
+    } catch (error) {
+      console.error(
+        'Error creating booking:',
+        error.response?.data || error.message
+      );
+      return rejectWithValue(error.response?.data || error.message);
+    }
+  }
+);
+
 const venuesSlice = createSlice({
   name: 'venues',
   initialState: {
@@ -74,6 +107,17 @@ const venuesSlice = createSlice({
         state.selectedVenue = action.payload.data || action.payload;
       })
       .addCase(fetchVenueById.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.payload;
+      })
+      .addCase(createVenue.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(createVenue.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        state.venues = [...state.venues, action.payload];
+      })
+      .addCase(createVenue.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.payload;
       });
