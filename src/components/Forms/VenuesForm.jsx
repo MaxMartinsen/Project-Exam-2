@@ -46,15 +46,15 @@ function VenuesForm() {
     e.preventDefault();
     setIsSubmitting(true);
 
-    const media = formData.images.map((img) => ({
-      url: img.url,
-      alt: img.alt || 'Venue image',
-    }));
+    // Filter out images where the URL is empty
+    const filteredMedia = formData.images.filter(
+      (img) => img.url.trim() !== ''
+    );
 
     const venueData = {
       name: formData.name.trim(),
       description: formData.description.trim(),
-      media: media,
+      media: filteredMedia, // Only include non-empty images
       price: parseFloat(formData.price),
       maxGuests: parseInt(formData.maxGuests),
       rating: formData.rating ? parseInt(formData.rating) : 0,
@@ -75,11 +75,8 @@ function VenuesForm() {
       },
     };
 
-    console.log('Final venue data being sent:', venueData); // Log data here
-
     try {
-      await dispatch(createVenue({ venueData, token, apiKey }));
-      // Additional actions after successful creation, like redirecting the user
+      await dispatch(createVenue({ venueData, token, apiKey })).unwrap();
     } catch (error) {
       setError('Failed to create venue: ' + error.message);
       console.error('Creation error:', error);

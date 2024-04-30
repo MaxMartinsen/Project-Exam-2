@@ -14,7 +14,8 @@ function ImageForm({ images, onImagesChange }) {
     onImagesChange(newImages);
   };
 
-  const handleAddImage = () => {
+  const handleAddImage = (event) => {
+    event.preventDefault();
     onImagesChange([...images, { url: '', alt: '' }]);
   };
 
