@@ -1,6 +1,6 @@
 import DEFAULT_AVATAR from '../../assets/image/default-profile.png';
 
-function UpdateAvatarModal({
+function UpdateAvatar({
   avatarUrl,
   isLoading,
   error,
@@ -124,4 +124,4 @@ function UpdateAvatarModal({
   );
 }
 
-export default UpdateAvatarModal;
+export default UpdateAvatar;
