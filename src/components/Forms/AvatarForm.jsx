@@ -1,6 +1,6 @@
 import DEFAULT_AVATAR from '../../assets/image/default-profile.png';
 
-function UpdateAvatar({
+function AvatarForm({
   avatarUrl,
   isLoading,
   error,
@@ -124,4 +124,4 @@ function UpdateAvatar({
   );
 }
 
-export default UpdateAvatar;
+export default AvatarForm;
