@@ -1,7 +1,8 @@
-import { useState, Suspense, lazy } from 'react';
+import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateProfile } from '../../features/profile/profileSlice';
 import { updateUser } from '../../features/user/userSlice';
+import UpdateAvatar from '../../components/Modal/UpdateAvatar';
 import DEFAULT_AVATAR from '../../assets/image/default-profile.png';
 import { DEFAULT_AVATAR_URL } from '../../utils/constans';
 
@@ -56,10 +57,6 @@ function SettingsProfile() {
     setAvatarUrl('');
   };
 
-  const UpdateAvatar = lazy(
-    () => import('../../components/Modal/UpdateAvatar')
-  );
-
   return (
     <>
       <div className="flex flex-col text-center items-center gap-3 m-auto mb-10 mt-36">
@@ -104,17 +101,15 @@ function SettingsProfile() {
       </div>
 
       {isModalOpen && (
-        <Suspense>
-          <UpdateAvatar
-            avatarUrl={avatarUrl}
-            isLoading={isLoading}
-            error={error}
-            handleCloseModal={() => setIsModalOpen(false)}
-            handleSubmit={handleSubmit}
-            handleAvatarUrlChange={handleAvatarUrlChange}
-            handleClearAvatarUrl={handleClearAvatarUrl}
-          />
-        </Suspense>
+        <UpdateAvatar
+          avatarUrl={avatarUrl}
+          isLoading={isLoading}
+          error={error}
+          handleCloseModal={() => setIsModalOpen(false)}
+          handleSubmit={handleSubmit}
+          handleAvatarUrlChange={handleAvatarUrlChange}
+          handleClearAvatarUrl={handleClearAvatarUrl}
+        />
       )}
     </>
   );
