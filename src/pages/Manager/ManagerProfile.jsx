@@ -1,3 +1,5 @@
+// src/pages/Manager/ManagerProfile.jsx
+
 import { useState } from 'react';
 import VenuesForm from '../../components/Forms/VenuesForm';
 import TablesProfiles from '../../components/Tables/TablesProfiles';
