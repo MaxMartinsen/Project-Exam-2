@@ -6,6 +6,7 @@ import { IoIosPersonAdd } from 'react-icons/io';
 import { FaStarHalfAlt } from 'react-icons/fa';
 import { FaMoneyBill1Wave } from 'react-icons/fa6';
 import ImageForm from './ImageForm';
+import VenueConfirmation from '../Modal/VenueConfirmation';
 
 function VenuesForm() {
   const dispatch = useDispatch();
@@ -28,6 +29,7 @@ function VenuesForm() {
     images: [{ url: '', alt: '' }],
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showConfirmation, setShowConfirmation] = useState(false);
   const [error, setError] = useState('');
 
   const handleChange = (e) => {
@@ -77,12 +79,17 @@ function VenuesForm() {
 
     try {
       await dispatch(createVenue({ venueData, token, apiKey }));
+      setShowConfirmation(true);
+      setError('');
     } catch (error) {
       setError('Failed to create venue: ' + error.message);
       console.error('Creation error:', error);
     } finally {
       setIsSubmitting(false);
     }
+  };
+  const handleModalClose = () => {
+    setShowConfirmation(false);
   };
 
   return (
@@ -454,6 +461,7 @@ function VenuesForm() {
           </div>
         </form>
       </div>
+      <VenueConfirmation isOpen={showConfirmation} onClose={handleModalClose} />
     </section>
   );
 }
