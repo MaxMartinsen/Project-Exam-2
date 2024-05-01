@@ -87,7 +87,38 @@ export const fetchBookingsByProfile = createAsyncThunk(
   }
 );
 
+// Asynchronous thunk to fetch venues by profile
+export const fetchVenuesByProfile = createAsyncThunk(
+  'profile/fetchVenuesByProfile',
+  async ({ username, token, apiKey }, { rejectWithValue }) => {
+    try {
+      const response = await fetch(
+        `${API_URL}/holidaze/profiles/${username}/venues?_customer=true&_venue=true`,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+            'X-Noroff-API-Key': apiKey,
+          },
+        }
+      );
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(`Failed to fetch venues: ${errorData.message}`);
+      }
+
+      const data = await response.json();
+      return data?.data || [];
+    } catch (err) {
+      console.error('Error fetching venues:', err.message);
+      return rejectWithValue(err.message);
+    }
+  }
+);
+
 const initialState = {
+  venues: [],
   bookings: [],
   isLoading: false,
   error: null,
@@ -121,6 +152,18 @@ const profileSlice = createSlice({
         state.bookings = action.payload;
       })
       .addCase(fetchBookingsByProfile.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      })
+      .addCase(fetchVenuesByProfile.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(fetchVenuesByProfile.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.venues = action.payload;
+      })
+      .addCase(fetchVenuesByProfile.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
       })

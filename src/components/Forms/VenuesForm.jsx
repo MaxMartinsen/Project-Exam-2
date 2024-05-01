@@ -76,7 +76,7 @@ function VenuesForm() {
     };
 
     try {
-      await dispatch(createVenue({ venueData, token, apiKey })).unwrap();
+      await dispatch(createVenue({ venueData, token, apiKey }));
     } catch (error) {
       setError('Failed to create venue: ' + error.message);
       console.error('Creation error:', error);
