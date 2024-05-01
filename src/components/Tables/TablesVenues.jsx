@@ -1,16 +1,22 @@
 // src/components/Tables/TablesVenues.jsx
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchVenuesByProfile } from '../../features/profile/profileSlice';
+import {
+  fetchVenuesByProfile,
+  deleteVenue,
+} from '../../features/profile/profileSlice';
 import Rating from '../Rating/Rating';
 import { format } from 'date-fns';
+import DeleteModal from '../Modal/DeleteModal';
 
 function TablesVenues() {
   const dispatch = useDispatch();
   const currentUser = useSelector((state) => state.user.currentUser);
   const token = useSelector((state) => state.user.token);
   const apiKey = useSelector((state) => state.user.apiKey);
+  const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [selectedVenueId, setSelectedVenueId] = useState(null);
 
   const { venues, isLoading, error } = useSelector((state) => state.profile);
 
@@ -23,17 +29,23 @@ function TablesVenues() {
     }
   }, [dispatch, currentUser, token, apiKey]);
 
-  if (isLoading) {
-    return <div>Loading bookings...</div>;
-  }
+  const handleDeleteClick = (id) => {
+    setSelectedVenueId(id);
+    setDeleteModalOpen(true);
+  };
 
-  if (error) {
-    return <div>Error: {error}</div>;
-  }
+  const confirmDelete = () => {
+    dispatch(deleteVenue({ venueId: selectedVenueId, token, apiKey }));
+    setDeleteModalOpen(false);
+  };
 
-  if (!venues || venues.length === 0) {
-    return <div>No venues found.</div>;
-  }
+  const cancelDelete = () => {
+    setDeleteModalOpen(false);
+  };
+
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error}</div>;
+  if (!venues.length) return <div>No venues found.</div>;
   return (
     <section className="container px-4 mx-auto">
       <div className="flex items-center gap-x-3">
@@ -164,7 +176,10 @@ function TablesVenues() {
                         </td>
                         <td className="px-4 py-4 text-sm whitespace-nowrap">
                           <div className="flex items-center gap-x-6">
-                            <button className="text-gray-500 transition-colors duration-200 dark:hover:text-red-500 dark:text-gray-300 hover:text-red-500 focus:outline-none">
+                            <button
+                              onClick={() => handleDeleteClick(profile.id)}
+                              className="text-gray-500 transition-colors duration-200 dark:hover:text-red-500 dark:text-gray-300 hover:text-red-500 focus:outline-none"
+                            >
                               <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 fill="none"
@@ -179,6 +194,7 @@ function TablesVenues() {
                                   d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
                                 />
                               </svg>
+                              <span className="sr-only">Delete</span>
                             </button>
 
                             <button className="text-gray-500 transition-colors duration-200 dark:hover:text-yellow-500 dark:text-gray-300 hover:text-yellow-500 focus:outline-none">
@@ -208,97 +224,12 @@ function TablesVenues() {
           </div>
         </div>
       </div>
-
-      <div className="flex items-center justify-between mt-6">
-        <a
-          href="#"
-          className="flex items-center px-5 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 bg-white border rounded-md gap-x-2 hover:bg-gray-100 dark:bg-gray-900 dark:text-gray-200 dark:border-gray-700 dark:hover:bg-gray-800"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth="1.5"
-            stroke="currentColor"
-            className="w-5 h-5 rtl:-scale-x-100"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M6.75 15.75L3 12m0 0l3.75-3.75M3 12h18"
-            />
-          </svg>
-
-          <span>previous</span>
-        </a>
-
-        <div className="items-center hidden lg:flex gap-x-3">
-          <a
-            href="#"
-            className="px-2 py-1 text-sm text-blue-500 rounded-md dark:bg-gray-800 bg-blue-100/60"
-          >
-            1
-          </a>
-          <a
-            href="#"
-            className="px-2 py-1 text-sm text-gray-500 rounded-md dark:hover:bg-gray-800 dark:text-gray-300 hover:bg-gray-100"
-          >
-            2
-          </a>
-          <a
-            href="#"
-            className="px-2 py-1 text-sm text-gray-500 rounded-md dark:hover:bg-gray-800 dark:text-gray-300 hover:bg-gray-100"
-          >
-            3
-          </a>
-          <a
-            href="#"
-            className="px-2 py-1 text-sm text-gray-500 rounded-md dark:hover:bg-gray-800 dark:text-gray-300 hover:bg-gray-100"
-          >
-            ...
-          </a>
-          <a
-            href="#"
-            className="px-2 py-1 text-sm text-gray-500 rounded-md dark:hover:bg-gray-800 dark:text-gray-300 hover:bg-gray-100"
-          >
-            12
-          </a>
-          <a
-            href="#"
-            className="px-2 py-1 text-sm text-gray-500 rounded-md dark:hover:bg-gray-800 dark:text-gray-300 hover:bg-gray-100"
-          >
-            13
-          </a>
-          <a
-            href="#"
-            className="px-2 py-1 text-sm text-gray-500 rounded-md dark:hover:bg-gray-800 dark:text-gray-300 hover:bg-gray-100"
-          >
-            14
-          </a>
-        </div>
-
-        <a
-          href="#"
-          className="flex items-center px-5 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 bg-white border rounded-md gap-x-2 hover:bg-gray-100 dark:bg-gray-900 dark:text-gray-200 dark:border-gray-700 dark:hover:bg-gray-800"
-        >
-          <span>Next</span>
-
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth="1.5"
-            stroke="currentColor"
-            className="w-5 h-5 rtl:-scale-x-100"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"
-            />
-          </svg>
-        </a>
-      </div>
+      {isDeleteModalOpen && (
+        <DeleteModal
+          confirmDelete={confirmDelete}
+          cancelDelete={cancelDelete}
+        />
+      )}
     </section>
   );
 }
