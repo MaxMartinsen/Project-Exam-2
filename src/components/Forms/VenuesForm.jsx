@@ -56,7 +56,7 @@ function VenuesForm() {
     const venueData = {
       name: formData.name.trim(),
       description: formData.description.trim(),
-      media: filteredMedia, // Only include non-empty images
+      media: filteredMedia,
       price: parseFloat(formData.price),
       maxGuests: parseInt(formData.maxGuests),
       rating: formData.rating ? parseInt(formData.rating) : 0,

@@ -56,7 +56,7 @@ export const createVenue = createAsyncThunk(
       });
 
       if (!response.ok) {
-        const errorData = await response.json(); // Get detailed error message from server
+        const errorData = await response.json();
         throw new Error(
           `Failed to create Venue: ${errorData.message || response.statusText}`
         );

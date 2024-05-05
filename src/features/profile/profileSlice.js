@@ -198,12 +198,12 @@ const profileSlice = createSlice({
       .addCase(fetchUserProfile.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
+      })
+      .addCase(deleteVenue.fulfilled, (state, action) => {
+        state.venues = state.venues.filter(
+          (venue) => venue.id !== action.payload
+        );
       });
-    builder.addCase(deleteVenue.fulfilled, (state, action) => {
-      state.venues = state.venues.filter(
-        (venue) => venue.id !== action.payload
-      );
-    });
   },
 });
 
