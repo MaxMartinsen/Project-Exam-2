@@ -115,7 +115,6 @@ function VenuesForm() {
               value={formData.name}
               onChange={handleChange}
               required
-              minLength="4"
               className="bg-gray-50 mt-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 block w-full ps-4 p-2.5"
             />
 
@@ -137,7 +136,6 @@ function VenuesForm() {
                 name="address"
                 value={formData.address}
                 onChange={handleChange}
-                required
                 id="address"
                 type="text"
                 className="bg-gray-50 mt-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 block w-full ps-4 p-2.5"
@@ -159,7 +157,6 @@ function VenuesForm() {
                 name="city"
                 value={formData.city}
                 onChange={handleChange}
-                required
                 id="city"
                 type="text"
                 className="bg-gray-50 mt-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 block w-full ps-4 p-2.5"
@@ -181,7 +178,6 @@ function VenuesForm() {
                 name="zip"
                 value={formData.zip}
                 onChange={handleChange}
-                required
                 id="zip"
                 type="text"
                 className="bg-gray-50 mt-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 block w-full ps-4 p-2.5"
@@ -203,7 +199,6 @@ function VenuesForm() {
                 name="country"
                 value={formData.country}
                 onChange={handleChange}
-                required
                 id="country"
                 type="text"
                 className="bg-gray-50 mt-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 block w-full ps-4 p-2.5"
@@ -225,7 +220,6 @@ function VenuesForm() {
                 name="continent"
                 value={formData.continent}
                 onChange={handleChange}
-                required
                 id="continent"
                 type="text"
                 className="bg-gray-50 mt-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 block w-full ps-4 p-2.5"
@@ -365,7 +359,6 @@ function VenuesForm() {
                     placeholder="1 - 5"
                     min="1"
                     max="5"
-                    required
                   />
                 </div>
                 <p
@@ -419,7 +412,6 @@ function VenuesForm() {
               name="description"
               value={formData.description}
               onChange={handleChange}
-              required
               id="description"
               rows="4"
               className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"

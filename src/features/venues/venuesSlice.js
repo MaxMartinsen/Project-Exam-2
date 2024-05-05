@@ -3,18 +3,29 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { API_VENUE_URL } from '../../utils/constans';
 
+// Helper function to recursively fetch all pages
+const fetchAllPages = async (url, currentPage = 1, accumulatedData = []) => {
+  const response = await fetch(`${url}?page=${currentPage}`);
+  if (!response.ok) {
+    throw new Error(`Error fetching venues: ${response.statusText}`);
+  }
+  const data = await response.json();
+  const newData = accumulatedData.concat(data.data);
+
+  if (data.meta.currentPage < data.meta.pageCount) {
+    return fetchAllPages(url, currentPage + 1, newData); // Recurse to get next page
+  } else {
+    return newData; // All pages have been fetched
+  }
+};
+
 // Fetch all venues with fetch
 export const fetchVenues = createAsyncThunk(
   'venues/fetchVenues',
   async (_, { rejectWithValue }) => {
     try {
-      const response = await fetch(API_VENUE_URL);
-      if (!response.ok) {
-        throw new Error(`Error fetching venues: ${response.statusText}`);
-      }
-
-      const data = await response.json();
-      return data;
+      const allVenues = await fetchAllPages(API_VENUE_URL);
+      return { data: allVenues };
     } catch (error) {
       return rejectWithValue(error.message);
     }

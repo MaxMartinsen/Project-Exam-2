@@ -203,6 +203,9 @@ const profileSlice = createSlice({
         state.venues = state.venues.filter(
           (venue) => venue.id !== action.payload
         );
+      })
+      .addCase(deleteVenue.rejected, (state, action) => {
+        state.error = action.payload;
       });
   },
 });
