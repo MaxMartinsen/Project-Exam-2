@@ -13,9 +13,9 @@ const fetchAllPages = async (url, currentPage = 1, accumulatedData = []) => {
   const newData = accumulatedData.concat(data.data);
 
   if (data.meta.currentPage < data.meta.pageCount) {
-    return fetchAllPages(url, currentPage + 1, newData); // Recurse to get next page
+    return fetchAllPages(url, currentPage + 1, newData);
   } else {
-    return newData; // All pages have been fetched
+    return newData;
   }
 };
 
