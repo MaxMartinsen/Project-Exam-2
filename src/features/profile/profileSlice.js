@@ -141,6 +141,24 @@ export const deleteVenue = createAsyncThunk(
 const initialState = {
   venues: [],
   bookings: [],
+  profile: {
+    name: null,
+    email: null,
+    bio: null,
+    avatar: {
+      url: '',
+      alt: '',
+    },
+    banner: {
+      url: '',
+      alt: '',
+    },
+    venueManager: false,
+    _count: {
+      venues: 0,
+      bookings: 0,
+    },
+  },
   isLoading: false,
   error: null,
 };
@@ -149,7 +167,21 @@ const initialState = {
 const profileSlice = createSlice({
   name: 'profile',
   initialState,
-  reducers: {},
+  reducers: {
+    clearProfile: (state) => {
+      state.bookings = [];
+      state.venues = [];
+      state.profile = {
+        name: null,
+        email: null,
+        bio: null,
+        avatar: { url: '', alt: '' },
+        banner: { url: '', alt: '' },
+        venueManager: false,
+        _count: { venues: 0, bookings: 0 },
+      };
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(updateProfile.pending, (state) => {
@@ -209,5 +241,5 @@ const profileSlice = createSlice({
       });
   },
 });
-
+export const { clearProfile } = profileSlice.actions;
 export default profileSlice.reducer;
