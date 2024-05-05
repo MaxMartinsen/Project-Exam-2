@@ -2,13 +2,11 @@
 
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  fetchVenuesByProfile,
-  deleteVenue,
-} from '../../features/profile/profileSlice';
+import { fetchVenuesByProfile } from '../../features/profile/profileSlice';
 import Rating from '../Rating/Rating';
 import { format } from 'date-fns';
 import DeleteModal from '../Modal/DeleteModal';
+import { deleteVenue } from '../../features/venues/venuesSlice';
 
 function TablesVenues() {
   const dispatch = useDispatch();
@@ -35,8 +33,17 @@ function TablesVenues() {
   };
 
   const confirmDelete = () => {
-    dispatch(deleteVenue({ venueId: selectedVenueId, token, apiKey }));
-    setDeleteModalOpen(false);
+    if (selectedVenueId) {
+      dispatch(deleteVenue({ venueId: selectedVenueId, token, apiKey }))
+        .then(() => {
+          dispatch(
+            fetchVenuesByProfile({ username: currentUser.name, token, apiKey })
+          );
+        })
+        .finally(() => {
+          setDeleteModalOpen(false);
+        });
+    }
   };
 
   const cancelDelete = () => {

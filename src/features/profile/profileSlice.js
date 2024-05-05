@@ -117,27 +117,6 @@ export const fetchVenuesByProfile = createAsyncThunk(
   }
 );
 
-// Asynchronous thunk to delete a venue
-export const deleteVenue = createAsyncThunk(
-  'profile/deleteVenue',
-  async ({ venueId, token, apiKey }, { rejectWithValue }) => {
-    try {
-      const response = await fetch(`${API_URL}/holidaze/venues/${venueId}`, {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-          'X-Noroff-API-Key': apiKey,
-        },
-      });
-      if (!response.ok) throw new Error('Failed to delete venue');
-      return venueId;
-    } catch (error) {
-      return rejectWithValue(error.message);
-    }
-  }
-);
-
 const initialState = {
   venues: [],
   bookings: [],
@@ -229,14 +208,6 @@ const profileSlice = createSlice({
       })
       .addCase(fetchUserProfile.rejected, (state, action) => {
         state.isLoading = false;
-        state.error = action.payload;
-      })
-      .addCase(deleteVenue.fulfilled, (state, action) => {
-        state.venues = state.venues.filter(
-          (venue) => venue.id !== action.payload
-        );
-      })
-      .addCase(deleteVenue.rejected, (state, action) => {
         state.error = action.payload;
       });
   },

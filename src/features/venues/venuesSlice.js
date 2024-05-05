@@ -82,6 +82,27 @@ export const createVenue = createAsyncThunk(
   }
 );
 
+// Asynchronous thunk to delete a venue
+export const deleteVenue = createAsyncThunk(
+  'profile/deleteVenue',
+  async ({ venueId, token, apiKey }, { rejectWithValue }) => {
+    try {
+      const response = await fetch(`${API_VENUE_URL}/${venueId}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+          'X-Noroff-API-Key': apiKey,
+        },
+      });
+      if (!response.ok) throw new Error('Failed to delete venue');
+      return venueId;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
 const venuesSlice = createSlice({
   name: 'venues',
   initialState: {
@@ -127,6 +148,14 @@ const venuesSlice = createSlice({
       })
       .addCase(createVenue.rejected, (state, action) => {
         state.status = 'failed';
+        state.error = action.payload;
+      })
+      .addCase(deleteVenue.fulfilled, (state, action) => {
+        state.venues = state.venues.filter(
+          (venue) => venue.id !== action.payload
+        );
+      })
+      .addCase(deleteVenue.rejected, (state, action) => {
         state.error = action.payload;
       });
   },
