@@ -8,7 +8,7 @@ import { format } from 'date-fns';
 import DeleteModal from '../Modal/DeleteModal';
 import { deleteVenue } from '../../features/venues/venuesSlice';
 
-function TablesVenues() {
+function TablesVenues({ onEditVenue }) {
   const dispatch = useDispatch();
   const currentUser = useSelector((state) => state.user.currentUser);
   const token = useSelector((state) => state.user.token);
@@ -30,6 +30,12 @@ function TablesVenues() {
   const handleDeleteClick = (id) => {
     setSelectedVenueId(id);
     setDeleteModalOpen(true);
+  };
+  const handleEditClick = (id) => {
+    const venueToEdit = venues.find((venue) => venue.id === id);
+    if (venueToEdit) {
+      onEditVenue(venueToEdit);
+    }
   };
 
   const confirmDelete = () => {
@@ -204,7 +210,10 @@ function TablesVenues() {
                               <span className="sr-only">Delete</span>
                             </button>
 
-                            <button className="text-gray-500 transition-colors duration-200 dark:hover:text-yellow-500 dark:text-gray-300 hover:text-yellow-500 focus:outline-none">
+                            <button
+                              onClick={() => handleEditClick(profile.id)}
+                              className="text-gray-500 transition-colors duration-200 dark:hover:text-yellow-500 dark:text-gray-300 hover:text-yellow-500 focus:outline-none"
+                            >
                               <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 fill="none"

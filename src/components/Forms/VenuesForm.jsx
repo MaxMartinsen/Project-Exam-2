@@ -1,14 +1,14 @@
 // src/components/Forms/VenuesForm.jsx
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { createVenue } from '../../features/venues/venuesSlice';
+import { createVenue, updateVenue } from '../../features/venues/venuesSlice';
 import { IoIosPersonAdd } from 'react-icons/io';
 import { FaStarHalfAlt } from 'react-icons/fa';
 import { FaMoneyBill1Wave } from 'react-icons/fa6';
 import ImageForm from './ImageForm';
 import VenueConfirmation from '../Modal/VenueConfirmation';
 
-function VenuesForm() {
+function VenuesForm({ mode, initialData }) {
   const dispatch = useDispatch();
   const { token, apiKey } = useSelector((state) => state.user);
   const [formData, setFormData] = useState({
@@ -44,6 +44,31 @@ function VenuesForm() {
     setFormData((prev) => ({ ...prev, images: newImages }));
   };
 
+  useEffect(() => {
+    if (mode === 'edit' && initialData) {
+      // Check if initialData.location and other required data exist to avoid undefined errors
+      if (initialData.location && initialData.meta && initialData.media) {
+        setFormData({
+          name: initialData.name || '',
+          description: initialData.description || '',
+          address: initialData.location.address || '',
+          city: initialData.location.city || '',
+          zip: initialData.location.zip || '',
+          country: initialData.location.country || '',
+          continent: initialData.location.continent || '',
+          maxGuests: initialData.maxGuests.toString(),
+          price: initialData.price.toString(),
+          rating: initialData.rating.toString(),
+          wifi: initialData.meta.wifi,
+          parking: initialData.meta.parking,
+          breakfast: initialData.meta.breakfast,
+          pets: initialData.meta.pets,
+          images: initialData.media || [{ url: '', alt: '' }],
+        });
+      }
+    }
+  }, [mode, initialData]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
@@ -77,17 +102,31 @@ function VenuesForm() {
       },
     };
 
-    try {
-      await dispatch(createVenue({ venueData, token, apiKey }));
-      setShowConfirmation(true);
-      setError('');
-    } catch (error) {
-      setError('Failed to create venue: ' + error.message);
-      console.error('Creation error:', error);
-    } finally {
-      setIsSubmitting(false);
+    if (mode === 'edit') {
+      try {
+        await dispatch(
+          updateVenue({ venueId: initialData.id, venueData, token, apiKey })
+        );
+        setShowConfirmation(true);
+        setError('');
+      } catch (error) {
+        setError('Failed to update venue: ' + error.message);
+      } finally {
+        setIsSubmitting(false);
+      }
+    } else {
+      try {
+        await dispatch(createVenue({ venueData, token, apiKey }));
+        setShowConfirmation(true);
+        setError('');
+      } catch (error) {
+        setError('Failed to create venue: ' + error.message);
+      } finally {
+        setIsSubmitting(false);
+      }
     }
   };
+
   const handleModalClose = () => {
     setShowConfirmation(false);
   };
@@ -96,7 +135,7 @@ function VenuesForm() {
     <section className="container px-4 mx-auto">
       <div className="flex items-center gap-x-3">
         <h2 className="text-lg font-medium text-gray-800 dark:text-white">
-          Create Venue
+          {mode === 'edit' ? 'Update Venue' : 'Create Venue'}
         </h2>
       </div>
       <div>
@@ -447,7 +486,13 @@ function VenuesForm() {
                   clipRule="evenodd"
                 ></path>
               </svg>
-              {isSubmitting ? 'Creating...' : 'Create Venue'}
+              {isSubmitting
+                ? mode === 'edit'
+                  ? 'Updating...'
+                  : 'Creating...'
+                : mode === 'edit'
+                  ? 'Update Venue'
+                  : 'Create Venue'}
             </button>
             {error && <div className="text-red-500">{error}</div>}
           </div>
