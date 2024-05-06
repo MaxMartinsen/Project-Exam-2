@@ -117,30 +117,27 @@ export const fetchVenuesByProfile = createAsyncThunk(
   }
 );
 
-// Asynchronous thunk to delete a venue
-export const deleteVenue = createAsyncThunk(
-  'profile/deleteVenue',
-  async ({ venueId, token, apiKey }, { rejectWithValue }) => {
-    try {
-      const response = await fetch(`${API_URL}/holidaze/venues/${venueId}`, {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-          'X-Noroff-API-Key': apiKey,
-        },
-      });
-      if (!response.ok) throw new Error('Failed to delete venue');
-      return venueId;
-    } catch (error) {
-      return rejectWithValue(error.message);
-    }
-  }
-);
-
 const initialState = {
   venues: [],
   bookings: [],
+  profile: {
+    name: null,
+    email: null,
+    bio: null,
+    avatar: {
+      url: '',
+      alt: '',
+    },
+    banner: {
+      url: '',
+      alt: '',
+    },
+    venueManager: false,
+    _count: {
+      venues: 0,
+      bookings: 0,
+    },
+  },
   isLoading: false,
   error: null,
 };
@@ -149,7 +146,21 @@ const initialState = {
 const profileSlice = createSlice({
   name: 'profile',
   initialState,
-  reducers: {},
+  reducers: {
+    clearProfile: (state) => {
+      state.bookings = [];
+      state.venues = [];
+      state.profile = {
+        name: null,
+        email: null,
+        bio: null,
+        avatar: { url: '', alt: '' },
+        banner: { url: '', alt: '' },
+        venueManager: false,
+        _count: { venues: 0, bookings: 0 },
+      };
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(updateProfile.pending, (state) => {
@@ -199,12 +210,7 @@ const profileSlice = createSlice({
         state.isLoading = false;
         state.error = action.payload;
       });
-    builder.addCase(deleteVenue.fulfilled, (state, action) => {
-      state.venues = state.venues.filter(
-        (venue) => venue.id !== action.payload
-      );
-    });
   },
 });
-
+export const { clearProfile } = profileSlice.actions;
 export default profileSlice.reducer;

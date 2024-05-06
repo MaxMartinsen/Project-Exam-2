@@ -1,6 +1,7 @@
 //src/features/user/userSlice.js
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { API_URL } from '../../utils/constans';
+import { clearProfile } from '../profile/profileSlice';
 
 export const createUser = createAsyncThunk(
   'user/createUser',
@@ -68,6 +69,7 @@ export const logoutUser = createAsyncThunk(
   'user/logoutUser',
   async (_, { dispatch }) => {
     localStorage.removeItem('user');
+    dispatch(clearProfile());
     dispatch(clearCurrentUser());
   }
 );
@@ -90,6 +92,10 @@ const userSlice = createSlice({
   reducers: {
     clearCurrentUser: (state) => {
       state.currentUser = null;
+      state.name = null;
+      state.email = null;
+      state.token = null;
+      state.apiKey = null;
       localStorage.removeItem('user');
     },
     updateUser: (state, action) => {
@@ -127,6 +133,9 @@ const userSlice = createSlice({
       .addCase(loginUser.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
+      })
+      .addCase(logoutUser.fulfilled, (state) => {
+        userSlice.caseReducers.clearCurrentUser(state);
       });
   },
 });

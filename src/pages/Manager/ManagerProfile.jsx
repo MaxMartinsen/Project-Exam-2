@@ -7,6 +7,12 @@ import TablesVenues from '../../components/Tables/TablesVenues';
 
 function ManagerProfile() {
   const [activeView, setActiveView] = useState('venue');
+  const [selectedVenue, setSelectedVenue] = useState(null);
+
+  const handleEditVenue = (venue) => {
+    setSelectedVenue(venue);
+    setActiveView('edit');
+  };
 
   const getButtonClass = (view) => {
     return `inline-flex items-center h-12 px-4 py-2 text-sm text-center border-gray-300 sm:text-base rounded-t-md whitespace-nowrap focus:outline-none ${
@@ -49,8 +55,10 @@ function ManagerProfile() {
         </div>
       </div>
 
-      {activeView === 'venue' && <TablesVenues />}
-      {activeView === 'create' && <VenuesForm />}
+      {activeView === 'venue' && <TablesVenues onEditVenue={handleEditVenue} />}
+      {(activeView === 'edit' || activeView === 'create') && (
+        <VenuesForm mode={activeView} initialData={selectedVenue} />
+      )}
       {activeView === 'profiles' && <TablesProfiles />}
     </section>
   );
