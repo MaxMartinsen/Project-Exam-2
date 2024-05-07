@@ -36,7 +36,7 @@ function VenuesList({ searchQuery, filterOptions, onFilterChange }) {
     return matchQuery && matchFacilities && matchPrice;
   });
   return (
-    <section className="max-w-screen-xl mx-auto p-4">
+    <section className="max-w-screen-xxl mx-auto p-4">
       <div className="grid grid-cols-12 gap-4">
         <div className="hidden md:block md:col-span-3">
           <FiltersForm onFilterChange={onFilterChange} />
@@ -60,12 +60,12 @@ function VenuesList({ searchQuery, filterOptions, onFilterChange }) {
                     }
                   />
                   <div className="flex flex-col p-4 leading-normal">
-                    <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900">
+                    <h5 className="mb-2 md:max-w-64 lg:max-w-80 overflow-hidden whitespace-nowrap text-ellipsis text-2xl font-bold tracking-tight text-gray-900">
                       {venue.name || 'Unknown Venue'}
                     </h5>
                     <Rating rating={venue.rating || 0} maxRating={5} />
                     {venue.location.city && (
-                      <p className="mb-3 flex items-center text-sm font-bold text-gray-500 underline underline-offset-2">
+                      <p className="mb-3 md:max-w-64 lg:max-w-80 overflow-hidden whitespace-nowrap text-ellipsis text-sm font-bold text-gray-500">
                         {venue.location.city}
                       </p>
                     )}
