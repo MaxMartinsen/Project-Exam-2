@@ -73,7 +73,7 @@ function VenuesList({ searchQuery, filterOptions, onFilterChange }) {
                           </h4>
                         </div>
                         <div className="hidden sm:flex flex-col">
-                          <div className="border-4 px-4 py-1 border-white flex items-center rounded-tr-2xl rounded-bl-2xl justify-center bg-gradient-to-br from-pelorous-400 to-pelorous-200">
+                          <div className="border-4 px-4 py-1 border-white flex items-center rounded-tr-2xl rounded-bl-2xl justify-center bg-pelorous-400">
                             <span className="text-white font-semibold text-xl lg:text-2xl">
                               {Math.floor(venue.rating) || '0'}
                             </span>
@@ -110,7 +110,7 @@ function VenuesList({ searchQuery, filterOptions, onFilterChange }) {
                           </span>
                         </div>
                         <div className="flex flex-col items-end">
-                          <button className="cursor-pointer w-fit py-1 px-4 lg:py-2 lg:px-6 flex  items-center rounded-full border-4 text-white font-semibold text-lg lg:text-xl border-white bg-gradient-to-br from-pelorous-400 to-pelorous-200 hover:from-pelorous-500 hover:to-pelorous-300">
+                          <button className="cursor-pointer w-fit py-1 px-4 lg:py-2 lg:px-6 flex  items-center rounded-xl border-4 text-white font-semibold text-lg lg:text-xl border-white bg-gradient-to-br from-pelorous-400 to-pelorous-200 hover:from-pelorous-500 hover:to-pelorous-300">
                             See availability
                             <FaArrowRight className="ml-6" />
                           </button>
