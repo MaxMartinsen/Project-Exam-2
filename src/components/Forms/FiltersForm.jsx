@@ -29,7 +29,7 @@ function FiltersForm({ onFilterChange }) {
   }, [breakfast, pets, wifi, parking, minPrice, maxPrice, onFilterChange]);
   return (
     <div className="sticky top-24">
-      <form className="flex text-fuscous-gray-700 flex-col rounded-3xl bg-white/45 border-4 border-white shadow-inner p-4 leading-normal">
+      <form className="flex text-fuscous-gray-700 flex-col rounded-3xl bg-white/45 border-2 border-white shadow-inner p-4 leading-normal">
         <h2 className="font-bold border-b-2 border-white mb-4">Filters</h2>
 
         <h3 className="mb-2 font-semibold text-gray-90">Facilities</h3>
@@ -116,7 +116,7 @@ function FiltersForm({ onFilterChange }) {
           placeholder="Min price"
           value={minPrice}
           onChange={handlePriceChange(setMinPrice)}
-          className="bg-white/45 border-white border-4 rounded-xl text-fuscous-gray-700 text-xl font-semibold focus:ring-0 focus:border-pelorous-300 block w-full py-1 px-4 "
+          className="bg-white/45 border-white border-2 rounded-xl text-fuscous-gray-700 text-xl font-semibold focus:ring-0 focus:border-pelorous-300 block w-full py-1 px-4 "
         />
         <span className="border-2 my-2 mx-14 border-white"></span>
         <label
@@ -131,7 +131,7 @@ function FiltersForm({ onFilterChange }) {
           placeholder="Max price"
           value={maxPrice}
           onChange={handlePriceChange(setMaxPrice)}
-          className="bg-white/45 border-white border-4 rounded-xl text-fuscous-gray-700 text-xl font-semibold focus:ring-0 focus:border-pelorous-300 block w-full py-1 px-4 "
+          className="bg-white/45 border-white border-2 rounded-xl text-fuscous-gray-700 text-xl font-semibold focus:ring-0 focus:border-pelorous-300 block w-full py-1 px-4 "
         />
       </form>
     </div>
