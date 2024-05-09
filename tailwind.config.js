@@ -13,7 +13,7 @@ export default {
   Mode: 'media',
   theme: {
     screens: {
-      sm: '435px',
+      sm: '370px',
       md: '768px',
       lg: '976px',
       xl: '1240px',
@@ -50,6 +50,26 @@ export default {
 
         'fuscous-gray': {
           700: '#4e4e4e',
+        },
+        'mine-shaft': {
+          900: '#333333',
+        },
+
+        'mountain-mist': {
+          400: '#8f8f8f',
+        },
+        pelorous: {
+          50: '#f0fafb',
+          100: '#d8f0f5',
+          200: '#b6e1eb',
+          300: '#84cbdc',
+          400: '#42a8c3',
+          500: '#2f8fab',
+          600: '#2a7490',
+          700: '#285f76',
+          800: '#285062',
+          900: '#254354',
+          950: '#142b38',
         },
       },
     },

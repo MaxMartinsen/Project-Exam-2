@@ -2,7 +2,7 @@ import AppRoutes from '../Routes/Routes';
 
 function App() {
   return (
-    <div className="app">
+    <div className="app font-body">
       <AppRoutes />
     </div>
   );
