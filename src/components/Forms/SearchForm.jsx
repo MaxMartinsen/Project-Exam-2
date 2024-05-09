@@ -1,6 +1,5 @@
 // src/components/Forms/SearchForm.jsx
 import { useState, useEffect } from 'react';
-import { MdOutlineLocationCity } from 'react-icons/md';
 
 function useDebounce(value, delay) {
   const [debouncedValue, setDebouncedValue] = useState(value);
@@ -36,35 +35,30 @@ function SearchForm({ onSearch }) {
   }, [debouncedSearchQuery, onSearch]);
 
   return (
-    <div className="relative">
-      <form
-        onSubmit={handleSubmit}
-        className="relative flex flex-col md:flex-row items-center mx-auto bg-orange-500 bg-opacity-80 p-4 rounded-xl gap-4"
+    <form
+      onSubmit={handleSubmit}
+      className="flex flex-col sm:flex-row w-full lg:w-[800px] md:flex-row items-center bg-white/45 rounded-3xl border-white border-4 p-4 gap-4 shadow-inner"
+    >
+      <div className="w-full">
+        <label htmlFor="location" className="sr-only">
+          Search location
+        </label>
+        <input
+          id="location"
+          type="text"
+          value={searchQuery}
+          onChange={handleChange}
+          className="bg-white/45 border-white border-4 rounded-xl text-fuscous-gray-700 text-xl font-semibold focus:ring-0 focus:border-pelorous-300 block w-full py-1 px-4 lg:py-2 lg:px-6"
+          placeholder="Search for venue"
+        />
+      </div>
+      <button
+        type="submit"
+        className="cursor-pointer w-fit py-1 px-4 lg:py-2 lg:px-6 flex  items-center rounded-xl border-4 text-white font-semibold text-lg lg:text-xl border-white bg-gradient-to-br from-pelorous-400 to-pelorous-200 hover:from-pelorous-500 hover:to-pelorous-300"
       >
-        <div className="relative w-full">
-          <label htmlFor="location" className="sr-only">
-            Search location
-          </label>
-          <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-            <MdOutlineLocationCity className="text-gray-500 w-6 h-6" />
-          </div>
-          <input
-            id="location"
-            type="text"
-            value={searchQuery}
-            onChange={handleChange}
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5"
-            placeholder="Search for venue"
-          />
-        </div>
-        <button
-          type="submit"
-          className="tracking-widest inline-flex items-center py-2.5 px-3 text-sm font-bold text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300"
-        >
-          Search
-        </button>
-      </form>
-    </div>
+        Search
+      </button>
+    </form>
   );
 }
 

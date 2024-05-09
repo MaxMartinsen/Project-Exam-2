@@ -13,10 +13,11 @@ export default {
   Mode: 'media',
   theme: {
     screens: {
-      sm: '435px',
+      sm: '370px',
       md: '768px',
       lg: '976px',
       xl: '1240px',
+      xxl: '1536px',
     },
     extend: {
       colors: {
@@ -33,25 +34,49 @@ export default {
           900: '#7b2121',
           950: '#420d0d',
         },
-        'athens-gray': {
-          50: '#eff2f7',
-          100: '#e7ebf2',
-          200: '#d4dce9',
-          300: '#b6c5da',
-          400: '#93a7c7',
-          500: '#798db8',
-          600: '#6778a9',
-          700: '#5b689a',
-          800: '#4e577f',
-          900: '#424966',
-          950: '#2b2f40',
+        zinnwaldite: {
+          50: '#fdf6f3',
+          100: '#fbece5',
+          200: '#f9dccf',
+          300: '#f6cebc',
+          400: '#ec9f7d',
+          500: '#df7f54',
+          600: '#cb6537',
+          700: '#ab522a',
+          800: '#8d4727',
+          900: '#763f26',
+          950: '#401e0f',
+        },
+
+        'fuscous-gray': {
+          700: '#4e4e4e',
+        },
+        'mine-shaft': {
+          900: '#333333',
+        },
+
+        'mountain-mist': {
+          400: '#8f8f8f',
+        },
+        pelorous: {
+          50: '#f0fafb',
+          100: '#d8f0f5',
+          200: '#b6e1eb',
+          300: '#84cbdc',
+          400: '#42a8c3',
+          500: '#2f8fab',
+          600: '#2a7490',
+          700: '#285f76',
+          800: '#285062',
+          900: '#254354',
+          950: '#142b38',
         },
       },
     },
     fontFamily: {
-      body: ['Segoe UI', 'Segoe UI Emoji', 'Segoe UI Symbol'],
-      sans: ['Segoe UI', 'Segoe UI Emoji', 'Segoe UI Symbol'],
-      poppins: ['"Poppins"', 'sans-serif'],
+      body: ['Roboto', 'Segoe UI', 'Segoe UI Emoji', 'Segoe UI Symbol'],
+      sans: ['Roboto', 'Segoe UI', 'Segoe UI Emoji', 'Segoe UI Symbol'],
+      lato: ['Lato', 'sans-serif'],
     },
   },
   plugins: [flowbitePlugin, flowbite.plugin(), require('flowbite/plugin')],
