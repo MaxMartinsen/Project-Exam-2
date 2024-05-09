@@ -1,4 +1,5 @@
 // src/components/Venues/VenuesList.jsx
+import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import IMAGE from '../../assets/image/default-image.png';
@@ -8,15 +9,14 @@ import { FaArrowRight } from 'react-icons/fa';
 function VenuesList({ searchQuery, filterOptions, onFilterChange }) {
   // Accept the searchQuery prop
   const { venues, status, error } = useSelector((state) => state.venues);
+  const [displayedVenuesCount, setDisplayedVenuesCount] = useState(12);
 
   if (status === 'loading') return <div>Loading...</div>;
   if (error) return <div>Error: {error.toString()}</div>;
   if (!venues) return <div>No data available.</div>;
 
-  // If searchQuery is undefined, consider it an empty string to prevent errors
   const query = (searchQuery || '').toLowerCase();
 
-  // Filter venues based on the search query
   const filteredVenues = venues.filter((venue) => {
     const matchQuery =
       venue.name.toLowerCase().includes(query) ||
@@ -35,6 +35,12 @@ function VenuesList({ searchQuery, filterOptions, onFilterChange }) {
 
     return matchQuery && matchFacilities && matchPrice;
   });
+
+  const displayedVenues = filteredVenues.slice(0, displayedVenuesCount);
+
+  const handleLoadMore = () => {
+    setDisplayedVenuesCount((prevCount) => prevCount + 12);
+  };
   return (
     <section className="max-w-screen-xxl mx-auto p-4">
       <div className="grid grid-cols-12 gap-4">
@@ -43,8 +49,8 @@ function VenuesList({ searchQuery, filterOptions, onFilterChange }) {
         </div>
         <div className="col-span-12 md:col-span-9">
           <div className="flex flex-col gap-6">
-            {filteredVenues.length > 0 ? (
-              filteredVenues.map((venue) => (
+            {displayedVenues.length > 0 ? (
+              displayedVenues.map((venue) => (
                 <Link
                   key={venue.id}
                   to={`/Venue/${venue.id}`}
@@ -122,6 +128,16 @@ function VenuesList({ searchQuery, filterOptions, onFilterChange }) {
               ))
             ) : (
               <div>No venues found for {searchQuery}.</div>
+            )}
+            {displayedVenues.length < filteredVenues.length && (
+              <div className="flex items-center justify-center">
+                <button
+                  className="cursor-pointer w-fit py-1 px-4 lg:py-2 lg:px-6 flex  items-center rounded-xl border-4 text-white font-semibold text-lg lg:text-xl border-white bg-gradient-to-br from-pelorous-400 to-pelorous-200 hover:from-pelorous-500 hover:to-pelorous-300"
+                  onClick={handleLoadMore}
+                >
+                  More Venues
+                </button>
+              </div>
             )}
           </div>
         </div>
