@@ -131,20 +131,3 @@ function VenuesList({ searchQuery, filterOptions, onFilterChange }) {
 }
 
 export default VenuesList;
-
-{
-  /* <div className="flex flex-col p-4 leading-normal">
-<h5 className="mb-2 md:max-w-64 lg:max-w-80 overflow-hidden whitespace-nowrap text-ellipsis text-2xl font-bold tracking-tight text-gray-900">
-  {venue.name || 'Unknown Venue'}
-</h5>
-<Rating rating={venue.rating || 0} maxRating={5} />
-{venue.location.city && (
-  <p className="mb-3 md:max-w-64 lg:max-w-80 overflow-hidden whitespace-nowrap text-ellipsis text-sm font-bold text-gray-500">
-    {venue.location.city}
-  </p>
-)}
-<p className="mb-3 md:max-w-44 lg:max-w-80 font-normal line-clamp-2 lg:line-clamp-3 text-gray-700">
-  {venue.description || 'No description'}
-</p>
-</div> */
-}
