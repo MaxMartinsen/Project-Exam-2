@@ -106,17 +106,20 @@ const userSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(createUser.pending, (state) => {
+        state.status = 'loading';
         state.isLoading = true;
       })
       .addCase(createUser.fulfilled, (state, action) => {
+        state.status = 'succeeded';
         const newUser = action.payload.data;
-        state.currentUser = newUser;
         state.isLoading = false;
         saveToLocalStorage(newUser);
       })
       .addCase(createUser.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
+        state.status = 'failed';
+        state.error = action.error.message;
       })
       .addCase(loginUser.pending, (state) => {
         state.isLoading = true;
