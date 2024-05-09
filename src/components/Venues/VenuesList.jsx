@@ -65,7 +65,7 @@ function VenuesList({ searchQuery, filterOptions, onFilterChange }) {
                     <div className="mt-4 w-full h-auto md:ml-3 md:my-0 lg:my-7 xl:ml-6 xl:my-9 flex flex-col">
                       <div className="flex justify-between">
                         <div className="flex flex-col">
-                          <h3 className="text-2xl xl:text-3xl font-semibold tracking-tight text-fuscous-gray-700 max-w-60 md:max-w-60 lg:max-w-80 overflow-hidden whitespace-nowrap text-ellipsis">
+                          <h3 className="text-2xl xl:text-3xl font-semibold tracking-tight text-fuscous-gray-700 max-w-60 md:max-w-60 lg:max-w-80 xl:max-w-96 overflow-hidden whitespace-nowrap text-ellipsis">
                             {venue.name || 'Unknown Venue'}
                           </h3>
                           <h4 className="text-mountain-mist-400 text-xl font-semibold tracking-tight max-w-60 md:max-w-60 lg:max-w-80 overflow-hidden whitespace-nowrap text-ellipsis">
