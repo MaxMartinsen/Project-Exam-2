@@ -21,18 +21,8 @@ export default {
     },
     extend: {
       colors: {
-        'alizarin-crimson': {
-          50: '#fdf3f3',
-          100: '#fde3e3',
-          200: '#fccccc',
-          300: '#f8a9a9',
-          400: '#f27777',
-          500: '#e74c4c',
-          600: '#d73d3d',
-          700: '#b22323',
-          800: '#932121',
-          900: '#7b2121',
-          950: '#420d0d',
+        'mandys-pink': {
+          300: '#ecbba8',
         },
 
         'fuscous-gray': {
