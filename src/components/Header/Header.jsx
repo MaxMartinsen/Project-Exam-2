@@ -73,7 +73,7 @@ function Header() {
   }, []);
   return (
     <nav
-      className={`fixed top-0 z-50 w-full flex-none transition-colors duration-500 lg:z-50 lg:border-b lg:border-white supports-backdrop-blur:bg-white/60 ${isScrolled ? 'backdrop-blur-sm bg-white/90' : 'backdrop-blur-sm bg-white/30'}`}
+      className={`fixed top-0 z-50 w-full flex-none transition-colors duration-500 lg:z-50 border-b border-white supports-backdrop-blur:bg-white/60 ${isScrolled ? 'backdrop-blur-sm bg-white/90' : 'backdrop-blur-sm bg-white/30'}`}
     >
       <div className="flex max-w-screen-xxl flex-wrap items-center justify-between mx-auto p-4">
         <Link
@@ -176,7 +176,7 @@ function Header() {
           ) : (
             <Link
               to={ROUTES.LOGIN}
-              className="w-[142px] text-white bg-alizarin-crimson-500 hover:bg-alizarin-crimson-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center"
+              className="w-[142px] cursor-pointer py-1 px-4 lg:py-2 lg:px-6 flex items-center  justify-center rounded-xl border-4 text-white font-semibold text-lg lg:text-xl border-white bg-gradient-to-br from-pelorous-400 to-pelorous-200 hover:from-pelorous-500 hover:to-pelorous-300"
             >
               Sign in
             </Link>
@@ -215,7 +215,7 @@ function Header() {
               <NavLink
                 to={ROUTES.HOME}
                 className={({ isActive }) =>
-                  `font-bold text-xl block py-2 px-3 rounded md:bg-transparent md:p-0 md:hover:text-zinnwaldite-500 ${isActive ? 'md:text-zinnwaldite-600 text-white bg-zinnwaldite-600' : 'text-fuscous-gray-900'} `
+                  `font-bold text-xl block py-2 px-3 rounded md:bg-transparent md:p-0 text-fuscous-gray-700 ${isActive ? 'md:text-fuscous-gray-700 md:decoration-pelorous-500 md:underline md:underline-offset-4 md:decoration-4 text-white bg-pelorous-500' : 'text-fuscous-gray-700 hover:text-pelorous-500'} `
                 }
               >
                 Venues
@@ -225,7 +225,7 @@ function Header() {
               <NavLink
                 to={ROUTES.ABOUT}
                 className={({ isActive }) =>
-                  `font-bold text-xl block py-2 px-3 rounded md:bg-transparent md:p-0 md:hover:text-zinnwaldite-500 ${isActive ? 'md:text-zinnwaldite-600 text-white bg-zinnwaldite-600' : 'text-fuscous-gray-900'} `
+                  `font-bold text-xl block py-2 px-3 rounded md:bg-transparent md:p-0 text-fuscous-gray-700 ${isActive ? 'md:text-fuscous-gray-700 md:decoration-pelorous-500 md:underline md:underline-offset-4 md:decoration-4 text-white bg-pelorous-500' : 'text-fuscous-gray-700 hover:text-pelorous-500'} `
                 }
               >
                 About
@@ -235,7 +235,7 @@ function Header() {
               <NavLink
                 to={ROUTES.CONTACT}
                 className={({ isActive }) =>
-                  `font-bold text-xl block py-2 px-3 rounded md:bg-transparent md:p-0 md:hover:text-zinnwaldite-500 ${isActive ? 'md:text-zinnwaldite-600 text-white bg-zinnwaldite-600' : 'text-fuscous-gray-900'} `
+                  `font-bold text-xl block py-2 px-3 rounded md:bg-transparent md:p-0 text-fuscous-gray-700 ${isActive ? 'md:text-fuscous-gray-700 md:decoration-pelorous-500 md:underline md:underline-offset-4 md:decoration-4 text-white bg-pelorous-500' : 'text-fuscous-gray-700 hover:text-pelorous-500'} `
                 }
               >
                 Contact
