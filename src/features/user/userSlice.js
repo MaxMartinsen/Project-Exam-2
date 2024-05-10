@@ -122,10 +122,12 @@ const userSlice = createSlice({
         state.error = action.error.message;
       })
       .addCase(loginUser.pending, (state) => {
+        state.status = 'loading';
         state.isLoading = true;
         state.error = null;
       })
       .addCase(loginUser.fulfilled, (state, action) => {
+        state.status = 'succeeded';
         const userData = action.payload.user;
         state.currentUser = userData;
         state.token = userData.accessToken;
@@ -134,8 +136,10 @@ const userSlice = createSlice({
         saveToLocalStorage(userData);
       })
       .addCase(loginUser.rejected, (state, action) => {
+        state.status = 'failed';
         state.isLoading = false;
         state.error = action.payload;
+        state.error = action.error.message;
       })
       .addCase(logoutUser.fulfilled, (state) => {
         userSlice.caseReducers.clearCurrentUser(state);

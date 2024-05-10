@@ -5,10 +5,14 @@ import { loginUser } from '../../features/user/userSlice';
 import { fetchUserProfile } from '../../features/profile/profileSlice';
 import { Link, useNavigate } from 'react-router-dom';
 import { ROUTES } from '../../utils/routes';
+import { validateEmail, validatePassword } from '../../utils/validation';
 
 function LoginForm() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const userStatus = useSelector((state) => state.user.status);
+  const userError = useSelector((state) => state.user.error);
+  const [errors, setErrors] = useState({});
   const [values, setValues] = useState({
     email: '',
     password: '',
@@ -20,6 +24,7 @@ function LoginForm() {
 
   const handleChange = ({ target: { value, name } }) => {
     setValues({ ...values, [name]: value });
+    setErrors({ ...errors, [name]: '' });
   };
 
   const handleSubmit = async (event) => {
@@ -28,12 +33,25 @@ function LoginForm() {
       email: values.email,
       password: values.password,
     };
+    const { email, password } = values;
 
-    try {
-      await dispatch(loginUser(userData));
-      // Navigation moved to useEffect to ensure profile is fetched first
-    } catch (error) {
-      console.error('Login failed:', error);
+    // Validation
+    const newErrors = {};
+    if (!validateEmail(email))
+      newErrors.email = "Email must be a valid 'stud.noroff.no' address.";
+    if (!validatePassword(password))
+      newErrors.password = 'Password must be at least 8 characters long.';
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return;
+    }
+
+    const resultAction = await dispatch(loginUser(userData));
+    if (loginUser.fulfilled.match(resultAction)) {
+      // handle success in useEffect to ensure profile is fetched
+    } else {
+      setErrors({ form: resultAction.error.message || 'Login failed' });
     }
   };
 
@@ -79,6 +97,11 @@ function LoginForm() {
                   onChange={handleChange}
                   autoComplete="given-email"
                 />
+                {errors.email && (
+                  <p className="text-red-500 text-xs italic mt-1">
+                    {errors.email}
+                  </p>
+                )}
               </div>
               <div>
                 <label
@@ -97,13 +120,24 @@ function LoginForm() {
                   value={values.password}
                   onChange={handleChange}
                 />
+                {errors.password && (
+                  <p className="text-red-500 text-xs italic mt-1">
+                    {errors.password}
+                  </p>
+                )}
               </div>
               <button
                 type="submit"
+                disabled={userStatus === 'loading'}
                 className="w-full rounded-xl border-2 text-white font-semibold border-white bg-gradient-to-br from-pelorous-400 to-pelorous-200 hover:from-pelorous-500 hover:to-pelorous-300 text-sm px-5 py-2.5 text-center"
               >
-                Login to your account
+                {userStatus === 'loading'
+                  ? 'Processing...'
+                  : 'Login to your account'}
               </button>
+              {userError && (
+                <p className="text-red-500 text-xs italic mt-1">{userError}</p>
+              )}
               <div className="text-sm font-medium text-gray-500 text-center">
                 Not registered?{' '}
                 <Link
