@@ -1,42 +1,16 @@
-import IMAGE from '../../assets/image/default-image.png';
 import LoginForm from '../../components/Forms/LoginForm';
 
 function Login() {
   return (
-    <>
-      <main className="w-full max-w-screen-xl mx-auto flex items-center gap-20">
-        <div className="hidden w-1/2 grid-cols-2 grid-rows-3 gap-4 h-[700px] lg:grid ">
-          <img
-            className="h-full w-full rounded-3xl row-span-1 shadow-xl"
-            src={IMAGE}
-            alt="Breakfast plate"
-          />
-          <img
-            className="h-full w-full rounded-3xl row-span-2 shadow-xl"
-            src={IMAGE}
-            alt="Couple relaxing by the water"
-          />
-
-          <img
-            className="h-full w-full rounded-3xl row-span-2 shadow-xl"
-            src={IMAGE}
-            alt="Small and cozy living room"
-          />
-
-          <img
-            className="h-full w-full rounded-3xl row-span-1 shadow-xl"
-            src={IMAGE}
-            alt="Hotel bed"
-          />
-        </div>
-
-        <div className="w-full max-w-[500px] m-auto">
-          <div className="space-y-2 pb-5">
+    <main className="bg-[url('/src/assets/image/hero-pattern.png')] w-full h-[300px] md:h-[600px] bg-cover flex">
+      <section className="relative md:container md:mx-auto p-4 w-full flex items-end justify-center">
+        <div className="w-full max-w-[500px] absolute top-36 sm:top-40 md:top-60">
+          <div className="space-y-2">
             <LoginForm />
           </div>
         </div>
-      </main>
-    </>
+      </section>
+    </main>
   );
 }
 

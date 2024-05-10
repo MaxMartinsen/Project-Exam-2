@@ -37,6 +37,8 @@ body {
   margin: 0;
   padding: 0;
   font-family: sans-serif;
+  background-color: #f6cebc;
+  overflow-x: hidden;
 }
 
 input::-webkit-outer-spin-button,

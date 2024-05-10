@@ -87,8 +87,57 @@ export const fetchBookingsByProfile = createAsyncThunk(
   }
 );
 
+// Asynchronous thunk to fetch venues by profile
+export const fetchVenuesByProfile = createAsyncThunk(
+  'profile/fetchVenuesByProfile',
+  async ({ username, token, apiKey }, { rejectWithValue }) => {
+    try {
+      const response = await fetch(
+        `${API_URL}/holidaze/profiles/${username}/venues?_customer=true&_venue=true`,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+            'X-Noroff-API-Key': apiKey,
+          },
+        }
+      );
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(`Failed to fetch venues: ${errorData.message}`);
+      }
+
+      const data = await response.json();
+      return data?.data || [];
+    } catch (err) {
+      console.error('Error fetching venues:', err.message);
+      return rejectWithValue(err.message);
+    }
+  }
+);
+
 const initialState = {
+  venues: [],
   bookings: [],
+  profile: {
+    name: null,
+    email: null,
+    bio: null,
+    avatar: {
+      url: '',
+      alt: '',
+    },
+    banner: {
+      url: '',
+      alt: '',
+    },
+    venueManager: false,
+    _count: {
+      venues: 0,
+      bookings: 0,
+    },
+  },
   isLoading: false,
   error: null,
 };
@@ -97,7 +146,21 @@ const initialState = {
 const profileSlice = createSlice({
   name: 'profile',
   initialState,
-  reducers: {},
+  reducers: {
+    clearProfile: (state) => {
+      state.bookings = [];
+      state.venues = [];
+      state.profile = {
+        name: null,
+        email: null,
+        bio: null,
+        avatar: { url: '', alt: '' },
+        banner: { url: '', alt: '' },
+        venueManager: false,
+        _count: { venues: 0, bookings: 0 },
+      };
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(updateProfile.pending, (state) => {
@@ -124,6 +187,18 @@ const profileSlice = createSlice({
         state.isLoading = false;
         state.error = action.payload;
       })
+      .addCase(fetchVenuesByProfile.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(fetchVenuesByProfile.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.venues = action.payload;
+      })
+      .addCase(fetchVenuesByProfile.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      })
       .addCase(fetchUserProfile.pending, (state) => {
         state.isLoading = true;
       })
@@ -137,5 +212,5 @@ const profileSlice = createSlice({
       });
   },
 });
-
+export const { clearProfile } = profileSlice.actions;
 export default profileSlice.reducer;

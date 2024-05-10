@@ -1,6 +1,7 @@
 //src/features/user/userSlice.js
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { API_URL } from '../../utils/constans';
+import { clearProfile } from '../profile/profileSlice';
 
 export const createUser = createAsyncThunk(
   'user/createUser',
@@ -68,6 +69,7 @@ export const logoutUser = createAsyncThunk(
   'user/logoutUser',
   async (_, { dispatch }) => {
     localStorage.removeItem('user');
+    dispatch(clearProfile());
     dispatch(clearCurrentUser());
   }
 );
@@ -90,6 +92,10 @@ const userSlice = createSlice({
   reducers: {
     clearCurrentUser: (state) => {
       state.currentUser = null;
+      state.name = null;
+      state.email = null;
+      state.token = null;
+      state.apiKey = null;
       localStorage.removeItem('user');
     },
     updateUser: (state, action) => {
@@ -100,23 +106,28 @@ const userSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(createUser.pending, (state) => {
+        state.status = 'loading';
         state.isLoading = true;
       })
       .addCase(createUser.fulfilled, (state, action) => {
+        state.status = 'succeeded';
         const newUser = action.payload.data;
-        state.currentUser = newUser;
         state.isLoading = false;
         saveToLocalStorage(newUser);
       })
       .addCase(createUser.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
+        state.status = 'failed';
+        state.error = action.error.message;
       })
       .addCase(loginUser.pending, (state) => {
+        state.status = 'loading';
         state.isLoading = true;
         state.error = null;
       })
       .addCase(loginUser.fulfilled, (state, action) => {
+        state.status = 'succeeded';
         const userData = action.payload.user;
         state.currentUser = userData;
         state.token = userData.accessToken;
@@ -125,8 +136,13 @@ const userSlice = createSlice({
         saveToLocalStorage(userData);
       })
       .addCase(loginUser.rejected, (state, action) => {
+        state.status = 'failed';
         state.isLoading = false;
         state.error = action.payload;
+        state.error = action.error.message;
+      })
+      .addCase(logoutUser.fulfilled, (state) => {
+        userSlice.caseReducers.clearCurrentUser(state);
       });
   },
 });

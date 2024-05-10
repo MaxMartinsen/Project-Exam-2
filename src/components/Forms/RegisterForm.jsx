@@ -1,14 +1,22 @@
+// src/components/Forms/RegisterForm.jsx
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { ROUTES } from '../../utils/routes';
 
 import { createUser } from '../../features/user/userSlice';
+import {
+  validateName,
+  validateEmail,
+  validatePassword,
+} from '../../utils/validation';
 
 function RegisterForm() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const userStatus = useSelector((state) => state.user.status);
+  const userError = useSelector((state) => state.user.error);
   const [isVenueManager, setIsVenueManager] = useState(false);
 
   const [values, setValues] = useState({
@@ -16,16 +24,35 @@ function RegisterForm() {
     email: '',
     password: '',
   });
+  const [errors, setErrors] = useState({});
+
   const handleChange = ({ target: { name, value, checked } }) => {
+    setValues({ ...values, [name]: value });
     if (name === 'venueManager') {
       setIsVenueManager(checked);
-    } else {
-      setValues({ ...values, [name]: value });
     }
+    setErrors({ ...errors, [name]: '' });
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
+
+    const { name, email, password } = values;
+
+    // Validation
+    const newErrors = {};
+    if (!validateName(name))
+      newErrors.name =
+        'Invalid name. No punctuation allowed, underscores are okay.';
+    if (!validateEmail(email))
+      newErrors.email = "Email must be a valid 'stud.noroff.no' address.";
+    if (!validatePassword(password))
+      newErrors.password = 'Password must be at least 8 characters long.';
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return;
+    }
 
     const userData = {
       name: values.name,
@@ -33,15 +60,21 @@ function RegisterForm() {
       password: values.password,
       venueManager: isVenueManager,
     };
-    dispatch(createUser(userData));
-    navigate(ROUTES.LOGIN);
+    const resultAction = await dispatch(createUser(userData));
+    if (createUser.fulfilled.match(resultAction)) {
+      navigate(ROUTES.LOGIN);
+    } else {
+      setErrors({
+        form: `Registration failed: ${resultAction.error.message || 'Please try again'}`,
+      });
+    }
   };
   return (
     <div className="justify-center items-center ">
       <div className=" p-4">
-        <div className=" bg-white rounded-lg shadow0">
+        <div className="bg-white/45 rounded-3xl border-white border-2 p-4 gap-4 shadow-inner">
           <div className="flex items-center justify-between p-4 md:p-5">
-            <h3 className="text-xl font-semibold text-gray-900 ">
+            <h3 className="text-xl font-semibold text-fuscous-gray-700">
               Sign in to Holidaze
             </h3>
           </div>
@@ -50,25 +83,30 @@ function RegisterForm() {
               <div>
                 <label
                   htmlFor="name"
-                  className="block mb-2 text-sm font-medium text-gray-900 "
+                  className="block mb-2 text-sm font-semibold text-fuscous-gray-700"
                 >
                   Your name
                 </label>
                 <input
-                  type="name"
+                  type="text"
                   name="name"
                   id="name"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                  placeholder="Your_username"
+                  className="bg-white/45 border-white border-2 rounded-xl text-fuscous-gray-700 text-sm font-semibold focus:ring-0 focus:border-pelorous-300 block w-full py-2 px-4"
+                  placeholder="Username"
                   required
                   onChange={handleChange}
                   autoComplete="given-name"
                 />
+                {errors.name && (
+                  <p className="text-red-500 text-xs italic mt-1">
+                    {errors.name}
+                  </p>
+                )}
               </div>
               <div>
                 <label
                   htmlFor="email"
-                  className="block mb-2 text-sm font-medium text-gray-900 "
+                  className="block mb-2 text-sm font-semibold text-fuscous-gray-700"
                 >
                   Your email
                 </label>
@@ -76,17 +114,22 @@ function RegisterForm() {
                   type="email"
                   name="email"
                   id="email"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                  className="bg-white/45 border-white border-2 rounded-xl text-fuscous-gray-700 text-sm font-semibold focus:ring-0 focus:border-pelorous-300 block w-full py-2 px-4"
                   placeholder="name@stud.noroff.no"
                   required
                   onChange={handleChange}
                   autoComplete="given-email"
                 />
+                {errors.email && (
+                  <p className="text-red-500 text-xs italic mt-1">
+                    {errors.email}
+                  </p>
+                )}
               </div>
               <div>
                 <label
                   htmlFor="password"
-                  className="block mb-2 text-sm font-medium text-gray-900 "
+                  className="block mb-2 text-sm font-semibold text-fuscous-gray-700"
                 >
                   Your password
                 </label>
@@ -95,25 +138,30 @@ function RegisterForm() {
                   name="password"
                   id="password"
                   placeholder="••••••••"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                  className="bg-white/45 border-white border-2 rounded-xl text-fuscous-gray-700 text-sm font-semibold focus:ring-0 focus:border-pelorous-300 block w-full py-2 px-4"
                   required
                   onChange={handleChange}
                 />
+                {errors.password && (
+                  <p className="text-red-500 text-xs italic mt-1">
+                    {errors.password}
+                  </p>
+                )}
               </div>
               <div className="flex justify-between">
                 <div className="flex items-start">
-                  <div className="flex items-center h-5">
+                  <div className="flex h-5">
                     <input
                       id="manager"
                       name="venueManager"
                       type="checkbox"
-                      className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300"
+                      className="w-4 h-4 text-pelorous-400 bg-white/45 border-white rounded focus:ring-0"
                       onChange={handleChange}
                     />
                   </div>
                   <label
                     htmlFor="manager"
-                    className="ms-2 text-sm font-medium text-gray-900"
+                    className="ms-2 text-sm font-medium text-fuscous-gray-700"
                   >
                     Venue Manager
                   </label>
@@ -121,15 +169,20 @@ function RegisterForm() {
               </div>
               <button
                 type="submit"
-                className="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+                disabled={userStatus === 'loading'}
+                className={`w-full rounded-xl border-2 text-white font-semibold border-white bg-gradient-to-br from-pelorous-400 to-pelorous-200 ${userStatus === 'loading' ? 'bg-gray-400' : 'hover:from-pelorous-500 hover:to-pelorous-300'} text-sm px-5 py-2.5 text-center`}
               >
-                Sign up
+                {userStatus === 'loading' ? 'Processing...' : 'Sign Up'}
               </button>
+              {userError && (
+                <p className="text-red-500 text-xs italic mt-1">{userError}</p>
+              )}
+
               <div className="text-sm font-medium text-gray-500 text-center">
                 Not registered?{' '}
                 <Link
                   to={ROUTES.LOGIN}
-                  className="text-blue-700 hover:underline"
+                  className="text-pelorous-500 hover:underline"
                 >
                   Sign in to account
                 </Link>

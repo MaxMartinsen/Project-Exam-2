@@ -73,32 +73,32 @@ function Header() {
   }, []);
   return (
     <nav
-      className={`sticky top-0 z-50 w-full flex-none transition-colors duration-500 lg:z-50 lg:border-b lg:border-slate-900/10 dark:border-slate-50/[0.06] supports-backdrop-blur:bg-white/60 ${isScrolled ? 'backdrop-blur-sm dark:bg-ebony-950/25' : 'dark:bg-transparent'}`}
+      className={`fixed top-0 z-50 w-full flex-none transition-colors duration-500 lg:z-50 border-b border-white supports-backdrop-blur:bg-white/60 ${isScrolled ? 'backdrop-blur-sm bg-white/90' : 'backdrop-blur-sm bg-white/30'}`}
     >
-      <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+      <div className="flex max-w-screen-xxl flex-wrap items-center justify-between mx-auto p-4">
         <Link
           to={ROUTES.HOME}
           className="flex items-center space-x-3 rtl:space-x-reverse"
         >
           <img src={LOGO} className="h-8" alt="Holidaze Logo" />
-          <span className="self-center text-2xl font-semibold whitespace-nowrap">
+          <span className="hidden text-fuscous-gray-700 font-lato italic md:block self-center text-2xl font-semibold whitespace-nowrap">
             Holidaze
           </span>
         </Link>
         <div className="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse relative">
           {isLoggedIn ? (
             <>
-              <div className="flex justify-end w-[142px]">
+              <div className="flex justify-end md:w-[142px]">
                 <button
                   type="button"
-                  className="flex text-sm rounded md:me-0 focus:ring-4 focus:ring-gray-300"
+                  className="flex text-sm rounded md:me-0"
                   id="user-menu-button"
                   aria-expanded="false"
                   onClick={() => setShowDropdown(!showDropdown)}
                 >
                   <span className="sr-only">Open user menu</span>
                   <img
-                    className="w-10 h-10 rounded"
+                    className="w-12 h-12 rounded-full hover:ring-4 ring-white"
                     src={
                       currentUser.avatar
                         ? currentUser.avatar.url
@@ -114,7 +114,7 @@ function Header() {
               </div>
               {showDropdown && (
                 <div
-                  className="z-40 absolute top-10 right-0 my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow"
+                  className="z-40 absolute top-12 right-0 my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-b-lg shadow"
                   id="user-dropdown"
                 >
                   <div className="px-4 py-3">
@@ -176,7 +176,7 @@ function Header() {
           ) : (
             <Link
               to={ROUTES.LOGIN}
-              className="w-[142px] text-white bg-alizarin-crimson-500 hover:bg-alizarin-crimson-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center"
+              className="w-[142px] cursor-pointer py-1 px-4 lg:py-2 lg:px-6 flex items-center  justify-center rounded-xl border-2 text-white font-semibold text-lg lg:text-xl border-white bg-gradient-to-br from-pelorous-400 to-pelorous-200 hover:from-pelorous-500 hover:to-pelorous-300"
             >
               Sign in
             </Link>
@@ -215,7 +215,7 @@ function Header() {
               <NavLink
                 to={ROUTES.HOME}
                 className={({ isActive }) =>
-                  `font-bold block py-2 px-3 rounded md:bg-transparent md:p-0 md:hover:text-alizarin-crimson-600 ${isActive ? 'md:text-alizarin-crimson-500 text-white bg-alizarin-crimson-500' : 'text-gray-900'} `
+                  `font-bold text-xl block py-2 px-3 rounded md:bg-transparent md:p-0 text-fuscous-gray-700 ${isActive ? 'md:text-fuscous-gray-700 md:decoration-pelorous-500 md:underline md:underline-offset-4 md:decoration-4 text-white bg-pelorous-500' : 'text-fuscous-gray-700 hover:text-pelorous-500'} `
                 }
               >
                 Venues
@@ -225,7 +225,7 @@ function Header() {
               <NavLink
                 to={ROUTES.ABOUT}
                 className={({ isActive }) =>
-                  `font-bold block py-2 px-3 rounded md:bg-transparent md:p-0 md:hover:text-alizarin-crimson-600 ${isActive ? 'md:text-alizarin-crimson-500 text-white bg-alizarin-crimson-500' : 'text-gray-900'} `
+                  `font-bold text-xl block py-2 px-3 rounded md:bg-transparent md:p-0 text-fuscous-gray-700 ${isActive ? 'md:text-fuscous-gray-700 md:decoration-pelorous-500 md:underline md:underline-offset-4 md:decoration-4 text-white bg-pelorous-500' : 'text-fuscous-gray-700 hover:text-pelorous-500'} `
                 }
               >
                 About
@@ -235,7 +235,7 @@ function Header() {
               <NavLink
                 to={ROUTES.CONTACT}
                 className={({ isActive }) =>
-                  `font-bold block py-2 px-3 rounded md:bg-transparent md:p-0 md:hover:text-alizarin-crimson-600 ${isActive ? 'md:text-alizarin-crimson-500 text-white bg-alizarin-crimson-500' : 'text-gray-900'} `
+                  `font-bold text-xl block py-2 px-3 rounded md:bg-transparent md:p-0 text-fuscous-gray-700 ${isActive ? 'md:text-fuscous-gray-700 md:decoration-pelorous-500 md:underline md:underline-offset-4 md:decoration-4 text-white bg-pelorous-500' : 'text-fuscous-gray-700 hover:text-pelorous-500'} `
                 }
               >
                 Contact

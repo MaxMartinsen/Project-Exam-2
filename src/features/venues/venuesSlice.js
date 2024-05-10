@@ -3,18 +3,29 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { API_VENUE_URL } from '../../utils/constans';
 
+// Helper function to recursively fetch all pages
+const fetchAllPages = async (url, currentPage = 1, accumulatedData = []) => {
+  const response = await fetch(`${url}?page=${currentPage}`);
+  if (!response.ok) {
+    throw new Error(`Error fetching venues: ${response.statusText}`);
+  }
+  const data = await response.json();
+  const newData = accumulatedData.concat(data.data);
+
+  if (data.meta.currentPage < data.meta.pageCount) {
+    return fetchAllPages(url, currentPage + 1, newData);
+  } else {
+    return newData;
+  }
+};
+
 // Fetch all venues with fetch
 export const fetchVenues = createAsyncThunk(
   'venues/fetchVenues',
   async (_, { rejectWithValue }) => {
     try {
-      const response = await fetch(API_VENUE_URL);
-      if (!response.ok) {
-        throw new Error(`Error fetching venues: ${response.statusText}`);
-      }
-
-      const data = await response.json();
-      return data;
+      const allVenues = await fetchAllPages(API_VENUE_URL);
+      return { data: allVenues };
     } catch (error) {
       return rejectWithValue(error.message);
     }
@@ -56,7 +67,7 @@ export const createVenue = createAsyncThunk(
       });
 
       if (!response.ok) {
-        const errorData = await response.json(); // Get detailed error message from server
+        const errorData = await response.json();
         throw new Error(
           `Failed to create Venue: ${errorData.message || response.statusText}`
         );
@@ -66,6 +77,55 @@ export const createVenue = createAsyncThunk(
       return data.data || data;
     } catch (error) {
       console.error('Error creating venue:', error);
+      return rejectWithValue(error.toString());
+    }
+  }
+);
+
+// Asynchronous thunk to delete a venue
+export const deleteVenue = createAsyncThunk(
+  'profile/deleteVenue',
+  async ({ venueId, token, apiKey }, { rejectWithValue }) => {
+    try {
+      const response = await fetch(`${API_VENUE_URL}/${venueId}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+          'X-Noroff-API-Key': apiKey,
+        },
+      });
+      if (!response.ok) throw new Error('Failed to delete venue');
+      return venueId;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
+export const updateVenue = createAsyncThunk(
+  'venues/updateVenue',
+  async ({ venueId, venueData, token, apiKey }, { rejectWithValue }) => {
+    try {
+      const response = await fetch(`${API_VENUE_URL}/${venueId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+          'X-Noroff-API-Key': apiKey,
+        },
+        body: JSON.stringify(venueData),
+      });
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(
+          `Failed to update venue: ${errorData.message || response.statusText}`
+        );
+      }
+      const updatedVenue = await response.json();
+      return updatedVenue.data;
+    } catch (error) {
+      console.error('Error updating venue:', error);
       return rejectWithValue(error.toString());
     }
   }
@@ -115,6 +175,30 @@ const venuesSlice = createSlice({
         state.venues = [...state.venues, action.payload];
       })
       .addCase(createVenue.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.payload;
+      })
+      .addCase(deleteVenue.fulfilled, (state, action) => {
+        state.venues = state.venues.filter(
+          (venue) => venue.id !== action.payload
+        );
+      })
+      .addCase(deleteVenue.rejected, (state, action) => {
+        state.error = action.payload;
+      })
+      .addCase(updateVenue.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(updateVenue.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        const index = state.venues.findIndex(
+          (venue) => venue.id === action.payload.id
+        );
+        if (index !== -1) {
+          state.venues[index] = action.payload;
+        }
+      })
+      .addCase(updateVenue.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.payload;
       });
