@@ -95,7 +95,7 @@ function BookingForm({ bookings, venueId, maxGuests, pricePerNight }) {
     const numberOfNights = (endDate - startDate) / (1000 * 60 * 60 * 24);
 
     if (numberOfNights <= 0) {
-      setBookingError('Please check the Check-out date.');
+      setBookingError('Please select the Check-out date.');
       setIsLoading(false);
       return;
     }
@@ -166,10 +166,14 @@ function BookingForm({ bookings, venueId, maxGuests, pricePerNight }) {
         onSubmit={handleSubmit(submitHandler)}
         className="flex flex-col gap-3 mt-3"
       >
-        <div className="flex flex-col justify-center mb-4 gap-4">
+        <div className="flex flex-col justify-center mb-4">
           <div className="flex justify-around">
-            <h2>Check in</h2>
-            <h2>Check out</h2>
+            <h2 className="text-xl font-semibold tracking-tight text-fuscous-gray-700">
+              Check in
+            </h2>
+            <h2 className="text-xl font-semibold tracking-tight text-fuscous-gray-700">
+              Check out
+            </h2>
           </div>
           <div>
             <DateRange
@@ -179,7 +183,7 @@ function BookingForm({ bookings, venueId, maxGuests, pricePerNight }) {
               moveRangeOnFirstSelection={false}
               months={1}
               direction="horizontal"
-              className="overflow-hidden w-full"
+              className="w-full rounded-b-2xl bg-white/40"
               rangeColors={['#2f8fab']}
               minDate={new Date()}
               disabledDates={disabledDates}
@@ -228,9 +232,13 @@ function BookingForm({ bookings, venueId, maxGuests, pricePerNight }) {
             Sign in
           </button>
         )}
-        {bookingError && (
-          <p className="text-red-500 text-sm italic mt-1">{bookingError}</p>
-        )}
+        <div className="relative">
+          {bookingError && (
+            <p className="absolute -bottom-3 left-0 text-red-500 text-sm italic mt-1">
+              {bookingError}
+            </p>
+          )}
+        </div>
         <div className="flex items-start justify-between mt-2 pt-4 border-t-4">
           <h2 className="">Total price</h2>
           <p>

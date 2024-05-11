@@ -7,9 +7,9 @@ function AmenitiesBadge({ meta }) {
     badges.push(
       <div
         key="wifi"
-        className="flex items-center bg-blue-500 text-white rounded px-2 py-1"
+        className="flex items-center bg-white/45 antialiased text-fuscous-gray-700 border-2 border-white rounded-lg px-4 py-2"
       >
-        <FaWifi className="mr-1" /> Wi-Fi
+        <FaWifi className="mr-2" /> Wi-Fi
       </div>
     );
   }
@@ -18,9 +18,9 @@ function AmenitiesBadge({ meta }) {
     badges.push(
       <div
         key="parking"
-        className="flex items-center bg-yellow-500 text-white rounded px-2 py-1"
+        className="flex items-center bg-white/45 antialiased text-fuscous-gray-700 border-2 border-white rounded-lg px-4 py-2"
       >
-        <FaParking className="mr-1" /> Parking
+        <FaParking className="mr-2" /> Parking
       </div>
     );
   }
@@ -29,9 +29,9 @@ function AmenitiesBadge({ meta }) {
     badges.push(
       <div
         key="breakfast"
-        className="flex items-center bg-orange-500 text-white rounded px-2 py-1"
+        className="flex items-center bg-white/45 antialiased text-fuscous-gray-700 border-2 border-white rounded-lg px-4 py-2"
       >
-        <FaUtensils className="mr-1" /> Breakfast
+        <FaUtensils className="mr-2" /> Breakfast
       </div>
     );
   }
@@ -40,9 +40,9 @@ function AmenitiesBadge({ meta }) {
     badges.push(
       <div
         key="pets"
-        className="flex items-center bg-green-500 text-white rounded px-2 py-1"
+        className="flex items-center bg-white/45 antialiased text-fuscous-gray-700 border-2 border-white rounded-lg px-4 py-2"
       >
-        <FaPaw className="mr-1" /> Pets Allowed
+        <FaPaw className="mr-2" /> Pets Allowed
       </div>
     );
   }

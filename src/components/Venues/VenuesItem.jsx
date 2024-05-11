@@ -36,7 +36,7 @@ function VenuesItem({ venue }) {
 
   return (
     <>
-      <section className="pt-8 md:pt-24 antialiased">
+      <section className="pt-24 antialiased">
         <div className="max-w-screen-xxl px-4 mx-auto 2xl:px-0">
           <div className="w-full">
             <img
@@ -98,9 +98,9 @@ function VenuesItem({ venue }) {
             </div>
             <div className="px-5 py-7 my-7 max-w-96 flex flex-col border-2 border-white bg-white/45 rounded-xl shadow-lg lg:p-9">
               <div className="mb-5 pb-5 border-b border-white">
-                <h2 className="h-16 flex items-center justify-center bg-athens-gray-700 w-full text-lg font-bold text-pelorous-500 ">
+                <h3 className="flex items-center justify-center bg-athens-gray-700 w-full text-2xl xl:text-3xl font-semibold tracking-tight  text-pelorous-500 ">
                   Availability
-                </h2>
+                </h3>
               </div>
               <BookingForm
                 bookings={bookings}
