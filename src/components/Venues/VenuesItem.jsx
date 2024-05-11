@@ -78,7 +78,7 @@ function VenuesItem({ venue }) {
                 <h3 className="text-2xl xl:text-3xl font-semibold tracking-tight text-fuscous-gray-700 max-w-60 md:max-w-60 lg:max-w-80 xxl:max-w-96 overflow-hidden whitespace-nowrap text-ellipsis">
                   About the Place
                 </h3>
-                <p className="text-xl font-normal tracking-tight text-fuscous-gray-700">
+                <p className="text-xl text-balance font-normal tracking-tight text-fuscous-gray-700">
                   {venue.description || ' '}
                 </p>
               </div>
