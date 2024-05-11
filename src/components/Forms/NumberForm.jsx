@@ -45,6 +45,7 @@ function NumberForm({ guests, setGuests, register, maxGuests }) {
           </svg>
         </button>
         <input
+          id="guests-input"
           type="number"
           value={guests}
           onChange={handleChange}
