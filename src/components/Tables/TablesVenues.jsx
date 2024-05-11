@@ -62,11 +62,9 @@ function TablesVenues({ onEditVenue }) {
   return (
     <section className="container px-4 mx-auto">
       <div className="flex items-center gap-x-3">
-        <h2 className="text-lg font-medium text-gray-800 dark:text-white">
-          Upcoming Venues
-        </h2>
+        <h2 className="text-lg font-medium text-gray-800">Upcoming Venues</h2>
 
-        <span className="px-3 py-1 text-xs text-blue-600 bg-blue-100 rounded-full dark:bg-gray-800 dark:text-blue-400">
+        <span className="px-3 py-1 text-xs text-blue-600 bg-blue-100 rounded-full">
           {venues?.length}
         </span>
       </div>
@@ -74,13 +72,13 @@ function TablesVenues({ onEditVenue }) {
       <div className="flex flex-col mt-6">
         <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
           <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
-            <div className="overflow-hidden border border-gray-200 dark:border-gray-700 md:rounded-lg">
-              <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-                <thead className="bg-gray-50 dark:bg-gray-800">
+            <div className="overflow-hidden border border-gray-200 md:rounded-lg">
+              <table className="min-w-full divide-y divide-gray-200">
+                <thead className="bg-gray-50">
                   <tr>
                     <th
                       scope="col"
-                      className="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                      className="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500"
                     >
                       <div className="flex items-center gap-x-3">
                         <span>Name Venue</span>
@@ -89,42 +87,42 @@ function TablesVenues({ onEditVenue }) {
 
                     <th
                       scope="col"
-                      className="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                      className="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500"
                     >
                       <span>Booked</span>
                     </th>
 
                     <th
                       scope="col"
-                      className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                      className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500"
                     >
                       <span>Guests</span>
                     </th>
 
                     <th
                       scope="col"
-                      className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                      className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500"
                     >
                       Location
                     </th>
 
                     <th
                       scope="col"
-                      className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                      className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500"
                     >
                       Created
                     </th>
 
                     <th
                       scope="col"
-                      className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                      className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500"
                     >
                       Updated
                     </th>
 
                     <th
                       scope="col"
-                      className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                      className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500"
                     >
                       Price
                     </th>
@@ -134,7 +132,7 @@ function TablesVenues({ onEditVenue }) {
                     </th>
                   </tr>
                 </thead>
-                <tbody className="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
+                <tbody className="bg-white divide-y divide-gray-200">
                   {venues.map((profile, index) => {
                     return (
                       <tr key={profile.id || index}>
@@ -147,7 +145,7 @@ function TablesVenues({ onEditVenue }) {
                                 alt={profile.media[0].alt}
                               />
                               <div>
-                                <h2 className="font-medium text-gray-800 dark:text-white ">
+                                <h2 className="font-medium text-gray-800">
                                   {profile.name}
                                 </h2>
                                 <div className="text-sm font-normal text-gray-600">
@@ -163,25 +161,25 @@ function TablesVenues({ onEditVenue }) {
                         <td className="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                           {profile._count.bookings}
                         </td>
-                        <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                        <td className="px-4 py-4 text-sm text-gray-500 whitespace-nowrap">
                           {profile.maxGuests}
                         </td>
-                        <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                        <td className="px-4 py-4 text-sm text-gray-500 whitespace-nowrap">
                           <div className="flex flex-col">
                             <p>{profile.location.address},</p>
                             <p>{profile.location.city}</p>
                           </div>
                         </td>
-                        <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                        <td className="px-4 py-4 text-sm text-gray-500 whitespace-nowrap">
                           {format(new Date(profile.created), 'dd.MM.yyyy')}
                         </td>
-                        <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                        <td className="px-4 py-4 text-sm text-gray-500 whitespace-nowrap">
                           {format(new Date(profile.updated), 'dd.MM.yyyy')}
                         </td>
                         <td className="px-4 py-4 text-sm whitespace-nowrap">
                           <div className="flex items-center gap-x-2">
                             <div className="flex flex-col items-start gap-x-2">
-                              <p className=" text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                              <p className=" text-sm text-gray-500 whitespace-nowrap">
                                 {profile.price} $
                               </p>
                             </div>
@@ -191,7 +189,7 @@ function TablesVenues({ onEditVenue }) {
                           <div className="flex items-center gap-x-6">
                             <button
                               onClick={() => handleDeleteClick(profile.id)}
-                              className="text-gray-500 transition-colors duration-200 dark:hover:text-red-500 dark:text-gray-300 hover:text-red-500 focus:outline-none"
+                              className="text-gray-500 transition-colors duration-200 hover:text-red-500 focus:outline-none"
                             >
                               <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -212,7 +210,7 @@ function TablesVenues({ onEditVenue }) {
 
                             <button
                               onClick={() => handleEditClick(profile.id)}
-                              className="text-gray-500 transition-colors duration-200 dark:hover:text-yellow-500 dark:text-gray-300 hover:text-yellow-500 focus:outline-none"
+                              className="text-gray-500 transition-colors duration-200 hover:text-yellow-500 focus:outline-none"
                             >
                               <svg
                                 xmlns="http://www.w3.org/2000/svg"

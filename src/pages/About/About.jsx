@@ -4,15 +4,15 @@ function About() {
       <div className="container flex flex-col px-6 py-10 mx-auto space-y-6 lg:h-[32rem] lg:py-16 lg:flex-row lg:items-center">
         <div className="w-full lg:w-1/2">
           <div className="lg:max-w-lg">
-            <h1 className="text-3xl font-semibold tracking-wide text-gray-800 dark:text-white lg:text-4xl">
+            <h1 className="text-3xl font-semibold tracking-wide text-gray-800 lg:text-4xl">
               Find your premium new glasses exported from US
             </h1>
-            <p className="mt-4 text-gray-600 dark:text-gray-300">
+            <p className="mt-4 text-gray-600">
               We work with the best remunated glasses dealers in US to find your
               new glasses.
             </p>
             <div className="grid gap-6 mt-8 sm:grid-cols-2">
-              <div className="flex items-center text-gray-800 -px-3 dark:text-gray-200">
+              <div className="flex items-center text-gray-800 -px-3">
                 <svg
                   className="w-5 h-5 mx-3"
                   xmlns="http://www.w3.org/2000/svg"
@@ -31,7 +31,7 @@ function About() {
                 <span className="mx-3">Premium selection</span>
               </div>
 
-              <div className="flex items-center text-gray-800 -px-3 dark:text-gray-200">
+              <div className="flex items-center text-gray-800 -px-3">
                 <svg
                   className="w-5 h-5 mx-3"
                   xmlns="http://www.w3.org/2000/svg"
@@ -50,7 +50,7 @@ function About() {
                 <span className="mx-3">Insurance</span>
               </div>
 
-              <div className="flex items-center text-gray-800 -px-3 dark:text-gray-200">
+              <div className="flex items-center text-gray-800 -px-3">
                 <svg
                   className="w-5 h-5 mx-3"
                   xmlns="http://www.w3.org/2000/svg"
@@ -69,7 +69,7 @@ function About() {
                 <span className="mx-3">All legal documents</span>
               </div>
 
-              <div className="flex items-center text-gray-800 -px-3 dark:text-gray-200">
+              <div className="flex items-center text-gray-800 -px-3">
                 <svg
                   className="w-5 h-5 mx-3"
                   xmlns="http://www.w3.org/2000/svg"
@@ -88,7 +88,7 @@ function About() {
                 <span className="mx-3">From US glasses dealers</span>
               </div>
 
-              <div className="flex items-center text-gray-800 -px-3 dark:text-gray-200">
+              <div className="flex items-center text-gray-800 -px-3">
                 <svg
                   className="w-5 h-5 mx-3"
                   xmlns="http://www.w3.org/2000/svg"
@@ -107,7 +107,7 @@ function About() {
                 <span className="mx-3">Payment Security</span>
               </div>
 
-              <div className="flex items-center text-gray-800 -px-3 dark:text-gray-200">
+              <div className="flex items-center text-gray-800 -px-3">
                 <svg
                   className="w-5 h-5 mx-3"
                   xmlns="http://www.w3.org/2000/svg"

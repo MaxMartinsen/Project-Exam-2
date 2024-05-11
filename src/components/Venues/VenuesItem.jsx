@@ -35,8 +35,8 @@ function VenuesItem({ venue }) {
   const imageUrl = media.length > 0 ? media[0].url : IMAGE;
 
   return (
-    <section className="py-8 bg-white md:py-16 antialiased">
-      <div className="max-w-screen-xl px-4 mx-auto 2xl:px-0">
+    <section className="py-8 md:py-16 antialiased">
+      <div className="max-w-screen-xxl px-4 mx-auto 2xl:px-0">
         <div className="lg:grid lg:grid-cols-2 lg:gap-8 xl:gap-16 mb-5">
           <div className="shrink-0 max-w-md lg:max-w-lg mx-auto">
             <img
