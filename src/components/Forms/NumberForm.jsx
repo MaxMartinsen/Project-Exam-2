@@ -26,10 +26,10 @@ function NumberForm({ guests, setGuests, register, maxGuests }) {
         <button
           type="button"
           onClick={handleDecrease}
-          className="bg-gray-100 hover:bg-gray-200 border border-gray-300 rounded-s-lg p-3 h-11 focus:ring-gray-100  focus:ring-2 focus:outline-none"
+          className="bg-gradient-to-br from-pelorous-400 to-pelorous-200 hover:from-pelorous-500 hover:to-pelorous-300 rounded-s-lg p-3 h-11 focus:ring-gray-100  focus:ring-2 focus:outline-none"
         >
           <svg
-            className="w-3 h-3 text-gray-900"
+            className="w-3 h-3 text-white"
             aria-hidden="true"
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -39,7 +39,7 @@ function NumberForm({ guests, setGuests, register, maxGuests }) {
               stroke="currentColor"
               strokeLinecap="round"
               strokeLinejoin="round"
-              strokeWidth="2"
+              strokeWidth="4"
               d="M1 1h16"
             />
           </svg>
@@ -74,10 +74,10 @@ function NumberForm({ guests, setGuests, register, maxGuests }) {
         <button
           type="button"
           onClick={handleIncrease}
-          className="bg-gray-100 hover:bg-gray-200 border border-gray-300 rounded-e-lg p-3 h-11 focus:ring-gray-100 focus:ring-2 focus:outline-none"
+          className="bg-gradient-to-br from-pelorous-400 to-pelorous-200 hover:from-pelorous-500 hover:to-pelorous-300 rounded-e-lg p-3 h-11 focus:ring-gray-100 focus:ring-2 focus:outline-none"
         >
           <svg
-            className="w-3 h-3 text-gray-900"
+            className="w-3 h-3 text-white"
             aria-hidden="true"
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -87,7 +87,7 @@ function NumberForm({ guests, setGuests, register, maxGuests }) {
               stroke="currentColor"
               strokeLinecap="round"
               strokeLinejoin="round"
-              strokeWidth="2"
+              strokeWidth="4"
               d="M9 1v16M1 9h16"
             />
           </svg>
