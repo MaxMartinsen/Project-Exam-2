@@ -1,13 +1,13 @@
 // src/components/Venues/VenuesItem.jsx
-import Rating from '../Rating/Rating';
-
-import IMAGE from '../../assets/image/default-image.png';
-import VenuesDetails from './VenuesDetails';
-import VenueBadge from '../Badge/VenueBadge';
-import BookingForm from '../Forms/BookingForm';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { createBooking } from '../../features/booking/bookingSlice';
+import { formatAddress } from '../../utils/addressUtils';
+import Rating from '../Rating/Rating';
+import VenuesDetails from './VenuesDetails';
+import VenueBadge from '../Badge/VenueBadge';
+import BookingForm from '../Forms/BookingForm';
+import IMAGE from '../../assets/image/default-image.png';
 
 function VenuesItem({ venue }) {
   const dispatch = useDispatch();
@@ -35,64 +35,85 @@ function VenuesItem({ venue }) {
   const imageUrl = media.length > 0 ? media[0].url : IMAGE;
 
   return (
-    <section className="py-8 md:py-16 antialiased">
-      <div className="max-w-screen-xxl px-4 mx-auto 2xl:px-0">
-        <div className="lg:grid lg:grid-cols-2 lg:gap-8 xl:gap-16 mb-5">
-          <div className="shrink-0 max-w-md lg:max-w-lg mx-auto">
+    <>
+      <section className="pt-8 md:pt-24 antialiased">
+        <div className="max-w-screen-xxl px-4 mx-auto 2xl:px-0">
+          <div className="w-full">
             <img
-              className="w-full"
+              className="w-full object-cover  md:h-[500px] rounded-3xl"
               src={imageUrl}
               alt={media.length > 0 ? media[0].alt : 'Default Image'}
             />
           </div>
-          <div className="mt-6 sm:mt-8 lg:mt-0">
-            <h1 className="text-xl font-semibold text-gray-900 sm:text-2xl">
-              {venue.name}
-            </h1>
-            <div className="my-4 sm:items-center sm:gap-4 sm:flex">
-              <p className="text-2xl font-extrabold text-gray-900 sm:text-3xl">
-                {venue.price} $ Night
-              </p>
+          <div className="flex w-full justify-between my-10">
+            <div>
+              <h1 className="text-xl font-semibold text-fuscous-gray-700 md:text-3xl">
+                {venue.name}
+              </h1>
+              <Rating rating={venue.rating || 0} maxRating={5} />
+              <h4 className="text-lg font-semibold text-mountain-mist-400 md:text-xl">
+                {formatAddress(venue)}
+              </h4>
             </div>
-
-            <Rating rating={venue.rating || 0} maxRating={5} />
-
-            <div className="mt-6 sm:gap-4 sm:items-center sm:flex sm:mt-8">
-              <a
-                href="#"
-                title=""
-                className="flex items-center justify-center py-2.5 px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-100"
-                role="button"
-              >
-                Reserve
-              </a>
+            <div>
+              <div className="border-2 px-5 py-2 border-white flex items-center rounded-tr-2xl rounded-bl-2xl justify-center bg-pelorous-400">
+                <span className="text-white font-semibold text-xl lg:text-2xl">
+                  {Math.floor(venue.rating) || '0'}
+                </span>
+              </div>
+              <div className="text-end">
+                <span className="text-sm text-end text-mine-shaft-900">
+                  Rating
+                </span>
+              </div>
             </div>
-
-            <hr className="my-6 md:my-8 border-gray-200" />
-
-            <p className="mb-6 text-gray-500">{venue.description}</p>
           </div>
         </div>
-        <VenueBadge meta={venue.meta} />
-        <div className="lg:grid lg:grid-cols-2 lg:gap-8 xl:gap-16">
-          <VenuesDetails owner={venue.owner} maxGuests={venue.maxGuests} />
-        </div>
-        <div className="px-5 py-7 mt-7 max-w-96 flex flex-col bg-white rounded-xl shadow-lg lg:p-9">
-          <div className="mb-5 pb-5 border-b">
-            <h2 className="h-16 flex items-center justify-center bg-athens-gray-700 w-full text-lg font-bold text-white ">
-              Availability
-            </h2>
+      </section>
+      <section className="bg-white/45 antialiased">
+        <div className="max-w-screen-xxl px-4 mx-auto 2xl:px-0">
+          <div className="flex flex-col md:gap-10 md:flex-row md:justify-between items-center md:items-start lg:gap-20">
+            <div className="w-full my-7 flex flex-col">
+              <div className="flex flex-col gap-6">
+                <h3 className="text-2xl xl:text-3xl font-semibold tracking-tight text-fuscous-gray-700 max-w-60 md:max-w-60 lg:max-w-80 xxl:max-w-96 overflow-hidden whitespace-nowrap text-ellipsis">
+                  About the Place
+                </h3>
+                <p className="text-xl font-normal tracking-tight text-fuscous-gray-700">
+                  {venue.description || ' '}
+                </p>
+              </div>
+              <div>
+                <VenuesDetails
+                  owner={venue.owner}
+                  maxGuests={venue.maxGuests}
+                  avatar={venue.owner.avatar}
+                />
+              </div>
+              <div className="flex flex-col gap-1">
+                <h4 className="text-xl font-semibold tracking-tight text-fuscous-gray-700">
+                  Facilities
+                </h4>
+                <VenueBadge meta={venue.meta} />
+              </div>
+            </div>
+            <div className="px-5 py-7 my-7 max-w-96 flex flex-col border-2 border-white bg-white/45 rounded-xl shadow-lg lg:p-9">
+              <div className="mb-5 pb-5 border-b border-white">
+                <h2 className="h-16 flex items-center justify-center bg-athens-gray-700 w-full text-lg font-bold text-pelorous-500 ">
+                  Availability
+                </h2>
+              </div>
+              <BookingForm
+                bookings={bookings}
+                maxGuests={maxGuests}
+                venueId={venue.id}
+                onSubmit={handleBooking}
+                pricePerNight={pricePerNight}
+              />
+            </div>
           </div>
-          <BookingForm
-            bookings={bookings}
-            maxGuests={maxGuests}
-            venueId={venue.id}
-            onSubmit={handleBooking}
-            pricePerNight={pricePerNight}
-          />
         </div>
-      </div>
-    </section>
+      </section>
+    </>
   );
 }
 

@@ -134,7 +134,7 @@ function BookingForm({ bookings, venueId, maxGuests, pricePerNight }) {
       await delay(2000);
       setIsModalOpen(true);
     } catch (error) {
-      setBookingError(`Failed to create booking: ${error.message}`);
+      setBookingError(`Failed to create booking ${error.message}`);
     } finally {
       setIsLoading(false);
       if (bookingError) {
@@ -168,8 +168,8 @@ function BookingForm({ bookings, venueId, maxGuests, pricePerNight }) {
               moveRangeOnFirstSelection={false}
               months={1}
               direction="horizontal"
-              className="w-full"
-              rangeColors={['#4e577f']}
+              className="overflow-hidden w-full"
+              rangeColors={['#2f8fab']}
               minDate={new Date()}
               disabledDates={disabledDates}
             />
@@ -201,7 +201,7 @@ function BookingForm({ bookings, venueId, maxGuests, pricePerNight }) {
         {isLoggedIn ? (
           <button
             type="submit"
-            className={`w-full mt-4 px-2.5 py-4 rounded text-white font-bold text-xl ${
+            className={`cursor-pointer w-full py-1 px-4 lg:py-2 lg:px-6 flex justify-center items-center  rounded-xl border-2 text-white font-semibold text-lg lg:text-xl border-white bg-gradient-to-br from-pelorous-400 to-pelorous-200 hover:from-pelorous-500 hover:to-pelorous-300 ${
               isLoading
                 ? 'bg-gray-400 cursor-not-allowed'
                 : 'bg-athens-gray-700 hover:bg-athens-gray-800 active:bg-athens-gray-900'
@@ -213,7 +213,7 @@ function BookingForm({ bookings, venueId, maxGuests, pricePerNight }) {
         ) : (
           <button
             type="button"
-            className="w-full mt-4 px-2.5 py-4 rounded text-white font-bold text-xl bg-athens-gray-700 hover:bg-athens-gray-800 active:bg-athens-gray-900"
+            className="cursor-pointer w-full py-1 px-4 lg:py-2 lg:px-6 flex justify-center items-center  rounded-xl border-2 text-white font-semibold text-lg lg:text-xl border-white bg-gradient-to-br from-pelorous-400 to-pelorous-200 hover:from-pelorous-500 hover:to-pelorous-300"
             onClick={() => navigate(ROUTES.LOGIN)}
           >
             Sign in
