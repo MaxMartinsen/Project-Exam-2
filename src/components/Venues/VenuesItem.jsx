@@ -1,5 +1,6 @@
 // src/components/Venues/VenuesItem.jsx
 
+import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { createBooking } from '../../features/booking/bookingSlice';
 import { formatAddress } from '../../utils/addressUtils';
@@ -8,6 +9,7 @@ import VenuesDetails from './VenuesDetails';
 import VenueBadge from '../Badge/VenueBadge';
 import BookingForm from '../Forms/BookingForm';
 import IMAGE from '../../assets/image/default-image.png';
+import ImageModal from '../Modal/ImageModal';
 
 function VenuesItem({ venue }) {
   const dispatch = useDispatch();
@@ -16,6 +18,18 @@ function VenuesItem({ venue }) {
   const bookings = venue.bookings || [];
   const maxGuests = venue.maxGuests || 0;
   const pricePerNight = venue.price;
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [currentImages, setCurrentImages] = useState([]);
+
+  const handleImageClick = () => {
+    if (media.length > 1) {
+      setCurrentImages(media);
+      setIsModalOpen(true);
+    } else {
+      setCurrentImages(media);
+      setIsModalOpen(true);
+    }
+  };
 
   const handleBooking = async (bookingData) => {
     console.log('Handle booking with data:', bookingData);
@@ -36,15 +50,21 @@ function VenuesItem({ venue }) {
 
   return (
     <>
+      <ImageModal
+        images={currentImages}
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+      />
       <section className="pt-24 antialiased">
         <div className="max-w-screen-xxl px-4 mx-auto 2xl:px-0">
-          <div className="w-full">
+          <button className="w-full">
             <img
+              onClick={handleImageClick}
               className="w-full object-cover  md:h-[500px] rounded-3xl"
               src={imageUrl}
               alt={media.length > 0 ? media[0].alt : 'Default Image'}
             />
-          </div>
+          </button>
           <div className="flex w-full justify-between my-10">
             <div>
               <h1 className="text-xl font-semibold text-fuscous-gray-700 md:text-3xl">
