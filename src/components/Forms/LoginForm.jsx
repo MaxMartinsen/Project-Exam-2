@@ -1,11 +1,22 @@
-// src/components/Forms/LoginForm.jsx
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
+
 import { loginUser } from '../../features/user/userSlice';
 import { fetchUserProfile } from '../../features/profile/profileSlice';
-import { Link, useNavigate } from 'react-router-dom';
+
 import { ROUTES } from '../../utils/routes';
 import { validateEmail, validatePassword } from '../../utils/validation';
+
+/**
+ * LoginForm component provides a user interface for signing into the application.
+ * It facilitates the entry of user credentials, validates them, and handles the login process.
+ *
+ * @param {Object} props - The props passed to the component are not specified as the component does not directly use props.
+ *
+ * @returns {JSX.Element} - A form that allows users to input their email and password, submit the form, and receive feedback on the status of their login attempt.
+ *
+ */
 
 function LoginForm() {
   const dispatch = useDispatch();
@@ -55,7 +66,6 @@ function LoginForm() {
     }
   };
 
-  // Effect to fetch profile after successful login
   useEffect(() => {
     if (currentUser && token && apiKey) {
       dispatch(
@@ -91,7 +101,7 @@ function LoginForm() {
                   name="email"
                   id="email"
                   required
-                  className="bg-white/45 border-white border-2 rounded-xl text-fuscous-gray-700 text-sm font-semibold focus:ring-0 focus:border-pelorous-300 block w-full py-2 px-4 "
+                  className="bg-white/45 border-white border-2 rounded-xl text-fuscous-gray-700 text-sm font-semibold focus:ring-0 focus:border-pelorous-300 block w-full py-2 px-4"
                   placeholder="name@stud.noroff.no"
                   value={values.email}
                   onChange={handleChange}
@@ -129,7 +139,7 @@ function LoginForm() {
               <button
                 type="submit"
                 disabled={userStatus === 'loading'}
-                className="w-full rounded-xl border-2 text-white font-semibold border-white bg-gradient-to-br from-pelorous-400 to-pelorous-200 hover:from-pelorous-500 hover:to-pelorous-300 text-sm px-5 py-2.5 text-center"
+                className="w-full rounded-xl border-2 text-white font-semibold border-white bg-gradient-to-br from-pelorous-600 to-pelorous-400 hover:from-pelorous-500 hover:to-pelorous-300 text-lg px-5 py-2.5 text-center"
               >
                 {userStatus === 'loading'
                   ? 'Processing...'

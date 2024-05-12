@@ -1,10 +1,14 @@
-function BookingError({ onClose }) {
+import { useNavigate } from 'react-router-dom';
+import { ROUTES } from '../../utils/routes';
+
+function ContactConfirmation({ onClose }) {
+  const navigate = useNavigate();
   return (
     <div className="fixed z-50 inset-0 bg-black bg-opacity-50 flex justify-center items-center">
       <div className="relative bg-white rounded-lg shadow">
         <div className="p-4 md:p-5 border-b rounded-t ">
           <h3 className="text-lg font-semibold text-gray-900 text-center px-14">
-            Booking failed to create
+            Your Contact Form Is Confirmed
           </h3>
           <button
             type="button"
@@ -31,14 +35,14 @@ function BookingError({ onClose }) {
         </div>
         <div className="p-4 md:p-5">
           <p className="text-gray-500 text-center mb-4">
-            Please change dates or number of guests.
+            Thank you for booking with Holidaze!
           </p>
           <button
             type="button"
-            onClick={onClose}
+            onClick={() => navigate(ROUTES.HOME)}
             className="text-white inline-flex w-full justify-center bg-gradient-to-br from-pelorous-600 to-pelorous-400 hover:from-pelorous-500 hover:to-pelorous-300  font-semibold rounded-lg text-lg px-5 py-2.5 text-center"
           >
-            Ok
+            Venues
           </button>
         </div>
       </div>
@@ -46,4 +50,4 @@ function BookingError({ onClose }) {
   );
 }
 
-export default BookingError;
+export default ContactConfirmation;

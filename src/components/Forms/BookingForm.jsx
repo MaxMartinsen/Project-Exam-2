@@ -1,18 +1,36 @@
-// src/components/Forms/BookingForm.jsx
 import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
+import { useSelector, useDispatch } from 'react-redux';
+import { useDisableCalendarDates } from '../../hooks/useDisableCalendarDates';
+import { useTotalPrice } from '../../hooks/useTotalPrice';
+import { useNavigate } from 'react-router-dom';
+
 import { DateRange } from 'react-date-range';
 import 'react-date-range/dist/styles.css';
 import 'react-date-range/dist/theme/default.css';
-import { useDisableCalendarDates } from '../../hooks/useDisableCalendarDates';
 import NumberForm from './NumberForm';
-import { useTotalPrice } from '../../hooks/useTotalPrice';
-import { useNavigate } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+
 import { createBooking } from '../../features/booking/bookingSlice';
 import { ROUTES } from '../../utils/routes';
 import BookingConfirmation from '../Modal/BookingConfirmation';
 import BookingError from './../Modal/BookingError';
+
+/**
+ * BookingForm component handles the user interaction for making a booking at a venue. It allows users to select check-in
+ * and check-out dates, specify the number of guests, and view the calculated total price based on the selected dates and
+ * price per night. The form includes validation to ensure the booking dates are selected properly and the number of guests
+ * does not exceed the maximum allowed. It displays dynamic feedback based on the booking process status including errors
+ * and confirmation prompts.
+ *
+ * @param {Object} props - The component props.
+ * @param {Array} props.bookings - Existing bookings for the venue to disable already booked dates.
+ * @param {string} props.venueId - The unique identifier for the venue.
+ * @param {number} props.maxGuests - The maximum number of guests allowed for the venue.
+ * @param {number} props.pricePerNight - The cost per night to stay at the venue.
+ *
+ * @returns {JSX.Element} - A form that includes date range selection, guest count input, price calculations, and submission
+ * capabilities. Provides modals for booking confirmation and error handling.
+ */
 
 function BookingForm({ bookings, venueId, maxGuests, pricePerNight }) {
   const navigate = useNavigate();
@@ -216,7 +234,7 @@ function BookingForm({ bookings, venueId, maxGuests, pricePerNight }) {
         {isLoggedIn ? (
           <button
             type="submit"
-            className={`w-full py-1 px-4 lg:py-2 lg:px-6 flex justify-center items-center  rounded-xl border-2 text-white font-semibold text-lg lg:text-xl border-white bg-gradient-to-br from-pelorous-400 to-pelorous-200 hover:from-pelorous-500 hover:to-pelorous-300 ${
+            className={`w-full py-1 px-4 lg:py-2 lg:px-6 flex justify-center items-center  rounded-xl border-2 text-white font-semibold text-lg lg:text-xl border-white bg-gradient-to-br from-pelorous-600 to-pelorous-400 hover:from-pelorous-500 hover:to-pelorous-300 ${
               isLoading ? 'cursor-not-allowed' : ''
             }`}
             disabled={isLoading}
@@ -226,7 +244,7 @@ function BookingForm({ bookings, venueId, maxGuests, pricePerNight }) {
         ) : (
           <button
             type="button"
-            className="w-full py-1 px-4 lg:py-2 lg:px-6 flex justify-center items-center  rounded-xl border-2 text-white font-semibold text-lg lg:text-xl border-white bg-gradient-to-br from-pelorous-400 to-pelorous-200 hover:from-pelorous-500 hover:to-pelorous-300"
+            className="w-full py-1 px-4 lg:py-2 lg:px-6 flex justify-center items-center  rounded-xl border-2 text-white font-semibold text-lg lg:text-xl border-white bg-gradient-to-br from-pelorous-600 to-pelorous-400 hover:from-pelorous-500 hover:to-pelorous-300"
             onClick={() => navigate(ROUTES.LOGIN)}
           >
             Sign in

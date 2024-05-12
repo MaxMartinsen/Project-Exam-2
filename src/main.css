@@ -39,6 +39,10 @@ body {
   font-family: sans-serif;
   background-color: #f6cebc;
   overflow-x: hidden;
+  background-image: url(/src/assets/image/hero-pattern.png);
+  background-position: top;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 input::-webkit-outer-spin-button,
