@@ -7,6 +7,7 @@ import Rating from '../Rating/Rating';
 import { format } from 'date-fns';
 import DeleteModal from '../Modal/DeleteModal';
 import { deleteVenue } from '../../features/venues/venuesSlice';
+import SkeletonItem from '../Skeleton/SkeletonItem';
 
 function TablesVenues({ onEditVenue }) {
   const dispatch = useDispatch();
@@ -56,7 +57,7 @@ function TablesVenues({ onEditVenue }) {
     setDeleteModalOpen(false);
   };
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <SkeletonItem />;
   if (error) return <div>Error: {error}</div>;
   if (!venues.length) return <div>No venues found.</div>;
   return (
@@ -132,7 +133,7 @@ function TablesVenues({ onEditVenue }) {
                     </th>
                   </tr>
                 </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
+                <tbody className="bg-white/45 divide-y divide-white">
                   {venues.map((profile, index) => {
                     return (
                       <tr key={profile.id || index}>

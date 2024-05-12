@@ -90,7 +90,7 @@ function VenuesItem({ venue }) {
           </div>
         </div>
       </section>
-      <section className="bg-white/45 antialiased">
+      <section className="bg-white/45 antialiased mb-4">
         <div className="max-w-screen-xxl px-4 mx-auto 2xl:px-0">
           <div className="flex flex-col md:gap-10 md:flex-row md:justify-between items-center md:items-start lg:gap-20">
             <div className="w-full my-7 flex flex-col">

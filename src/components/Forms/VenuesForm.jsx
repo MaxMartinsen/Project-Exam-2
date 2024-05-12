@@ -46,7 +46,6 @@ function VenuesForm({ mode, initialData }) {
 
   useEffect(() => {
     if (mode === 'edit' && initialData) {
-      // Check if initialData.location and other required data exist to avoid undefined errors
       if (initialData.location && initialData.meta && initialData.media) {
         setFormData({
           name: initialData.name || '',
@@ -73,7 +72,6 @@ function VenuesForm({ mode, initialData }) {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Filter out images where the URL is empty
     const filteredMedia = formData.images.filter(
       (img) => img.url.trim() !== ''
     );
@@ -132,7 +130,7 @@ function VenuesForm({ mode, initialData }) {
   };
 
   return (
-    <section className="container px-4 mx-auto">
+    <section className="max-w-screen-xxl px-4 mx-auto">
       <div className="flex items-center gap-x-3">
         <h2 className="text-lg font-medium text-gray-800">
           {mode === 'edit' ? 'Update Venue' : 'Create Venue'}
@@ -153,10 +151,6 @@ function VenuesForm({ mode, initialData }) {
               required
               className="bg-gray-50 mt-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 block w-full ps-4 p-2.5"
             />
-
-            <p className="mt-3 hidden text-xs text-red-400">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-            </p>
           </div>
           <h2 className="mb-4 font-semibold text-gray-900">Location</h2>
           <div className="flex flex-col md:flex-row gap-4">
@@ -173,10 +167,6 @@ function VenuesForm({ mode, initialData }) {
                 type="text"
                 className="bg-gray-50 mt-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 block w-full ps-4 p-2.5"
               />
-
-              <p className="mt-3 hidden text-xs text-red-400">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              </p>
             </div>
             <div className="md:max-w-64 ">
               <label htmlFor="city" className="block text-sm text-gray-500">
@@ -191,10 +181,6 @@ function VenuesForm({ mode, initialData }) {
                 type="text"
                 className="bg-gray-50 mt-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 block w-full ps-4 p-2.5"
               />
-
-              <p className="mt-3 hidden text-xs text-red-400">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              </p>
             </div>
             <div className="md:max-w-32 ">
               <label htmlFor="zip" className="block text-sm text-gray-500">
@@ -209,10 +195,6 @@ function VenuesForm({ mode, initialData }) {
                 type="text"
                 className="bg-gray-50 mt-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 block w-full ps-4 p-2.5"
               />
-
-              <p className="mt-3 hidden text-xs text-red-400">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              </p>
             </div>
             <div className="md:w-80 ">
               <label htmlFor="country" className="block text-sm text-gray-500">
@@ -227,10 +209,6 @@ function VenuesForm({ mode, initialData }) {
                 type="text"
                 className="bg-gray-50 mt-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 block w-full ps-4 p-2.5"
               />
-
-              <p className="mt-3 hidden text-xs text-red-400">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              </p>
             </div>
             <div className="md:max-w-64 ">
               <label
@@ -248,15 +226,11 @@ function VenuesForm({ mode, initialData }) {
                 type="text"
                 className="bg-gray-50 mt-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 block w-full ps-4 p-2.5"
               />
-
-              <p className="mt-3 hidden text-xs text-red-400">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              </p>
             </div>
           </div>
 
           <h2 className="mb-4 font-semibold text-gray-900">Facilities</h2>
-          <ul className="items-center w-full text-sm font-medium text-gray-900 border-gray-300 bg-white border rounded-lg sm:flex">
+          <ul className="items-center w-full text-sm font-medium text-gray-900 border-gray-300 bg-white border rounded-lg md:flex">
             <li className="w-full border-b sm:border-b-0 sm:border-r border-gray-300">
               <div className="flex items-center ps-3">
                 <input
@@ -357,12 +331,6 @@ function VenuesForm({ mode, initialData }) {
                   required
                 />
               </div>
-              <p
-                id="helper-text-explanation"
-                className="mt-1 text-sm text-gray-500"
-              >
-                Please select a digit number from 1 to 999.
-              </p>
             </div>
             <div className="col-span-1">
               <div className="col-span-1">
@@ -385,12 +353,6 @@ function VenuesForm({ mode, initialData }) {
                     max="5"
                   />
                 </div>
-                <p
-                  id="helper-text-explanation"
-                  className="mt-1 text-sm text-gray-500"
-                >
-                  Please select a digit number from 1 to 5.
-                </p>
               </div>
             </div>
             <div className="col-span-1">
@@ -415,12 +377,6 @@ function VenuesForm({ mode, initialData }) {
                     required
                   />
                 </div>
-                <p
-                  id="helper-text-explanation"
-                  className="mt-1 text-sm text-gray-500"
-                >
-                  Please select a digit number from 1.
-                </p>
               </div>
             </div>
           </div>
@@ -441,10 +397,6 @@ function VenuesForm({ mode, initialData }) {
               className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
               placeholder="Write your thoughts here..."
             ></textarea>
-
-            <p className="mt-1 text-sm text-gray-500">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-            </p>
           </div>
           <h2 className="mb-4 font-semibold text-gray-900">Gallery</h2>
           <div>
@@ -457,7 +409,7 @@ function VenuesForm({ mode, initialData }) {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+              className="cursor-pointer w-fit py-1 px-4 lg:py-2 lg:px-6 flex  items-center rounded-xl border-2 text-white font-semibold text-lg lg:text-xl border-white bg-gradient-to-br from-pelorous-600 to-pelorous-400 hover:from-pelorous-500 hover:to-pelorous-300"
             >
               <svg
                 className="me-1 -ms-1 w-5 h-5"

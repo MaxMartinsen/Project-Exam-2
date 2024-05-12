@@ -55,7 +55,6 @@ function LoginForm() {
     }
   };
 
-  // Effect to fetch profile after successful login
   useEffect(() => {
     if (currentUser && token && apiKey) {
       dispatch(
@@ -129,7 +128,7 @@ function LoginForm() {
               <button
                 type="submit"
                 disabled={userStatus === 'loading'}
-                className="w-full rounded-xl border-2 text-white font-semibold border-white bg-gradient-to-br from-pelorous-600 to-pelorous-400 hover:from-pelorous-500 hover:to-pelorous-300 text-sm px-5 py-2.5 text-center"
+                className="w-full rounded-xl border-2 text-white font-semibold border-white bg-gradient-to-br from-pelorous-600 to-pelorous-400 hover:from-pelorous-500 hover:to-pelorous-300 text-lg px-5 py-2.5 text-center"
               >
                 {userStatus === 'loading'
                   ? 'Processing...'

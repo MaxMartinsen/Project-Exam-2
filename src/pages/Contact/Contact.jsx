@@ -1,7 +1,7 @@
 function Contact() {
   return (
-    <section className="bg-white">
-      <div className="container px-6 py-12 mx-auto">
+    <section className="pt-24 pb-3">
+      <div className="max-w-screen-xxl px-6 py-10 mx-auto">
         <div>
           <p className="font-medium text-blue-500">Contact us</p>
 

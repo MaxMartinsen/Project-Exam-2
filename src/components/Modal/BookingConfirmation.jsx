@@ -40,7 +40,7 @@ function BookingConfirmation({ onClose }) {
           <button
             type="button"
             onClick={() => navigate(ROUTES.BOOKINGS)}
-            className="text-white inline-flex w-full justify-center bg-gradient-to-br from-pelorous-600 to-pelorous-400 hover:from-pelorous-500 hover:to-pelorous-300  font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+            className="text-white inline-flex w-full justify-center bg-gradient-to-br from-pelorous-600 to-pelorous-400 hover:from-pelorous-500 hover:to-pelorous-300  font-semibold rounded-lg text-lg px-5 py-2.5 text-center"
           >
             Booking
           </button>
