@@ -26,7 +26,7 @@ function NumberForm({ guests, setGuests, register, maxGuests }) {
         <button
           type="button"
           onClick={handleDecrease}
-          className="bg-gradient-to-br from-pelorous-400 to-pelorous-200 hover:from-pelorous-500 hover:to-pelorous-300 rounded-s-lg p-3 h-11 focus:ring-gray-100  focus:ring-2 focus:outline-none"
+          className="bg-gradient-to-br from-pelorous-600 to-pelorous-400 hover:from-pelorous-500 hover:to-pelorous-300 rounded-s-lg p-3 h-11 focus:ring-gray-100  focus:ring-2 focus:outline-none"
         >
           <svg
             className="w-3 h-3 text-white"
@@ -59,7 +59,7 @@ function NumberForm({ guests, setGuests, register, maxGuests }) {
         <button
           type="button"
           onClick={handleIncrease}
-          className="bg-gradient-to-br from-pelorous-400 to-pelorous-200 hover:from-pelorous-500 hover:to-pelorous-300 rounded-e-lg p-3 h-11 focus:ring-gray-100 focus:ring-2 focus:outline-none"
+          className="bg-gradient-to-br from-pelorous-600 to-pelorous-400 hover:from-pelorous-500 hover:to-pelorous-300 rounded-e-lg p-3 h-11 focus:ring-gray-100 focus:ring-2 focus:outline-none"
         >
           <svg
             className="w-3 h-3 text-white"

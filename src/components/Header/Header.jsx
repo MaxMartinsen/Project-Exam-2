@@ -176,7 +176,7 @@ function Header() {
           ) : (
             <Link
               to={ROUTES.LOGIN}
-              className="w-[142px] cursor-pointer py-1 px-4 lg:py-2 lg:px-6 flex items-center  justify-center rounded-xl border-2 text-white font-semibold text-lg lg:text-xl border-white bg-gradient-to-br from-pelorous-400 to-pelorous-200 hover:from-pelorous-500 hover:to-pelorous-300"
+              className="w-[142px] cursor-pointer py-1 px-4 lg:py-2 lg:px-6 flex items-center  justify-center rounded-xl border-2 text-white font-semibold text-lg lg:text-xl border-white bg-gradient-to-br from-pelorous-600 to-pelorous-400 hover:from-pelorous-500 hover:to-pelorous-300"
             >
               Sign in
             </Link>

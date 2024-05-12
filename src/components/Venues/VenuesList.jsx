@@ -117,7 +117,7 @@ function VenuesList({ searchQuery, filterOptions, onFilterChange }) {
                           </span>
                         </div>
                         <div className="flex flex-col items-end">
-                          <button className="cursor-pointer w-fit py-1 px-4 lg:py-2 lg:px-6 flex  items-center rounded-xl border-2 text-white font-semibold text-lg lg:text-xl border-white bg-gradient-to-br from-pelorous-400 to-pelorous-200 hover:from-pelorous-500 hover:to-pelorous-300">
+                          <button className="cursor-pointer w-fit py-1 px-4 lg:py-2 lg:px-6 flex  items-center rounded-xl border-2 text-white font-semibold text-lg lg:text-xl border-white bg-gradient-to-br from-pelorous-600 to-pelorous-400 hover:from-pelorous-500 hover:to-pelorous-300">
                             See availability
                             <FaArrowRight className="ml-6" />
                           </button>
@@ -133,7 +133,7 @@ function VenuesList({ searchQuery, filterOptions, onFilterChange }) {
             {displayedVenues.length < filteredVenues.length && (
               <div className="flex items-center justify-center">
                 <button
-                  className="cursor-pointer w-fit py-1 px-4 lg:py-2 lg:px-6 flex  items-center rounded-xl border-2 text-white font-semibold text-lg lg:text-xl border-white bg-gradient-to-br from-pelorous-400 to-pelorous-200 hover:from-pelorous-500 hover:to-pelorous-300"
+                  className="cursor-pointer w-fit py-1 px-4 lg:py-2 lg:px-6 flex  items-center rounded-xl border-2 text-white font-semibold text-lg lg:text-xl border-white bg-gradient-to-br from-pelorous-600 to-pelorous-400 hover:from-pelorous-500 hover:to-pelorous-300"
                   onClick={handleLoadMore}
                 >
                   More Venues
