@@ -43,13 +43,16 @@ function ImageForm({ images, onImagesChange }) {
               )}
               <div className="relative w-full">
                 <input
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 block w-full ps-4 p-2.5"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-pelorous-500 block w-full ps-4 p-2.5"
                   type="url"
+                  id="image"
                   placeholder="Image URL"
                   value={image.url}
                   onChange={(e) => handleImageChange(index, e.target.value)}
                 />
-                <label className="sr-only">Image</label>
+                <label htmlFor="image" className="sr-only">
+                  Image
+                </label>
               </div>
             </div>
             <div>

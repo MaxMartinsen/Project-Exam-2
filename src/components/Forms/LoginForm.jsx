@@ -90,7 +90,7 @@ function LoginForm() {
                   name="email"
                   id="email"
                   required
-                  className="bg-white/45 border-white border-2 rounded-xl text-fuscous-gray-700 text-sm font-semibold focus:ring-0 focus:border-pelorous-300 block w-full py-2 px-4 "
+                  className="bg-white/45 border-white border-2 rounded-xl text-fuscous-gray-700 text-sm font-semibold focus:ring-0 focus:border-pelorous-300 block w-full py-2 px-4"
                   placeholder="name@stud.noroff.no"
                   value={values.email}
                   onChange={handleChange}

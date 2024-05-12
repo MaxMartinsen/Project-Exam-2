@@ -16,7 +16,7 @@ function ImageModal({ images, isOpen, onClose }) {
   return (
     <>
       <div className="fixed z-50 inset-0 bg-black bg-opacity-50 flex justify-center items-center">
-        <div className="relative bg-white rounded-2xl shadow max-w-[300px] sm:max-w-[370px] md:max-w-[700px] xl:max-w-[1000px] px-3">
+        <div className="relative bg-white rounded-2xl shadow max-w-[300px] sm:max-w-[370px] md:max-w-[700px] xl:max-w-[1000px]">
           <div className="relative p-4 text-center bg-white rounded-2xl shadow sm:p-5">
             <button
               onClick={onClose}

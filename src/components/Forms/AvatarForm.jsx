@@ -65,7 +65,7 @@ function AvatarForm({
                 <button
                   type="button"
                   onClick={handleClearAvatarUrl}
-                  className="text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+                  className="text-white inline-flex items-center border-white bg-gradient-to-br from-pelorous-600 to-pelorous-400 hover:from-pelorous-500 hover:to-pelorous-300 font-semibold rounded-lg text-sm px-5 py-2.5 text-center"
                 >
                   <svg
                     className="me-1 -ms-1 w-5 h-5"
@@ -100,7 +100,7 @@ function AvatarForm({
             <button
               type="submit"
               disabled={isLoading}
-              className="text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+              className="text-white inline-flex items-center border-white bg-gradient-to-br from-pelorous-600 to-pelorous-400 hover:from-pelorous-500 hover:to-pelorous-300 font-semibold rounded-lg text-sm px-5 py-2.5 text-center"
             >
               <svg
                 className="me-1 -ms-1 w-5 h-5"

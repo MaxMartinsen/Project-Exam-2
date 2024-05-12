@@ -1,24 +1,121 @@
+import { useState } from 'react';
+import ContactConfirmation from '../../components/Modal/ContactConfirmation';
+
 function Contact() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [email, setEmail] = useState('');
+  const [message, setMessage] = useState('');
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    setIsModalOpen(true);
+    setFirstName('');
+    setLastName('');
+    setEmail('');
+    setMessage('');
+  };
   return (
     <section className="pt-24 pb-3">
       <div className="max-w-screen-xxl px-6 py-10 mx-auto">
         <div>
-          <p className="font-medium text-blue-500">Contact us</p>
-
-          <h1 className="mt-2 text-2xl font-semibold text-gray-800 md:text-3xl">
+          <h1 className="text-2xl font-semibold text-gray-800 md:text-3xl">
             Chat to our friendly team
           </h1>
 
           <p className="mt-3 text-gray-500">
-            We’d love to hear from you. Please fill out this form or shoot us an
-            email.
+            We&apos;d love to hear from you.
+            <br /> Please fill out this form or shoot us an email.
           </p>
         </div>
 
         <div className="grid grid-cols-1 gap-12 mt-10 lg:grid-cols-2">
+          <div className="p-4 py-6 rounded-lg bg-white/45 md:p-8">
+            <form onSubmit={handleSubmit}>
+              <div className="-mx-2 md:items-center md:flex">
+                <div className="flex-1 px-2">
+                  <label
+                    htmlFor="firstName"
+                    className="block mb-2 text-sm text-gray-600"
+                  >
+                    First Name
+                  </label>
+                  <input
+                    value={firstName}
+                    onChange={(e) => setFirstName(e.target.value)}
+                    autoComplete="name"
+                    id="firstName"
+                    type="text"
+                    placeholder="John "
+                    className="bg-white/45 border-white border-2 rounded-xl text-fuscous-gray-700 text-sm font-semibold focus:ring-0 focus:border-pelorous-300 block w-full py-2 px-4"
+                  />
+                </div>
+
+                <div className="flex-1 px-2 mt-4 md:mt-0">
+                  <label
+                    htmlFor="lastName"
+                    className="block mb-2 text-sm text-gray-600"
+                  >
+                    Last Name
+                  </label>
+                  <input
+                    value={lastName}
+                    onChange={(e) => setLastName(e.target.value)}
+                    id="lastName"
+                    type="text"
+                    placeholder="Doe"
+                    className="bg-white/45 border-white border-2 rounded-xl text-fuscous-gray-700 text-sm font-semibold focus:ring-0 focus:border-pelorous-300 block w-full py-2 px-4"
+                  />
+                </div>
+              </div>
+
+              <div className="mt-4">
+                <label
+                  htmlFor="email"
+                  className="block mb-2 text-sm text-gray-600"
+                >
+                  Email address
+                </label>
+                <input
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  autoComplete="email"
+                  id="email"
+                  type="email"
+                  placeholder="johndoe@stud.noroff.no"
+                  className="bg-white/45 border-white border-2 rounded-xl text-fuscous-gray-700 text-sm font-semibold focus:ring-0 focus:border-pelorous-300 block w-full py-2 px-4"
+                />
+              </div>
+
+              <div className="w-full mt-4">
+                <label
+                  htmlFor="textarea"
+                  className="block mb-2 text-sm text-gray-600"
+                >
+                  Message
+                </label>
+                <textarea
+                  value={message}
+                  onChange={(e) => setMessage(e.target.value)}
+                  id="textarea"
+                  className="block w-full h-32 px-5 py-2.5 mt-2 text-sm font-semibold text-fuscous-gray-700 bg-white/45 border-2 border-white rounded-lg md:h-56 focus:border-pelorous-300  focus:ring-0"
+                  placeholder="Message"
+                ></textarea>
+              </div>
+
+              <button
+                type="submit"
+                className="w-full px-6 py-3 mt-4 text-lg font-semibold tracking-wide text-white capitalize transition-colors duration-300 transform rounded-xl border-2 border-white bg-gradient-to-br from-pelorous-600 to-pelorous-400 hover:from-pelorous-500 hover:to-pelorous-300"
+              >
+                Send message
+              </button>
+            </form>
+          </div>
+
           <div className="grid grid-cols-1 gap-12 md:grid-cols-2">
             <div>
-              <span className="inline-block p-3 text-blue-500 rounded-full bg-blue-100/80">
+              <span className="inline-block p-3 text-pelorous-500 rounded-full bg-white/45">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -41,11 +138,13 @@ function Contact() {
               <p className="mt-2 text-sm text-gray-500">
                 Our friendly team is here to help.
               </p>
-              <p className="mt-2 text-sm text-blue-500">hello@merakiui.com</p>
+              <p className="mt-2 text-sm text-pelorous-500">
+                post@holidaze-venue.netlify.app
+              </p>
             </div>
 
             <div>
-              <span className="inline-block p-3 text-blue-500 rounded-full bg-blue-100/80">
+              <span className="inline-block p-3 text-pelorous-500 rounded-full bg-white/45">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -73,11 +172,11 @@ function Contact() {
               <p className="mt-2 text-sm text-gray-500">
                 Our friendly team is here to help.
               </p>
-              <p className="mt-2 text-sm text-blue-500">Start new chat</p>
+              <p className="mt-2 text-sm text-pelorous-500">Start new chat</p>
             </div>
 
             <div>
-              <span className="inline-block p-3 text-blue-500 rounded-full bg-blue-100/80">
+              <span className="inline-block p-3 text-pelorous-500 rounded-full bg-white/45">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -105,13 +204,13 @@ function Contact() {
               <p className="mt-2 text-sm text-gray-500">
                 Come say hello at our office HQ.
               </p>
-              <p className="mt-2 text-sm text-blue-500">
+              <p className="mt-2 text-sm text-pelorous-500">
                 100 Smith Street Collingwood VIC 3066 AU
               </p>
             </div>
 
             <div>
-              <span className="inline-block p-3 text-blue-500 rounded-full bg-blue-100/80">
+              <span className="inline-block p-3 text-pelorous-500 rounded-full bg-white/45">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -134,64 +233,16 @@ function Contact() {
               <p className="mt-2 text-sm text-gray-500">
                 Mon-Fri from 8am to 5pm.
               </p>
-              <p className="mt-2 text-sm text-blue-500">+1 (555) 000-0000</p>
+              <p className="mt-2 text-sm text-pelorous-500">
+                +1 (555) 000-0000
+              </p>
             </div>
-          </div>
-
-          <div className="p-4 py-6 rounded-lg bg-gray-50 md:p-8">
-            <form>
-              <div className="-mx-2 md:items-center md:flex">
-                <div className="flex-1 px-2">
-                  <label className="block mb-2 text-sm text-gray-600">
-                    First Name
-                  </label>
-                  <input
-                    type="text"
-                    placeholder="John "
-                    className="block w-full px-5 py-2.5 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-lg focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
-                  />
-                </div>
-
-                <div className="flex-1 px-2 mt-4 md:mt-0">
-                  <label className="block mb-2 text-sm text-gray-600">
-                    Last Name
-                  </label>
-                  <input
-                    type="text"
-                    placeholder="Doe"
-                    className="block w-full px-5 py-2.5 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-lg focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
-                  />
-                </div>
-              </div>
-
-              <div className="mt-4">
-                <label className="block mb-2 text-sm text-gray-600">
-                  Email address
-                </label>
-                <input
-                  type="email"
-                  placeholder="johndoe@example.com"
-                  className="block w-full px-5 py-2.5 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-lg focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
-                />
-              </div>
-
-              <div className="w-full mt-4">
-                <label className="block mb-2 text-sm text-gray-600">
-                  Message
-                </label>
-                <textarea
-                  className="block w-full h-32 px-5 py-2.5 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-lg md:h-56 focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
-                  placeholder="Message"
-                ></textarea>
-              </div>
-
-              <button className="w-full px-6 py-3 mt-4 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-500 rounded-lg hover:bg-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50">
-                Send message
-              </button>
-            </form>
           </div>
         </div>
       </div>
+      {isModalOpen && (
+        <ContactConfirmation onClose={() => setIsModalOpen(false)} />
+      )}
     </section>
   );
 }

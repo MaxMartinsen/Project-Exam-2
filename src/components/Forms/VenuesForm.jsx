@@ -149,7 +149,7 @@ function VenuesForm({ mode, initialData }) {
               value={formData.name}
               onChange={handleChange}
               required
-              className="bg-gray-50 mt-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 block w-full ps-4 p-2.5"
+              className="bg-gray-50 mt-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-pelorous-500 block w-full ps-4 p-2.5"
             />
           </div>
           <h2 className="mb-4 font-semibold text-gray-900">Location</h2>
@@ -165,7 +165,7 @@ function VenuesForm({ mode, initialData }) {
                 onChange={handleChange}
                 id="address"
                 type="text"
-                className="bg-gray-50 mt-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 block w-full ps-4 p-2.5"
+                className="bg-gray-50 mt-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-pelorous-500 block w-full ps-4 p-2.5"
               />
             </div>
             <div className="md:max-w-64 ">
@@ -179,7 +179,7 @@ function VenuesForm({ mode, initialData }) {
                 onChange={handleChange}
                 id="city"
                 type="text"
-                className="bg-gray-50 mt-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 block w-full ps-4 p-2.5"
+                className="bg-gray-50 mt-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-pelorous-500 block w-full ps-4 p-2.5"
               />
             </div>
             <div className="md:max-w-32 ">
@@ -193,7 +193,7 @@ function VenuesForm({ mode, initialData }) {
                 onChange={handleChange}
                 id="zip"
                 type="text"
-                className="bg-gray-50 mt-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 block w-full ps-4 p-2.5"
+                className="bg-gray-50 mt-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-pelorous-500 block w-full ps-4 p-2.5"
               />
             </div>
             <div className="md:w-80 ">
@@ -207,7 +207,7 @@ function VenuesForm({ mode, initialData }) {
                 onChange={handleChange}
                 id="country"
                 type="text"
-                className="bg-gray-50 mt-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 block w-full ps-4 p-2.5"
+                className="bg-gray-50 mt-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-pelorous-500 block w-full ps-4 p-2.5"
               />
             </div>
             <div className="md:max-w-64 ">
@@ -224,7 +224,7 @@ function VenuesForm({ mode, initialData }) {
                 onChange={handleChange}
                 id="continent"
                 type="text"
-                className="bg-gray-50 mt-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 block w-full ps-4 p-2.5"
+                className="bg-gray-50 mt-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-pelorous-500 block w-full ps-4 p-2.5"
               />
             </div>
           </div>
@@ -239,7 +239,7 @@ function VenuesForm({ mode, initialData }) {
                   checked={formData.wifi}
                   onChange={handleChange}
                   id="meta-checkbox-wifi"
-                  className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
+                  className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-pelorous-500"
                 />
                 <label
                   htmlFor="meta-checkbox-wifi"
@@ -257,7 +257,7 @@ function VenuesForm({ mode, initialData }) {
                   checked={formData.parking}
                   onChange={handleChange}
                   id="meta-checkbox-parking"
-                  className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
+                  className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-pelorous-500"
                 />
                 <label
                   htmlFor="meta-checkbox-parking"
@@ -275,7 +275,7 @@ function VenuesForm({ mode, initialData }) {
                   checked={formData.breakfast}
                   onChange={handleChange}
                   id="meta-checkbox-breakfast"
-                  className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
+                  className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-pelorous-500"
                 />
                 <label
                   htmlFor="meta-checkbox-breakfast"
@@ -293,7 +293,7 @@ function VenuesForm({ mode, initialData }) {
                   checked={formData.pets}
                   onChange={handleChange}
                   id="meta-checkbox-pets"
-                  className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
+                  className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-pelorous-500"
                 />
                 <label
                   htmlFor="meta-checkbox-pets"
@@ -324,7 +324,7 @@ function VenuesForm({ mode, initialData }) {
                   name="maxGuests"
                   value={formData.maxGuests}
                   onChange={handleChange}
-                  className="bg-gray-50 mt-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 block w-full ps-10 p-2.5"
+                  className="bg-gray-50 mt-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-pelorous-500 block w-full ps-10 p-2.5"
                   min="1"
                   max="999"
                   placeholder="1 - 999"
@@ -347,7 +347,7 @@ function VenuesForm({ mode, initialData }) {
                     name="rating"
                     value={formData.rating}
                     onChange={handleChange}
-                    className="bg-gray-50 mt-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5"
+                    className="bg-gray-50 mt-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-pelorous-500 focus:border-pelorous-500 block w-full ps-10 p-2.5"
                     placeholder="1 - 5"
                     min="1"
                     max="5"
@@ -371,7 +371,7 @@ function VenuesForm({ mode, initialData }) {
                     value={formData.price}
                     onChange={handleChange}
                     aria-describedby="helper-text-explanation"
-                    className="bg-gray-50 mt-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5"
+                    className="bg-gray-50 mt-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-pelorous-500 focus:border-pelorous-500 block w-full ps-10 p-2.5"
                     placeholder="Enter price per night"
                     min="1"
                     required
@@ -394,7 +394,7 @@ function VenuesForm({ mode, initialData }) {
               onChange={handleChange}
               id="description"
               rows="4"
-              className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+              className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-pelorous-500 focus:border-pelorous-500"
               placeholder="Write your thoughts here..."
             ></textarea>
           </div>
