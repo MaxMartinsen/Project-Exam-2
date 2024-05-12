@@ -1,7 +1,20 @@
-// src/components/Forms/ImageForm.jsx
 import { CgTrash } from 'react-icons/cg';
 import { TbPhotoPlus } from 'react-icons/tb';
+
 import DEFAULT_IMAGE from '../../assets/image/default-image.png';
+
+/**
+ * ImageForm component allows users to dynamically manage a list of images. Users can add new images,
+ * update existing ones, or remove them. It is designed to handle image URLs and provide visual feedback
+ * by displaying a thumbnail of the entered URL.
+ *
+ * @param {Object} props - The props passed to the component.
+ * @param {Array} props.images - An array of objects, each containing the properties `url` and `alt` for each image.
+ * @param {Function} props.onImagesChange - Callback function that updates the state in the parent component when the images change.
+ *
+ * @returns {JSX.Element} - A form that allows users to manipulate image URLs interactively. It displays a set of input fields
+ * for entering URLs, buttons to remove or add fields, and a preview of the image from the entered URL.
+ */
 
 function ImageForm({ images, onImagesChange }) {
   const handleImageChange = (index, value) => {

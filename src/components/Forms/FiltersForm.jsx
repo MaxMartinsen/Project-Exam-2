@@ -1,5 +1,18 @@
 import { useState, useEffect } from 'react';
 
+/**
+ * FiltersForm component provides a set of inputs for filtering data based on specific criteria like amenities
+ * and price range. It includes checkboxes for amenities and input fields for minimum and maximum price.
+ * The form auto-updates the filters in the parent component through a callback function upon any change.
+ *
+ * @param {Object} props - The props passed to the component.
+ * @param {Function} props.onFilterChange - Callback function that is called whenever any filter value changes.
+ * This function sends the updated filters back to the parent component.
+ *
+ * @returns {JSX.Element} A form with various filters that can be applied to search queries. Each input is managed
+ * by local state and updates are propagated back to the parent via the `onFilterChange` callback.
+ */
+
 function FiltersForm({ onFilterChange }) {
   const [breakfast, setBreakfast] = useState(false);
   const [pets, setPets] = useState(false);

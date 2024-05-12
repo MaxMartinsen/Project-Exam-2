@@ -1,5 +1,12 @@
 import aboutImg from '../../assets/image/default-about.png';
 
+/**
+ * About component that provides a detailed description of the holidaze service.
+ * This component can optionally display an image and text.
+ *
+ * @returns {JSX.Element} The rendered About component.
+ */
+
 function About() {
   return (
     <section className="pt-24 pb-3">

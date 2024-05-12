@@ -1,5 +1,23 @@
 import DEFAULT_AVATAR from '../../assets/image/default-profile.png';
 
+/**
+ * AvatarForm component allows users to update their profile picture by providing an image URL.
+ * It features an input field for the URL, a preview of the current or default avatar, and buttons
+ * for clearing the input field or submitting the new avatar. The form is embedded in a modal layout.
+ *
+ * @param {Object} props - The props passed to the component.
+ * @param {string} props.avatarUrl - The URL of the avatar, used to populate the input field and preview image.
+ * @param {boolean} props.isLoading - Indicates if the form submission is in progress, disabling the submit button during processing.
+ * @param {string} props.error - An error message to be displayed if the update fails.
+ * @param {Function} props.handleCloseModal - Function to close the modal containing the form.
+ * @param {Function} props.handleSubmit - Function to handle the submission of the form.
+ * @param {Function} props.handleAvatarUrlChange - Function to update the state of the avatar URL upon input change.
+ * @param {Function} props.handleClearAvatarUrl - Function to clear the avatar URL input field.
+ *
+ * @returns {JSX.Element} A modal with a form that allows users to update their avatar by providing a URL,
+ * previewing the avatar, and submitting the changes. Displays an error message if the update fails.
+ */
+
 function AvatarForm({
   avatarUrl,
   isLoading,

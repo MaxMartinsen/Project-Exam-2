@@ -1,15 +1,42 @@
-// src/components/Venues/VenuesItem.jsx
-
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+
 import { createBooking } from '../../features/booking/bookingSlice';
+
 import { formatAddress } from '../../utils/addressUtils';
+
 import Rating from '../Rating/Rating';
 import VenuesDetails from './VenuesDetails';
 import VenueBadge from '../Badge/VenueBadge';
 import BookingForm from '../Forms/BookingForm';
+
 import IMAGE from '../../assets/image/default-image.png';
+
 import ImageModal from '../Modal/ImageModal';
+
+/**
+ * VenuesItem component provides a detailed view of a specific venue. It displays rich information about the venue,
+ * including images, ratings, description, and booking options. It supports image enlargement via a modal and handles booking
+ * operations directly.
+ *
+ * @param {Object} props - The props passed to the component.
+ * @param {Object} props.venue - The venue object containing all details of a venue such as name, description, media, bookings, etc.
+ * @param {string} props.venue.name - Name of the venue.
+ * @param {string} props.venue.description - Description of the venue.
+ * @param {Array} props.venue.media - Array of media objects for the venue; each object contains a URL and an alt text.
+ * @param {number} props.venue.rating - Current rating of the venue.
+ * @param {Array} props.venue.bookings - Existing bookings for the venue.
+ * @param {number} props.venue.maxGuests - Maximum number of guests the venue can accommodate.
+ * @param {number} props.venue.price - Price per night for booking the venue.
+ * @param {Object} props.venue.meta - Contains metadata about the venue such as available facilities.
+ * @param {Object} props.venue.owner - Owner of the venue, includes information like name and avatar.
+ *
+ * @returns {JSX.Element} Renders a detailed view of a venue with interactive elements such as a booking form,
+ * an image modal for viewing pictures, and venue details including a badge showcasing facilities.
+ *
+ * The component handles state for modal visibility and the currently displayed images in the modal.
+ * It uses Redux actions to manage bookings and Redux state for user authentication data needed for booking operations.
+ */
 
 function VenuesItem({ venue }) {
   const dispatch = useDispatch();
@@ -32,7 +59,6 @@ function VenuesItem({ venue }) {
   };
 
   const handleBooking = async (bookingData) => {
-    console.log('Handle booking with data:', bookingData);
     try {
       await dispatch(createBooking({ bookingData, token, apiKey }));
     } catch (error) {

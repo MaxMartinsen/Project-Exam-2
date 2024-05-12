@@ -1,6 +1,14 @@
 import { useState } from 'react';
 import ContactConfirmation from '../../components/Modal/ContactConfirmation';
 
+/**
+ * Contact component to handle user inquiries through a form.
+ * Manages form state and handles submission.
+ *
+ * @param {Object} props - The component props.
+ * @returns {JSX.Element} The Contact component that includes input fields for first name, last name, email, and a message textarea, with a submission button that triggers a modal confirmation.
+ */
+
 function Contact() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [firstName, setFirstName] = useState('');

@@ -1,4 +1,3 @@
-// src/components/Forms/RegisterForm.jsx
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -11,6 +10,16 @@ import {
   validateEmail,
   validatePassword,
 } from '../../utils/validation';
+
+/**
+ * RegisterForm component allows new users to sign up by entering their personal information and credentials.
+ * It validates user input before submission and provides feedback on the registration process. This form also
+ * includes an option for users to register as venue managers.
+ *
+ *
+ * @returns {JSX.Element} - A structured form that allows new users to register by providing their name, email,
+ * and password. The form includes validation, error feedback, and conditional navigation based on the user's state.
+ */
 
 function RegisterForm() {
   const dispatch = useDispatch();
@@ -39,7 +48,6 @@ function RegisterForm() {
 
     const { name, email, password } = values;
 
-    // Validation
     const newErrors = {};
     if (!validateName(name))
       newErrors.name =

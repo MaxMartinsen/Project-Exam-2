@@ -1,11 +1,22 @@
-// src/components/Forms/LoginForm.jsx
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
+
 import { loginUser } from '../../features/user/userSlice';
 import { fetchUserProfile } from '../../features/profile/profileSlice';
-import { Link, useNavigate } from 'react-router-dom';
+
 import { ROUTES } from '../../utils/routes';
 import { validateEmail, validatePassword } from '../../utils/validation';
+
+/**
+ * LoginForm component provides a user interface for signing into the application.
+ * It facilitates the entry of user credentials, validates them, and handles the login process.
+ *
+ * @param {Object} props - The props passed to the component are not specified as the component does not directly use props.
+ *
+ * @returns {JSX.Element} - A form that allows users to input their email and password, submit the form, and receive feedback on the status of their login attempt.
+ *
+ */
 
 function LoginForm() {
   const dispatch = useDispatch();

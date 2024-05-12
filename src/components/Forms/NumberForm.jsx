@@ -1,21 +1,31 @@
-// src/components/Forms/NumberForm.jsx
+/**
+ * NumberForm component provides a user interface for adjusting the number of guests within a specified range.
+ * It includes "+" and "-" buttons to increment and decrement the guest count, as well as an input field for direct
+ * manipulation of the number. The component ensures that the guest count does not exceed the maximum allowed guests
+ * and does not drop below one.
+ *
+ * @param {Object} props - The properties passed to the component.
+ * @param {number} props.guests - The current number of guests.
+ * @param {Function} props.setGuests - A function to update the number of guests.
+ * @param {Function} props.register - Method from react-hook-form to register the input field for validation.
+ * @param {number} props.maxGuests - The maximum number of guests allowed.
+ *
+ * @returns {JSX.Element} A component with buttons for increasing and decreasing the guest count, and an input field for direct entry.
+ */
 
 function NumberForm({ guests, setGuests, register, maxGuests }) {
   const handleDecrease = () => {
     setGuests((g) => Math.max(1, g - 1));
-    console.log('Decreased guests count:', Math.max(1, guests - 1));
   };
 
   const handleIncrease = () => {
     setGuests((g) => Math.min(maxGuests, g + 1));
-    console.log('Increased guests count:', Math.min(maxGuests, guests + 1));
   };
 
   const handleChange = (e) => {
     const newGuests = parseInt(e.target.value, 10);
     const validGuests = Math.min(Math.max(1, newGuests), maxGuests);
     setGuests(validGuests);
-    console.log('Changed guests count:', validGuests);
   };
   return (
     <>

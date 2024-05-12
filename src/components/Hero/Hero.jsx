@@ -1,6 +1,19 @@
-// src/components/Hero/Hero.jsx
-import SearchForm from '../Forms/SearchForm';
 import { useSelector } from 'react-redux';
+
+import SearchForm from '../Forms/SearchForm';
+
+/**
+ * Hero component that displays a headline and a search form.
+ * It encourages users to discover and search for getaways, hotels, and other accommodations.
+ * This component dynamically adjusts based on the user's authentication status to provide
+ * a more tailored interaction experience.
+ *
+ * @param {Object} props - The component props.
+ * @param {Function} props.onSearch - Callback function that handles the search input submitted by the user.
+ *                                    This function is passed down to the SearchForm component.
+ * @returns {JSX.Element} The Hero component, which consists of a title, subtitle, and a search form that
+ *                        uses Redux state to check if the user is logged in.
+ */
 
 function Hero({ onSearch }) {
   const isLoggedIn = useSelector((state) => !!state.user.currentUser);

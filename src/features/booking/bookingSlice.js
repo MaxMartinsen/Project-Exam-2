@@ -30,10 +30,6 @@ export const createBooking = createAsyncThunk(
   'bookings/createBooking',
   async ({ bookingData, token, apiKey }, { rejectWithValue }) => {
     try {
-      console.log('Creating booking with data:', bookingData);
-      console.log('Authorization token:', token);
-      console.log('API Key:', apiKey);
-
       const response = await fetch(API_BOOKINGS_URL, {
         method: 'POST',
         headers: {
@@ -49,8 +45,6 @@ export const createBooking = createAsyncThunk(
       }
 
       const data = await response.json();
-      console.log('Booking response:', response);
-      console.log('Booking created successfully:', data);
 
       return data.data || data;
     } catch (error) {

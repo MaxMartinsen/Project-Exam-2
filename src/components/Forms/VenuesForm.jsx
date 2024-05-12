@@ -1,4 +1,3 @@
-// src/components/Forms/VenuesForm.jsx
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { createVenue, updateVenue } from '../../features/venues/venuesSlice';
@@ -7,6 +6,19 @@ import { FaStarHalfAlt } from 'react-icons/fa';
 import { FaMoneyBill1Wave } from 'react-icons/fa6';
 import ImageForm from './ImageForm';
 import VenueConfirmation from '../Modal/VenueConfirmation';
+
+/**
+ * VenuesForm component handles the creation and updating of venue details.
+ * It provides a comprehensive form for entering venue information, managing images, and toggling amenities.
+ * The form is capable of operating in two modes: 'create' and 'edit', determined by the `mode` prop.
+ *
+ * @param {Object} props - The props passed to the component.
+ * @param {string} props.mode - A string indicating the form mode, either 'create' or 'edit', to configure form behavior.
+ * @param {Object} props.initialData - The initial data for the venue in 'edit' mode to pre-fill the form fields.
+ *                                  This should include all necessary venue details such as name, location, amenities, etc.
+ *
+ * @returns {JSX.Element} - A form that adapts to either creating or updating venue details with various input controls and visual feedback mechanisms.
+ */
 
 function VenuesForm({ mode, initialData }) {
   const dispatch = useDispatch();

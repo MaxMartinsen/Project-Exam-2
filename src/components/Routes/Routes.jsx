@@ -12,6 +12,28 @@ import Settings from '../../pages/Settings/Settings';
 import BookingsProfile from '../../pages/Bookings/BookingsProfile';
 import ManagerProfile from '../../pages/Manager/ManagerProfile';
 
+/**
+ * AppRoutes component sets up the routing for the entire application using React Router.
+ * It defines the main navigation paths and associates them with their respective page components.
+ * All routes are nested within a single Layout component to maintain a consistent layout across different pages.
+ *
+ * Routes are defined using a constants file (`ROUTES`) which holds the paths to ensure consistency and reusability.
+ *
+ * @returns {JSX.Element} Renders the routing structure encapsulated within the Layout component.
+ * This setup allows for the implementation of a common layout across various pages like Home, About, Contact, etc.
+ *
+ * Detailed Routes:
+ * - Home: The main landing page of the application.
+ * - About: Provides information about the application or service.
+ * - Contact: Contact form and contact information page.
+ * - Venue: Detailed page for individual venues.
+ * - Login: User login page.
+ * - Register: New user registration page.
+ * - Settings: User-specific settings page.
+ * - BookingsProfile: User page to view and manage bookings.
+ * - ManagerProfile: Venue manager page to manage their listings.
+ */
+
 function AppRoutes() {
   return (
     <Routes>
