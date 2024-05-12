@@ -134,17 +134,14 @@ function VenuesForm({ mode, initialData }) {
   return (
     <section className="container px-4 mx-auto">
       <div className="flex items-center gap-x-3">
-        <h2 className="text-lg font-medium text-gray-800 dark:text-white">
+        <h2 className="text-lg font-medium text-gray-800">
           {mode === 'edit' ? 'Update Venue' : 'Create Venue'}
         </h2>
       </div>
       <div>
         <form onSubmit={handleSubmit} className="w-full h-full space-y-5">
           <div className="mt-4 md:max-w-64">
-            <label
-              htmlFor="name"
-              className="block text-sm text-gray-500 dark:text-gray-300"
-            >
+            <label htmlFor="name" className="block text-sm text-gray-500">
               Venue name
             </label>
 
@@ -164,10 +161,7 @@ function VenuesForm({ mode, initialData }) {
           <h2 className="mb-4 font-semibold text-gray-900">Location</h2>
           <div className="flex flex-col md:flex-row gap-4">
             <div className="md:w-96">
-              <label
-                htmlFor="address"
-                className="block text-sm text-gray-500 dark:text-gray-300"
-              >
+              <label htmlFor="address" className="block text-sm text-gray-500">
                 Adress
               </label>
 
@@ -185,10 +179,7 @@ function VenuesForm({ mode, initialData }) {
               </p>
             </div>
             <div className="md:max-w-64 ">
-              <label
-                htmlFor="city"
-                className="block text-sm text-gray-500 dark:text-gray-300"
-              >
+              <label htmlFor="city" className="block text-sm text-gray-500">
                 City
               </label>
 
@@ -206,10 +197,7 @@ function VenuesForm({ mode, initialData }) {
               </p>
             </div>
             <div className="md:max-w-32 ">
-              <label
-                htmlFor="zip"
-                className="block text-sm text-gray-500 dark:text-gray-300"
-              >
+              <label htmlFor="zip" className="block text-sm text-gray-500">
                 Zip
               </label>
 
@@ -227,10 +215,7 @@ function VenuesForm({ mode, initialData }) {
               </p>
             </div>
             <div className="md:w-80 ">
-              <label
-                htmlFor="country"
-                className="block text-sm text-gray-500 dark:text-gray-300"
-              >
+              <label htmlFor="country" className="block text-sm text-gray-500">
                 Country
               </label>
 
@@ -250,7 +235,7 @@ function VenuesForm({ mode, initialData }) {
             <div className="md:max-w-64 ">
               <label
                 htmlFor="continent"
-                className="block text-sm text-gray-500 dark:text-gray-300"
+                className="block text-sm text-gray-500"
               >
                 Continent
               </label>
@@ -374,7 +359,7 @@ function VenuesForm({ mode, initialData }) {
               </div>
               <p
                 id="helper-text-explanation"
-                className="mt-1 text-sm text-gray-500 dark:text-gray-400"
+                className="mt-1 text-sm text-gray-500"
               >
                 Please select a digit number from 1 to 999.
               </p>
@@ -402,7 +387,7 @@ function VenuesForm({ mode, initialData }) {
                 </div>
                 <p
                   id="helper-text-explanation"
-                  className="mt-1 text-sm text-gray-500 dark:text-gray-400"
+                  className="mt-1 text-sm text-gray-500"
                 >
                   Please select a digit number from 1 to 5.
                 </p>
@@ -432,7 +417,7 @@ function VenuesForm({ mode, initialData }) {
                 </div>
                 <p
                   id="helper-text-explanation"
-                  className="mt-1 text-sm text-gray-500 dark:text-gray-400"
+                  className="mt-1 text-sm text-gray-500"
                 >
                   Please select a digit number from 1.
                 </p>
@@ -443,7 +428,7 @@ function VenuesForm({ mode, initialData }) {
           <div>
             <label
               htmlFor="description"
-              className="block mb-2 text-sm font-medium text-gray-500 dark:text-white"
+              className="block mb-2 text-sm font-medium text-gray-500"
             >
               Description
             </label>
@@ -457,7 +442,7 @@ function VenuesForm({ mode, initialData }) {
               placeholder="Write your thoughts here..."
             ></textarea>
 
-            <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+            <p className="mt-1 text-sm text-gray-500">
               Lorem ipsum dolor sit amet consectetur adipisicing elit.
             </p>
           </div>

@@ -5,13 +5,14 @@ import { Link } from 'react-router-dom';
 import IMAGE from '../../assets/image/default-image.png';
 import FiltersForm from '../Forms/FiltersForm';
 import { FaArrowRight } from 'react-icons/fa';
+import SkeletonList from '../Skeleton/SkeletonList';
 
 function VenuesList({ searchQuery, filterOptions, onFilterChange }) {
   // Accept the searchQuery prop
   const { venues, status, error } = useSelector((state) => state.venues);
   const [displayedVenuesCount, setDisplayedVenuesCount] = useState(12);
 
-  if (status === 'loading') return <div>Loading...</div>;
+  if (status === 'loading') return <SkeletonList />;
   if (error) return <div>Error: {error.toString()}</div>;
   if (!venues) return <div>No data available.</div>;
 

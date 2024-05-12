@@ -45,7 +45,7 @@ export const createBooking = createAsyncThunk(
       });
 
       if (!response.ok) {
-        throw new Error(`Failed to create booking: ${response.statusText}`);
+        throw new Error(`Failed to create booking ${response.statusText}`);
       }
 
       const data = await response.json();

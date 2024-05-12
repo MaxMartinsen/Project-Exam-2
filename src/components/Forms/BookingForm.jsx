@@ -12,6 +12,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { createBooking } from '../../features/booking/bookingSlice';
 import { ROUTES } from '../../utils/routes';
 import BookingConfirmation from '../Modal/BookingConfirmation';
+import BookingError from './../Modal/BookingError';
 
 function BookingForm({ bookings, venueId, maxGuests, pricePerNight }) {
   const navigate = useNavigate();
@@ -24,6 +25,8 @@ function BookingForm({ bookings, venueId, maxGuests, pricePerNight }) {
   const [isLoading, setIsLoading] = useState(false);
   const bookingSliceError = useSelector((state) => state.bookings.error);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [showErrorModal, setShowErrorModal] = useState(false);
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -32,11 +35,7 @@ function BookingForm({ bookings, venueId, maxGuests, pricePerNight }) {
     }
   }, [bookingSliceError]);
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
+  const { register, handleSubmit } = useForm();
 
   const { disabledDates } = useDisableCalendarDates({
     bookings,
@@ -64,6 +63,7 @@ function BookingForm({ bookings, venueId, maxGuests, pricePerNight }) {
     if (isLoading) return;
 
     setIsLoading(true);
+    setShowErrorModal(false);
 
     let { startDate, endDate } = range[0];
 
@@ -95,7 +95,8 @@ function BookingForm({ bookings, venueId, maxGuests, pricePerNight }) {
     const numberOfNights = (endDate - startDate) / (1000 * 60 * 60 * 24);
 
     if (numberOfNights <= 0) {
-      setBookingError('Check-out date must be later than check-in date.');
+      setBookingError('Please select the Check-out date.');
+      setIsLoading(false);
       return;
     }
 
@@ -129,15 +130,25 @@ function BookingForm({ bookings, venueId, maxGuests, pricePerNight }) {
     };
 
     try {
-      dispatch(createBooking({ bookingData, token, apiKey }));
+      const actionResult = await dispatch(
+        createBooking({ bookingData, token, apiKey })
+      );
+      const result = actionResult.payload;
 
+      if (actionResult.error || result.error) {
+        throw new Error('Booking failed');
+      }
+      setBookingError('');
       await delay(2000);
       setIsModalOpen(true);
     } catch (error) {
-      setBookingError(`Failed to create booking: ${error.message}`);
+      const errorMessage = error.message || 'Failed to create booking';
+      setBookingError(errorMessage);
+      await delay(2000);
+      setShowErrorModal(true);
     } finally {
       setIsLoading(false);
-      if (bookingError) {
+      if (!bookingError) {
         setBookingError('');
       }
     }
@@ -155,10 +166,14 @@ function BookingForm({ bookings, venueId, maxGuests, pricePerNight }) {
         onSubmit={handleSubmit(submitHandler)}
         className="flex flex-col gap-3 mt-3"
       >
-        <div className="flex flex-col justify-center mb-4 gap-4">
+        <div className="flex flex-col justify-center mb-4">
           <div className="flex justify-around">
-            <h2>Check in</h2>
-            <h2>Check out</h2>
+            <h2 className="text-xl font-semibold tracking-tight text-fuscous-gray-700">
+              Check in
+            </h2>
+            <h2 className="text-xl font-semibold tracking-tight text-fuscous-gray-700">
+              Check out
+            </h2>
           </div>
           <div>
             <DateRange
@@ -168,8 +183,8 @@ function BookingForm({ bookings, venueId, maxGuests, pricePerNight }) {
               moveRangeOnFirstSelection={false}
               months={1}
               direction="horizontal"
-              className="w-full"
-              rangeColors={['#4e577f']}
+              className="w-full rounded-b-2xl bg-white/40"
+              rangeColors={['#2f8fab']}
               minDate={new Date()}
               disabledDates={disabledDates}
             />
@@ -201,10 +216,8 @@ function BookingForm({ bookings, venueId, maxGuests, pricePerNight }) {
         {isLoggedIn ? (
           <button
             type="submit"
-            className={`w-full mt-4 px-2.5 py-4 rounded text-white font-bold text-xl ${
-              isLoading
-                ? 'bg-gray-400 cursor-not-allowed'
-                : 'bg-athens-gray-700 hover:bg-athens-gray-800 active:bg-athens-gray-900'
+            className={`w-full py-1 px-4 lg:py-2 lg:px-6 flex justify-center items-center  rounded-xl border-2 text-white font-semibold text-lg lg:text-xl border-white bg-gradient-to-br from-pelorous-400 to-pelorous-200 hover:from-pelorous-500 hover:to-pelorous-300 ${
+              isLoading ? 'cursor-not-allowed' : ''
             }`}
             disabled={isLoading}
           >
@@ -213,16 +226,19 @@ function BookingForm({ bookings, venueId, maxGuests, pricePerNight }) {
         ) : (
           <button
             type="button"
-            className="w-full mt-4 px-2.5 py-4 rounded text-white font-bold text-xl bg-athens-gray-700 hover:bg-athens-gray-800 active:bg-athens-gray-900"
+            className="w-full py-1 px-4 lg:py-2 lg:px-6 flex justify-center items-center  rounded-xl border-2 text-white font-semibold text-lg lg:text-xl border-white bg-gradient-to-br from-pelorous-400 to-pelorous-200 hover:from-pelorous-500 hover:to-pelorous-300"
             onClick={() => navigate(ROUTES.LOGIN)}
           >
             Sign in
           </button>
         )}
-        {errors.guests && (
-          <p className="text-red-500">Please enter a valid number of guests.</p>
-        )}
-        {bookingError && <p className="text-red-500">{bookingError}</p>}
+        <div className="relative">
+          {bookingError && (
+            <p className="absolute -bottom-3 left-0 text-red-500 text-sm italic mt-1">
+              {bookingError}
+            </p>
+          )}
+        </div>
         <div className="flex items-start justify-between mt-2 pt-4 border-t-4">
           <h2 className="">Total price</h2>
           <p>
@@ -233,6 +249,12 @@ function BookingForm({ bookings, venueId, maxGuests, pricePerNight }) {
       </form>
       {isModalOpen && (
         <BookingConfirmation onClose={() => setIsModalOpen(false)} />
+      )}
+      {showErrorModal && (
+        <BookingError
+          message={bookingError}
+          onClose={() => setShowErrorModal(false)}
+        />
       )}
     </>
   );

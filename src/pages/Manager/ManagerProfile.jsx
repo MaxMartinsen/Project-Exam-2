@@ -20,13 +20,13 @@ function ManagerProfile() {
     }`;
   };
   return (
-    <section className="bg-white dark:bg-gray-900">
+    <section className="bg-white">
       <div className="max-w-screen-xl px-6 py-10 mx-auto">
-        <h1 className="text-2xl font-semibold text-gray-800 capitalize lg:text-3xl dark:text-white">
+        <h1 className="text-2xl font-semibold text-gray-800 capitalize lg:text-3xl">
           Manager dashboard
         </h1>
 
-        <p className="mt-4 text-gray-500 xl:mt-6 dark:text-gray-300">
+        <p className="mt-4 text-gray-500 xl:mt-6">
           Manage your Holidaze experience
         </p>
 

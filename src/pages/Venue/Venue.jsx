@@ -4,6 +4,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { fetchVenueById } from '../../features/venues/venuesSlice';
 import VenuesItem from '../../components/Venues/VenuesItem';
 import { ROUTES } from '../../utils/routes';
+import SkeletonItem from '../../components/Skeleton/SkeletonItem';
 
 function Venue() {
   const { id } = useParams();
@@ -25,7 +26,7 @@ function Venue() {
     }
   }, [error, navigate]);
 
-  if (status === 'loading') return <div>Loading...</div>;
+  if (status === 'loading') return <SkeletonItem />;
   if (!selectedVenue) return <div>Venue not found</div>;
 
   return (
