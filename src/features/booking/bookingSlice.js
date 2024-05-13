@@ -1,8 +1,22 @@
-// src/features/booking/bookingSlice.js
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { API_BOOKINGS_URL } from '../../utils/constans';
 
-// Asynchronous thunk to fetch all bookings
+/**
+ * Booking slice that handles fetching and creating bookings through asynchronous thunks.
+ *
+ * Utilizes Redux Toolkit's createSlice and createAsyncThunk to manage state related to bookings. This includes
+ * fetching all bookings related to a specific venue and creating new bookings. Both thunks handle API interactions
+ * with proper authorization and error management. The slice also handles state updates based on the results of these
+ * actions, including loading states and errors.
+ *
+ * Exports:
+ * - fetchBookings: Async thunk for fetching bookings by venue ID.
+ * - createBooking: Async thunk for submitting a new booking to the server.
+ * - bookingsSlice.reducer: Reducer function for the bookings slice.
+ *
+ * @module bookingSlice
+ */
+
 export const fetchBookings = createAsyncThunk(
   'bookings/fetchBookings',
   async ({ token, apiKey, venueId }, { rejectWithValue }) => {

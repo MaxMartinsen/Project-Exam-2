@@ -1,5 +1,18 @@
 import { useNavigate } from 'react-router-dom';
+
 import { ROUTES } from '../../utils/routes';
+
+/**
+ * ContactConfirmation component displays a modal dialog to confirm successful submission of the contact form.
+ * It provides an affirmative response to users after they have interacted with the contact form, ensuring them
+ * that their message has been received.
+ *
+ * @param {Object} props - The properties passed to the component.
+ * @param {Function} props.onClose - A callback function that is called when the user decides to close the modal.
+ *                                   This function should handle any necessary cleanup or state resetting.
+ *
+ * @returns {JSX.Element} A modal dialog that informs the user of successful contact form submission with options to close the modal or navigate away.
+ */
 
 function ContactConfirmation({ onClose }) {
   const navigate = useNavigate();

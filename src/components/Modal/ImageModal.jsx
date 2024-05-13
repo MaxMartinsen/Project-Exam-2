@@ -2,6 +2,18 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
+/**
+ * ImageModal component showcases images in a modal overlay, supporting both single and multiple images through a carousel.
+ * It is designed to provide users with a large view of images, particularly useful in galleries or product displays.
+ *
+ * @param {Object} props - The properties passed to the component.
+ * @param {Array} props.images - An array of image objects that contain the URLs and alternative text for the images.
+ * @param {boolean} props.isOpen - A boolean flag to determine if the modal should be visible.
+ * @param {Function} props.onClose - A callback function that is called to close the modal.
+ *
+ * @returns {JSX.Element} The modal dialog displaying images either in a carousel or singly, based on the number of images.
+ */
+
 function ImageModal({ images, isOpen, onClose }) {
   const settings = {
     dots: true,

@@ -1,5 +1,12 @@
-// src/pages/Bookings/BookingsProfile.jsx
 import TabletsBookings from '../../components/Tables/TabletsBookings';
+
+/**
+ * `BookingsProfile` is a React component that serves as the main user interface for managing bookings on the Holidaze platform.
+ * It provides a comprehensive overview and management tools for user's bookings, displayed through the `TabletsBookings` component.
+ * This component acts as a dashboard where users can view and manage their booking details.
+ *
+ * @returns {JSX.Element} The BookingsProfile component, comprising a section with a header and the `TabletsBookings` component.
+ */
 
 function BookingsProfile() {
   return (
