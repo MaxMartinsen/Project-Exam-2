@@ -5,7 +5,7 @@
 Booking site built with React
 
 <div id="logo" align="center">
-  <img src="https://github.com/MaxMartinsen/Project-Exam-2/blob/main/src/assets/image/logo-holidaze.png" width="600" height="300"/>
+  <img src="https://github.com/MaxMartinsen/Project-Exam-2/blob/main/src/assets/image/logo-holidaze.png" width="600" height="250"/>
 </div>
 
 ### Intro
