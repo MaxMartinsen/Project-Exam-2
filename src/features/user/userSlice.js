@@ -1,13 +1,28 @@
-//src/features/user/userSlice.js
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { API_URL } from '../../utils/constans';
+import { API_AUTH_URL } from '../../utils/constans';
 import { clearProfile } from '../profile/profileSlice';
+
+/**
+ * User slice for managing user authentication and session.
+ * Handles user registration, login, logout, and API key generation.
+ * Stores user data in localStorage to persist session state across reloads.
+ *
+ * Exports:
+ * - createUser: Async thunk for user registration.
+ * - loginUser: Async thunk for user authentication and API key generation.
+ * - logoutUser: Async thunk for user logout and session cleanup.
+ * - userSlice.reducer: Reducer function for user state.
+ * - clearCurrentUser: Action to clear the current user state.
+ * - updateUser: Action to update the user's information in the state and localStorage.
+ *
+ * @module userSlice
+ */
 
 export const createUser = createAsyncThunk(
   'user/createUser',
   async (userData, { rejectWithValue }) => {
     try {
-      const response = await fetch(`${API_URL}/auth/register`, {
+      const response = await fetch(`${API_AUTH_URL}/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -27,7 +42,7 @@ export const loginUser = createAsyncThunk(
   'user/loginUser',
   async (userData, { rejectWithValue }) => {
     try {
-      const loginResponse = await fetch(`${API_URL}/auth/login`, {
+      const loginResponse = await fetch(`${API_AUTH_URL}/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(userData),
@@ -39,7 +54,7 @@ export const loginUser = createAsyncThunk(
 
       const accessToken = loginData.data.accessToken;
 
-      const apiKeyResponse = await fetch(`${API_URL}/auth/create-api-key`, {
+      const apiKeyResponse = await fetch(`${API_AUTH_URL}/create-api-key`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

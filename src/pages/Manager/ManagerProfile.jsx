@@ -1,9 +1,16 @@
-// src/pages/Manager/ManagerProfile.jsx
-
 import { useState } from 'react';
+
 import VenuesForm from '../../components/Forms/VenuesForm';
 import TablesProfiles from '../../components/Tables/TablesProfiles';
 import TablesVenues from '../../components/Tables/TablesVenues';
+
+/**
+ * `ManagerProfile` is a React component for the manager's dashboard on the Holidaze platform.
+ * This component allows venue managers to interact with various functionalities like viewing, editing, and creating venues,
+ * as well as managing profiles. It provides a navigation system to switch between different views based on the manager's actions.
+ *
+ * @returns {JSX.Element} Renders the managerial dashboard with capabilities to switch between different management views.
+ */
 
 function ManagerProfile() {
   const [activeView, setActiveView] = useState('venue');

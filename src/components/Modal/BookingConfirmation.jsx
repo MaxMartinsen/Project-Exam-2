@@ -1,5 +1,18 @@
 import { useNavigate } from 'react-router-dom';
+
 import { ROUTES } from '../../utils/routes';
+
+/**
+ * BookingConfirmation component displays a modal dialog to inform users that their booking has been successfully confirmed.
+ * It provides an option to close the modal and another to navigate to the user's bookings page to view the confirmed booking details.
+ *
+ * @param {Object} props - The properties passed to the component.
+ * @param {Function} props.onClose - A function that is called to close the modal. This function should handle any necessary
+ *                                    cleanup or state resetting that needs to occur upon closing the modal.
+ *
+ *
+ * @returns {JSX.Element} A modal dialog component that informs the user of a successful booking and provides navigation options.
+ */
 
 function BookingConfirmation({ onClose }) {
   const navigate = useNavigate();

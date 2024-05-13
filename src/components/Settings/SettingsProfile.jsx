@@ -1,10 +1,24 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+
 import { updateProfile } from '../../features/profile/profileSlice';
 import { updateUser } from '../../features/user/userSlice';
+
 import AvatarForm from '../Forms/AvatarForm.jsx';
+
 import DEFAULT_AVATAR from '../../assets/image/default-profile.png';
+
 import { DEFAULT_AVATAR_URL } from '../../utils/constans';
+
+/**
+ * SettingsProfile component provides a user interface for updating the current user's profile information,
+ * primarily their avatar. This component is part of the user settings page and integrates with the application's state management
+ * via Redux to fetch and update user data.
+ *
+ * @param {Object} props - The component does not use external props as it fetches data directly from the Redux store.
+ *
+ * @returns {JSX.Element} Renders a profile settings interface allowing the user to update their avatar along with feedback mechanisms.
+ */
 
 function SettingsProfile() {
   const dispatch = useDispatch();

@@ -1,3 +1,15 @@
+/**
+ * DeleteModal component presents a user interface for confirming the deletion of an item. It asks the user to confirm
+ * their intention before proceeding with a potentially destructive action, enhancing data integrity and user experience
+ * by preventing accidental deletions.
+ *
+ * @param {Object} props - The properties passed to the component.
+ * @param {Function} props.confirmDelete - A callback function that is executed when the user confirms the deletion.
+ * @param {Function} props.cancelDelete - A callback function that is executed when the user cancels the deletion.
+ *
+ * @returns {JSX.Element} The modal dialog that provides 'Yes' and 'No' options to either confirm or cancel the delete action.
+ */
+
 function DeleteModal({ confirmDelete, cancelDelete }) {
   return (
     <>

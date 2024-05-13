@@ -1,28 +1,27 @@
-// src/components/Tables/TablesProfile.jsx
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchBookingsByProfile } from '../../features/profile/profileSlice';
-import Rating from '../Rating/Rating';
+
 import { format } from 'date-fns';
+
+import { fetchBookingsByProfile } from '../../features/profile/profileSlice';
+
+import Rating from '../Rating/Rating';
+
 import { formatAddress } from '../../utils/addressUtils';
 import SkeletonItem from './../Skeleton/SkeletonItem';
 
-function calculateTotalPrice(dateFrom, dateTo, pricePerNight) {
-  if (!dateFrom || !dateTo || pricePerNight <= 0) return 0;
+import calculateTotalPrice from '../../utils/calculateTotalPrice';
+import calculateTotalNights from '../../utils/calculateTotalNights';
 
-  const timeDiff = Math.abs(dateTo - dateFrom);
-  const dayCount = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
-  return dayCount * pricePerNight;
-}
-
-// Function to calculate total nights
-function calculateTotalNights(dateFrom, dateTo) {
-  if (!dateFrom || !dateTo) return 0;
-
-  const timeDiff = Math.abs(dateTo - dateFrom);
-  const totalNights = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
-  return totalNights;
-}
+/**
+ * TablesBookings component displays a list of upcoming bookings associated with the current user's profile.
+ * It fetches bookings from the Redux store and presents them in a structured table, including detailed information
+ * such as venue name, number of guests, location, booking dates, and total price.
+ *
+ * @param {Object} props - The component does not take external props since it relies on Redux state.
+ *
+ * @returns {JSX.Element} A component that renders a table of bookings if available, or appropriate feedback for loading and error states.
+ */
 
 function TabletsBookings() {
   const dispatch = useDispatch();

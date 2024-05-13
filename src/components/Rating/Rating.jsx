@@ -1,3 +1,14 @@
+/**
+ * Rating component displays a visual representation of a rating using stars.
+ * It dynamically renders a set of star icons filled to represent the rating value against a maximum possible rating.
+ *
+ * @param {Object} props - The properties passed to the component.
+ * @param {number} props.rating - The current rating value which determines how many stars are filled.
+ * @param {number} props.maxRating - The maximum possible rating value that defines the total number of stars displayed.
+ *
+ * @returns {JSX.Element} A row of stars with some filled based on the rating value, providing a clear visual indication of the rating level.
+ */
+
 function Rating({ rating, maxRating }) {
   return (
     <div className="flex items-center mb-3">

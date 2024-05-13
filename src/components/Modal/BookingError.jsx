@@ -1,3 +1,14 @@
+/**
+ * BookingError component displays a modal dialog to inform users that their attempt to create a booking has failed.
+ * It offers guidance on possible reasons for the failure and includes an "Ok" button to dismiss the error message.
+ *
+ * @param {Object} props - The properties passed to the component.
+ * @param {Function} props.onClose - A callback function that is called when the user decides to close the modal,
+ *                                   typically used to clear error states or navigate away.
+ *
+ * @returns {JSX.Element} A modal that informs the user of a booking creation error with an option to close the modal and correct the inputs.
+ */
+
 function BookingError({ onClose }) {
   return (
     <div className="fixed z-50 inset-0 bg-black bg-opacity-50 flex justify-center items-center">

@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react';
-import { Link, useNavigate, NavLink } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
+import { Link, useNavigate, NavLink } from 'react-router-dom';
+
 import { logoutUser } from '../../features/user/userSlice';
 
 import { ROUTES } from '../../utils/routes';
+
 import LOGO from '/HolidazeLogo.svg';
 import DEFAULT_AVATAR from '../../assets/image/default-profile.png';
 
@@ -11,6 +13,27 @@ import { LuSettings } from 'react-icons/lu';
 import { BsFillLuggageFill } from 'react-icons/bs';
 import { GrUserManager } from 'react-icons/gr';
 import { LuLogOut } from 'react-icons/lu';
+
+/**
+ * Header component provides the primary navigation for the application. It displays different navigation options
+ * based on user authentication status and includes interactive elements such as login, logout, and dropdown menus for user settings.
+ *
+ * Features:
+ * - Displays the application logo with a link to the homepage.
+ * - Offers links to various sections of the site such as Venues, About, and Contact, highlighting the current active page.
+ * - Provides a user-specific dropdown menu with options like Settings, Bookings, and Logout for authenticated users.
+ * - Utilizes Redux for state management to handle user authentication states and actions.
+ * - Implements responsive design, ensuring that the navigation is accessible on both desktop and mobile devices.
+ *
+ * State Management:
+ * - Uses Redux to access user data and authentication status.
+ * - Local state is used to manage the visibility of the dropdown menu.
+ *
+ * @returns {JSX.Element} A responsive header that adapts to the user's authentication status and provides essential navigation capabilities across the application.
+ *
+ * Usage:
+ * This component should be placed at the top of each page to provide consistent navigation and user interface across the application.
+ */
 
 function Header() {
   const dispatch = useDispatch();
