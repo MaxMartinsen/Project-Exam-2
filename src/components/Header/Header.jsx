@@ -6,7 +6,7 @@ import { logoutUser } from '../../features/user/userSlice';
 
 import { ROUTES } from '../../utils/routes';
 
-import LOGO from '/HolidazeLogo.svg';
+import LOGO from '/holidaze-logo.svg';
 import DEFAULT_AVATAR from '../../assets/image/default-profile.png';
 
 import { LuSettings } from 'react-icons/lu';

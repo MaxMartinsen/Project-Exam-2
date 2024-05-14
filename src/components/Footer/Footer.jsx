@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 
 import { ROUTES } from '../../utils/routes';
 
-import LOGO from '/HolidazeLogo.svg';
+import LOGO from '/holidaze-logo.svg';
 
 /**
  * Footer component presents a consistent bottom navigation and branding across the application.
