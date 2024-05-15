@@ -4,5 +4,6 @@ import Inspect from 'vite-plugin-inspect';
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  base:'/Project-Exam-2',
   plugins: [react(), Inspect()],
 });
