@@ -1,19 +1,20 @@
-// src/components/Forms/SearchForm.jsx
 import { useState, useEffect } from 'react';
+import useDebounce from '../../hooks/useDebounce';
 
-function useDebounce(value, delay) {
-  const [debouncedValue, setDebouncedValue] = useState(value);
-
-  useEffect(() => {
-    const handler = setTimeout(() => setDebouncedValue(value), delay);
-
-    return () => {
-      clearTimeout(handler);
-    };
-  }, [value, delay]);
-
-  return debouncedValue;
-}
+/**
+ * SearchForm component used for submitting search queries.
+ * This form utilizes a debounced input to reduce the frequency of search operations,
+ * enhancing performance and user experience by reducing unnecessary load.
+ *
+ * @param {Object} props - The component props.
+ * @param {Function} props.onSearch - Callback function that executes the search operation.
+ *                                    This function is called with the search query whenever
+ *                                    the user stops typing for a specified delay or submits the form.
+ *
+ * @returns {JSX.Element} The SearchForm component, consisting of an input field for entering
+ *                        a search query and a submit button. The form ensures that search
+ *                        queries are processed in an optimized manner using debouncing.                  on user input.
+ */
 
 function SearchForm({ onSearch }) {
   const [searchQuery, setSearchQuery] = useState('');
@@ -54,7 +55,7 @@ function SearchForm({ onSearch }) {
       </div>
       <button
         type="submit"
-        className="cursor-pointer w-fit py-1 px-4 lg:py-2 lg:px-6 flex  items-center rounded-xl border-2 text-white font-semibold text-lg lg:text-xl border-white bg-gradient-to-br from-pelorous-400 to-pelorous-200 hover:from-pelorous-500 hover:to-pelorous-300"
+        className="cursor-pointer w-fit py-1 px-4 lg:py-2 lg:px-6 flex  items-center rounded-xl border-2 text-white font-semibold text-lg lg:text-xl border-white bg-gradient-to-br from-pelorous-600 to-pelorous-400 hover:from-pelorous-500 hover:to-pelorous-300"
       >
         Search
       </button>

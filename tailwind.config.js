@@ -1,14 +1,10 @@
 /** @type {import('tailwindcss').Config} */
-import flowbitePlugin from 'flowbite/plugin';
-const flowbite = require('flowbite-react/tailwind');
 
 export default {
   content: [
     './index.html',
     './src/**/*.{js,ts,jsx,tsx}',
-    './node_modules/flowbite-react/lib/esm/**/*.js',
     './node_modules/tailwind-datepicker-react/dist/**/*.js',
-    flowbite.content(),
   ],
   Mode: 'media',
   theme: {
@@ -56,5 +52,5 @@ export default {
       lato: ['Lato', 'sans-serif'],
     },
   },
-  plugins: [flowbitePlugin, flowbite.plugin(), require('flowbite/plugin')],
+  plugins: [require('flowbite/plugin')],
 };

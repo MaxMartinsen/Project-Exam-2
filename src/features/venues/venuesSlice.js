@@ -1,7 +1,25 @@
-// src/features/venues/venuesSlice.js
-
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { API_VENUE_URL } from '../../utils/constans';
+
+/**
+ *
+ * Manages the state for venue-related data and interactions.
+ * Utilizes Redux Toolkit for efficient and scalable state management,
+ * including asynchronous API calls using createAsyncThunk and data handling with createSlice.
+ *
+ * Functions:
+ * - fetchVenues: Asynchronously fetches all venues.
+ * - fetchVenueById: Asynchronously fetches a single venue by ID.
+ * - createVenue: Asynchronously creates a new venue.
+ * - updateVenue: Asynchronously updates an existing venue.
+ * - deleteVenue: Asynchronously deletes a venue.
+ *
+ * State:
+ * - venues: Array of venue objects.
+ * - selectedVenue: Currently selected venue for detailed view.
+ * - status: Loading status of venue operations ('idle', 'loading', 'succeeded', 'failed').
+ * - error: Error information on failed operations.
+ */
 
 // Helper function to recursively fetch all pages
 const fetchAllPages = async (url, currentPage = 1, accumulatedData = []) => {

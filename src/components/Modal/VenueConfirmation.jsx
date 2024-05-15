@@ -1,6 +1,17 @@
 import { useNavigate } from 'react-router-dom';
 import { ROUTES } from '../../utils/routes';
 
+/**
+ * VenueConfirmation component displays a modal dialog to confirm the successful creation of a venue.
+ * This modal provides visual feedback to users after they submit venue information, confirming that the data has been successfully processed.
+ *
+ * @param {Object} props - The properties passed to the component.
+ * @param {boolean} props.isOpen - A boolean that controls whether the modal is visible. If false, the modal does not render.
+ * @param {Function} props.onClose - A callback function that is called when the user wishes to close the modal. This typically will reset the visibility state.
+ *
+ * @returns {JSX.Element} A modal that informs the user that a venue has been successfully created, with options to close the modal or navigate to another page.
+ */
+
 function VenueConfirmation({ isOpen, onClose }) {
   const navigate = useNavigate();
   if (!isOpen) return null;
@@ -41,7 +52,7 @@ function VenueConfirmation({ isOpen, onClose }) {
           <button
             type="button"
             onClick={() => navigate(ROUTES.HOME)}
-            className="text-white inline-flex w-full justify-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+            className="text-white inline-flex w-full justify-center bg-gradient-to-br from-pelorous-600 to-pelorous-400 hover:from-pelorous-500 hover:to-pelorous-300  font-semibold rounded-lg text-lg px-5 py-2.5 text-center"
           >
             Success!
           </button>

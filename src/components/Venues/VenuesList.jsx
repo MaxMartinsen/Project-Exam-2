@@ -1,17 +1,40 @@
-// src/components/Venues/VenuesList.jsx
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import IMAGE from '../../assets/image/default-image.png';
+
 import FiltersForm from '../Forms/FiltersForm';
+
+import IMAGE from '../../assets/image/default-image.png';
 import { FaArrowRight } from 'react-icons/fa';
 
+import SkeletonList from '../Skeleton/SkeletonList';
+
+/**
+ * VenuesList component displays a list of venues filtered by search queries and additional filter options.
+ * It fetches venue data from the Redux store and renders each venue as a link to its detailed view.
+ * The component also supports pagination by loading more venues on demand.
+ *
+ * @param {Object} props - The props passed to the component.
+ * @param {string} props.searchQuery - The search term used to filter venues based on their name, city, or country.
+ * @param {Object} props.filterOptions - Contains various criteria used to filter venues, such as amenities and price range.
+ *    @param {boolean} props.filterOptions.breakfast - Filter for venues offering breakfast.
+ *    @param {boolean} props.filterOptions.pets - Filter for pet-friendly venues.
+ *    @param {boolean} props.filterOptions.wifi - Filter for venues with WiFi availability.
+ *    @param {boolean} props.filterOptions.parking - Filter for venues with parking availability.
+ *    @param {number} props.filterOptions.minPrice - Minimum price filter.
+ *    @param {number} props.filterOptions.maxPrice - Maximum price filter.
+ * @param {Function} props.onFilterChange - Callback function triggered when filter options change.
+ *
+ * @returns {JSX.Element} A responsive grid of venue cards, each providing a brief overview and a link to the detailed venue page.
+ * Each card displays essential venue details like name, location, price, and rating. If no venues match the filters, a message is displayed.
+ * If more venues are available beyond the initial display limit, a "Load More" button is presented.
+ */
+
 function VenuesList({ searchQuery, filterOptions, onFilterChange }) {
-  // Accept the searchQuery prop
   const { venues, status, error } = useSelector((state) => state.venues);
   const [displayedVenuesCount, setDisplayedVenuesCount] = useState(12);
 
-  if (status === 'loading') return <div>Loading...</div>;
+  if (status === 'loading') return <SkeletonList />;
   if (error) return <div>Error: {error.toString()}</div>;
   if (!venues) return <div>No data available.</div>;
 
@@ -116,7 +139,7 @@ function VenuesList({ searchQuery, filterOptions, onFilterChange }) {
                           </span>
                         </div>
                         <div className="flex flex-col items-end">
-                          <button className="cursor-pointer w-fit py-1 px-4 lg:py-2 lg:px-6 flex  items-center rounded-xl border-2 text-white font-semibold text-lg lg:text-xl border-white bg-gradient-to-br from-pelorous-400 to-pelorous-200 hover:from-pelorous-500 hover:to-pelorous-300">
+                          <button className="cursor-pointer w-fit py-1 px-4 lg:py-2 lg:px-6 flex  items-center rounded-xl border-2 text-white font-semibold text-lg lg:text-xl border-white bg-gradient-to-br from-pelorous-600 to-pelorous-400 hover:from-pelorous-500 hover:to-pelorous-300">
                             See availability
                             <FaArrowRight className="ml-6" />
                           </button>
@@ -132,7 +155,7 @@ function VenuesList({ searchQuery, filterOptions, onFilterChange }) {
             {displayedVenues.length < filteredVenues.length && (
               <div className="flex items-center justify-center">
                 <button
-                  className="cursor-pointer w-fit py-1 px-4 lg:py-2 lg:px-6 flex  items-center rounded-xl border-2 text-white font-semibold text-lg lg:text-xl border-white bg-gradient-to-br from-pelorous-400 to-pelorous-200 hover:from-pelorous-500 hover:to-pelorous-300"
+                  className="cursor-pointer w-fit py-1 px-4 lg:py-2 lg:px-6 flex  items-center rounded-xl border-2 text-white font-semibold text-lg lg:text-xl border-white bg-gradient-to-br from-pelorous-600 to-pelorous-400 hover:from-pelorous-500 hover:to-pelorous-300"
                   onClick={handleLoadMore}
                 >
                   More Venues

@@ -1,15 +1,30 @@
 import { FaWifi, FaParking, FaUtensils, FaPaw } from 'react-icons/fa';
 
-function AmenitiesBadge({ meta }) {
+/**
+ * VenueBadge component dynamically generates badges for various amenities based on the venue's metadata.
+ * It uses specific icons to visually represent the presence of amenities such as Wi-Fi, parking, breakfast, and pet allowance.
+ *
+ * @param {Object} props - The component props.
+ * @param {Object} props.meta - Metadata containing boolean values indicating the availability of specific amenities.
+ * @param {boolean} props.meta.wifi - Indicates if Wi-Fi is available.
+ * @param {boolean} props.meta.parking - Indicates if parking is available.
+ * @param {boolean} props.meta.breakfast - Indicates if breakfast is provided.
+ * @param {boolean} props.meta.pets - Indicates if pets are allowed.
+ *
+ * @returns {JSX.Element} A flex container with badges for each available amenity. Each badge is styled with a border,
+ * rounded corners, and includes an icon and a label describing the amenity.
+ */
+
+function VenueBadge({ meta }) {
   const badges = [];
 
   if (meta.wifi) {
     badges.push(
       <div
         key="wifi"
-        className="flex items-center bg-blue-500 text-white rounded px-2 py-1"
+        className="flex items-center bg-white/45 antialiased text-fuscous-gray-700 border-2 border-white rounded-lg px-4 py-2"
       >
-        <FaWifi className="mr-1" /> Wi-Fi
+        <FaWifi className="mr-2" /> Wi-Fi
       </div>
     );
   }
@@ -18,9 +33,9 @@ function AmenitiesBadge({ meta }) {
     badges.push(
       <div
         key="parking"
-        className="flex items-center bg-yellow-500 text-white rounded px-2 py-1"
+        className="flex items-center bg-white/45 antialiased text-fuscous-gray-700 border-2 border-white rounded-lg px-4 py-2"
       >
-        <FaParking className="mr-1" /> Parking
+        <FaParking className="mr-2" /> Parking
       </div>
     );
   }
@@ -29,9 +44,9 @@ function AmenitiesBadge({ meta }) {
     badges.push(
       <div
         key="breakfast"
-        className="flex items-center bg-orange-500 text-white rounded px-2 py-1"
+        className="flex items-center bg-white/45 antialiased text-fuscous-gray-700 border-2 border-white rounded-lg px-4 py-2"
       >
-        <FaUtensils className="mr-1" /> Breakfast
+        <FaUtensils className="mr-2" /> Breakfast
       </div>
     );
   }
@@ -40,9 +55,9 @@ function AmenitiesBadge({ meta }) {
     badges.push(
       <div
         key="pets"
-        className="flex items-center bg-green-500 text-white rounded px-2 py-1"
+        className="flex items-center bg-white/45 antialiased text-fuscous-gray-700 border-2 border-white rounded-lg px-4 py-2"
       >
-        <FaPaw className="mr-1" /> Pets Allowed
+        <FaPaw className="mr-2" /> Pets Allowed
       </div>
     );
   }
@@ -50,4 +65,4 @@ function AmenitiesBadge({ meta }) {
   return <div className="flex flex-wrap gap-2">{badges}</div>;
 }
 
-export default AmenitiesBadge;
+export default VenueBadge;

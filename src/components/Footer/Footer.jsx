@@ -2,7 +2,23 @@ import { Link } from 'react-router-dom';
 
 import { ROUTES } from '../../utils/routes';
 
-import LOGO from '/HolidazeLogo.svg';
+import LOGO from '/holidaze-logo.svg';
+
+/**
+ * Footer component presents a consistent bottom navigation and branding across the application.
+ * It includes links to the Home, About, and Contact pages, alongside the application logo and a copyright statement.
+ * This component is styled with specific colors, margins, and typographical settings to fit the application's design theme.
+ *
+ * Usage:
+ * - Placed at the bottom of the layout, visible on all pages.
+ *
+ * Features:
+ * - Links are provided to the Home, About, and Contact pages using routing paths from a centralized routes configuration.
+ * - Displays the application logo and the name "Holidaze" styled in a distinctive manner.
+ * - Copyright year and rights information are clearly stated.
+ *
+ * @returns {JSX.Element} Renders the footer element of the application with navigation links and branding.
+ */
 
 function Footer() {
   return (
@@ -19,7 +35,7 @@ function Footer() {
                 Holidaze
               </span>
             </Link>
-            <ul className="flex flex-wrap items-center mb-6 text-sm font-medium text-fuscous-gray-700 sm:mb-0">
+            <ul className="flex flex-wrap items-center mb-6 text-sm font-medium text-black sm:mb-0">
               <li>
                 <Link
                   to={ROUTES.ABOUT}
@@ -36,13 +52,13 @@ function Footer() {
             </ul>
           </div>
           <hr className="my-6 border-white sm:mx-auto lg:my-4" />
-          <span className="block text-sm text-gray-500 sm:text-center">
+          <div className="block text-sm text-fuscous-gray-700 sm:text-center">
             © 2024{' '}
-            <a href="https://flowbite.com/" className="hover:underline">
+            <Link to={ROUTES.HOME} className="hover:underline">
               Holidaze™
-            </a>
+            </Link>
             . All Rights Reserved.
-          </span>
+          </div>
         </div>
       </div>
     </footer>

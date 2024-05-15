@@ -9,6 +9,7 @@ import { differenceInCalendarDays } from 'date-fns';
  * @param {Date} params.endDate - The end date of the booking.
  * @returns {number} The total price for the booking.
  */
+
 export const useTotalPrice = ({ pricePerNight, startDate, endDate }) => {
   // Calculate the number of nights based on the date range
   const numNights = useMemo(() => {

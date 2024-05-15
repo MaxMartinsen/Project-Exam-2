@@ -1,13 +1,26 @@
-// src/features/profile/profileSlice.js
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { API_URL } from '../../utils/constans';
+import { API_PROFILE_URL } from '../../utils/constans';
 
-// Asynchronous thunk to fetch profile details
+/**
+ * Profile slice that manages profile-related operations and state.
+ * It handles fetching and updating user profiles, as well as fetching bookings and venues associated with the user.
+ *
+ * Exports:
+ * - fetchUserProfile: Async thunk for fetching user profile details.
+ * - updateProfile: Async thunk for updating user profile details, specifically the avatar.
+ * - fetchBookingsByProfile: Async thunk for fetching bookings associated with the user profile.
+ * - fetchVenuesByProfile: Async thunk for fetching venues managed by the user profile.
+ * - profileSlice.reducer: Reducer function for the profile slice.
+ * - clearProfile: Action to clear the profile state.
+ *
+ * @module profileSlice
+ */
+
 export const fetchUserProfile = createAsyncThunk(
   'profile/fetchUserProfile',
   async ({ username, token, apiKey }, { rejectWithValue }) => {
     try {
-      const response = await fetch(`${API_URL}/holidaze/profiles/${username}`, {
+      const response = await fetch(`${API_PROFILE_URL}/${username}`, {
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
@@ -32,7 +45,7 @@ export const updateProfile = createAsyncThunk(
   'profile/updateProfile',
   async ({ username, token, apiKey, avatarUrl }, { rejectWithValue }) => {
     try {
-      const response = await fetch(`${API_URL}/holidaze/profiles/${username}`, {
+      const response = await fetch(`${API_PROFILE_URL}/${username}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -63,7 +76,7 @@ export const fetchBookingsByProfile = createAsyncThunk(
   async ({ username, token, apiKey }, { rejectWithValue }) => {
     try {
       const response = await fetch(
-        `${API_URL}/holidaze/profiles/${username}/bookings?_customer=true&_venue=true`,
+        `${API_PROFILE_URL}/${username}/bookings?_customer=true&_venue=true`,
         {
           headers: {
             'Content-Type': 'application/json',
@@ -93,7 +106,7 @@ export const fetchVenuesByProfile = createAsyncThunk(
   async ({ username, token, apiKey }, { rejectWithValue }) => {
     try {
       const response = await fetch(
-        `${API_URL}/holidaze/profiles/${username}/venues?_customer=true&_venue=true`,
+        `${API_PROFILE_URL}/${username}/venues?_customer=true&_venue=true`,
         {
           headers: {
             'Content-Type': 'application/json',

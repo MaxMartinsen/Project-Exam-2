@@ -1,7 +1,20 @@
-// src/components/Forms/ImageForm.jsx
 import { CgTrash } from 'react-icons/cg';
 import { TbPhotoPlus } from 'react-icons/tb';
+
 import DEFAULT_IMAGE from '../../assets/image/default-image.png';
+
+/**
+ * ImageForm component allows users to dynamically manage a list of images. Users can add new images,
+ * update existing ones, or remove them. It is designed to handle image URLs and provide visual feedback
+ * by displaying a thumbnail of the entered URL.
+ *
+ * @param {Object} props - The props passed to the component.
+ * @param {Array} props.images - An array of objects, each containing the properties `url` and `alt` for each image.
+ * @param {Function} props.onImagesChange - Callback function that updates the state in the parent component when the images change.
+ *
+ * @returns {JSX.Element} - A form that allows users to manipulate image URLs interactively. It displays a set of input fields
+ * for entering URLs, buttons to remove or add fields, and a preview of the image from the entered URL.
+ */
 
 function ImageForm({ images, onImagesChange }) {
   const handleImageChange = (index, value) => {
@@ -43,13 +56,16 @@ function ImageForm({ images, onImagesChange }) {
               )}
               <div className="relative w-full">
                 <input
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 block w-full ps-4 p-2.5"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-pelorous-500 block w-full ps-4 p-2.5"
                   type="url"
+                  id="image"
                   placeholder="Image URL"
                   value={image.url}
                   onChange={(e) => handleImageChange(index, e.target.value)}
                 />
-                <label className="sr-only">Image</label>
+                <label htmlFor="image" className="sr-only">
+                  Image
+                </label>
               </div>
             </div>
             <div>
