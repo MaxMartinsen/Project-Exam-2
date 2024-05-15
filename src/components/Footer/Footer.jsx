@@ -52,13 +52,13 @@ function Footer() {
             </ul>
           </div>
           <hr className="my-6 border-white sm:mx-auto lg:my-4" />
-          <span className="block text-sm text-fuscous-gray-700 sm:text-center">
+          <div className="block text-sm text-fuscous-gray-700 sm:text-center">
             © 2024{' '}
-            <a href="https://flowbite.com/" className="hover:underline">
+            <Link to={ROUTES.HOME} className="hover:underline">
               Holidaze™
-            </a>
+            </Link>
             . All Rights Reserved.
-          </span>
+          </div>
         </div>
       </div>
     </footer>

@@ -16,10 +16,10 @@ function About() {
             <img className="h-full" src={aboutImg} alt="dashboard image" />
           </div>
           <div className="mt-4 md:mt-0 flex flex-col">
-            <h1 className="mb-4 text-4xl tracking-tight font-semibold text-gray-900 dark:text-white">
+            <h1 className="mb-4 text-4xl tracking-tight font-semibold text-gray-900">
               Discover Your Perfect Holiday Home
             </h1>
-            <p className="mb-6 font-light text-gray-500 md:text-lg dark:text-gray-400 max-w-96">
+            <p className="mb-6 font-light text-gray-500 md:text-lg max-w-96">
               At Holidaze, we make the search for your next vacation stay as
               easy and enjoyable as the getaway itself. Explore a wide range of
               homes—from beach front bungalows to mountain chalets—all tailored
