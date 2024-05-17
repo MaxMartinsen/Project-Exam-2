@@ -99,6 +99,10 @@ This is an open source project. See the official repository for more details: - 
 
 State Management: As React applications grow, managing state across components becomes increasingly complex. Redux is a popular library for managing application state in a predictable way. [@reduxjs/toolkit](https://redux-toolkit.js.org/) is the official, opinionated, batteries-included toolset for efficient Redux development. It simplifies common tasks such as store setup, creating reducers, asynchronous logic, and more.
 
+### Babel
+
+Babel is a JavaScript compiler that is used to convert ECMAScript 2015+ code into a backwards compatible version of JavaScript in current and older browsers or environments.
+
 ## Site architecture
 
 - Venues Page
@@ -130,6 +134,38 @@ git clone git@github.com/MaxMartinsen/Project-Exam-2.git
 - Run `npm install` from inside the project folder to install dependencies.
 
 - Run `npm run dev` to start the development server.
+
+## Running Tests
+
+### Jest
+
+Jest is a delightful JavaScript testing framework with a focus on simplicity.
+
+This project uses Jest for testing. To run the tests, use the following command:
+
+```bash
+npm run test
+```
+
+### @testing-library/react
+
+Testing utilities for React components.
+
+- [@testing-library/react](https://testing-library.com/docs/react-testing-library/intro/)
+
+### jest-svg-transformer
+
+A Jest transformer for SVG files to mock them during tests.
+
+- [jest-svg-transformer](https://www.npmjs.com/package/jest-svg-transformer)
+
+### identity-obj-proxy
+
+A Jest transformer for CSS modules to mock them during tests.
+
+- [identity-obj-proxy](https://www.npmjs.com/package/identity-obj-proxy)
+
+---
 
 ## Contributing
 
