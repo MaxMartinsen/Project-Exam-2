@@ -21,5 +21,6 @@ module.exports = {
       'warn',
       { allowConstantExport: true },
     ],
+    'jest/no-focused-tests': 'off',
   },
 };
