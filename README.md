@@ -1,5 +1,11 @@
 # Holidaze booking site
 
+## Status with Badges
+
+[![Automated E2E Testing](https://github.com/MaxMartinsen/Project-Exam-2/actions/workflows/e2e-test.yml/badge.svg)](https://github.com/MaxMartinsen/Project-Exam-2/actions/workflows/e2e-test.yml)
+
+[![Automated Unit Testing](https://github.com/MaxMartinsen/Project-Exam-2/actions/workflows/unit-test.yml/badge.svg)](https://github.com/MaxMartinsen/Project-Exam-2/actions/workflows/unit-test.yml)
+
 # Project-Exam-2
 
 Booking site built with React
