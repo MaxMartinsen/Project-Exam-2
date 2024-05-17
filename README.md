@@ -154,7 +154,7 @@ Cypress is a JavaScript end-to-end testing framework that is used to test the co
 To run Cypress tests, use the following command:
 
 ```bash
-npm run cypress
+npm run test-e2e
 ```
 
 This command will:
