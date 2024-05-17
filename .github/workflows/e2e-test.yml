@@ -11,7 +11,13 @@ jobs:
       - name: Checkout under $GITHUB_WORKSPACE
         uses: actions/checkout@main
 
-      - name: run cypress tests with electron
-        uses: cypress-io/github-action@v4
+      - name: Set up NodeJS
+        uses: actions/setup-node@v1
         with:
-          browser: electron
+          node-version: 16
+
+      - name: Install all dependencies
+        run: npm install
+
+      - name: Run Tests
+        run: npm run test-e2e-cli
