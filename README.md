@@ -2,7 +2,6 @@
 
 ## Status with Badges
 
-<!-- Badges -->
 <p align="center">
   <a href="https://github.com/MaxMartinsen/Project-Exam-2/actions/workflows/e2e-test.yml">
     <img src="https://github.com/MaxMartinsen/Project-Exam-2/actions/workflows/e2e-test.yml/badge.svg" alt="Automated E2E Testing">
