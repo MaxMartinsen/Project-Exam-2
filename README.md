@@ -123,7 +123,7 @@ Babel is a JavaScript compiler that is used to convert ECMAScript 2015+ code int
 
 ## Getting Started
 
-### Installing
+## Installing
 
 - Clone the repo:
 
@@ -146,6 +146,24 @@ This project uses Jest for testing. To run the tests, use the following command:
 ```bash
 npm run test
 ```
+
+### Cypress
+
+Cypress is a JavaScript end-to-end testing framework that is used to test the complete functionality of web applications.
+
+To run Cypress tests, use the following command:
+
+```bash
+npm run cypress
+```
+
+This command will:
+
+1. Start the Vite server.
+
+2. Wait for the server to be available at http://localhost:3000.
+
+3. Open Cypress once the server is available.
 
 ### @testing-library/react
 
