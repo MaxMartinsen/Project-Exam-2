@@ -2,17 +2,11 @@
 
 ## Status with Badges
 
-<p align="center">
-  <a href="https://github.com/MaxMartinsen/Project-Exam-2/actions/workflows/e2e-test.yml">
-    <img src="https://github.com/MaxMartinsen/Project-Exam-2/actions/workflows/e2e-test.yml/badge.svg" alt="Automated E2E Testing"/>
-  </a>
-  <a href="https://github.com/MaxMartinsen/Project-Exam-2/actions/workflows/unit-test.yml">
-    <img src="https://github.com/MaxMartinsen/Project-Exam-2/actions/workflows/unit-test.yml/badge.svg" alt="Automated Unit Testing"/>
-  </a>
-  <a href="https://app.netlify.com/sites/holidaze-venue/deploys">
-    <img src="https://api.netlify.com/api/v1/badges/2dedffda-6419-42d7-9d94-fedb5d1e01e6/deploy-status" alt="Netlify Status"/>
-  </a>
-</p>
+[![Automated E2E Testing](https://github.com/MaxMartinsen/Project-Exam-2/actions/workflows/e2e-test.yml/badge.svg)](https://github.com/MaxMartinsen/Project-Exam-2/actions/workflows/e2e-test.yml)
+
+[![Automated Unit Testing](https://github.com/MaxMartinsen/Project-Exam-2/actions/workflows/unit-test.yml/badge.svg)](https://github.com/MaxMartinsen/Project-Exam-2/actions/workflows/unit-test.yml)
+
+[![Netlify Status](https://api.netlify.com/api/v1/badges/2dedffda-6419-42d7-9d94-fedb5d1e01e6/deploy-status)](https://app.netlify.com/sites/holidaze-venue/deploys)
 
 # Project-Exam-2
 
