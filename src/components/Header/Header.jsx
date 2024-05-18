@@ -128,7 +128,12 @@ function Header() {
                   className="flex text-sm rounded md:me-0"
                   id="user-menu-button"
                   aria-expanded="false"
-                  onClick={() => setShowDropdown(!showDropdown)}
+                  onClick={() => {
+                    if (!showDropdown) {
+                      closeMenu();
+                    }
+                    setShowDropdown(!showDropdown);
+                  }}
                 >
                   <span className="sr-only">Open user menu</span>
                   <img
