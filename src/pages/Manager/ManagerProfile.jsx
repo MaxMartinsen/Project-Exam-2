@@ -1,7 +1,6 @@
 import { useState } from 'react';
 
 import VenuesForm from '../../components/Forms/VenuesForm';
-import TablesProfiles from '../../components/Tables/TablesProfiles';
 import TablesVenues from '../../components/Tables/TablesVenues';
 
 /**
@@ -23,7 +22,7 @@ function ManagerProfile() {
 
   const getButtonClass = (view) => {
     return `inline-flex items-center h-12 px-4 py-2 text-sm text-center border-white sm:text-base rounded-t-md whitespace-nowrap focus:outline-none ${
-      activeView === view ? 'border border-b-0' : 'bg-transparent border-b'
+      activeView === view ? 'border-2 border-b-0' : 'bg-transparent border-b-2'
     }`;
   };
   return (
@@ -52,13 +51,7 @@ function ManagerProfile() {
             Create
           </button>
 
-          <button
-            onClick={() => setActiveView('profiles')}
-            className={getButtonClass('profiles')}
-          >
-            All profiles
-          </button>
-          <div className="inline-flex items-center w-full h-12 px-4 py-2 text-sm text-center text-gray-700 bg-transparent border-b border-white sm:text-base whitespace-nowrap cursor-base focus:outline-none"></div>
+          <div className="inline-flex items-center w-full h-12 px-4 py-2 text-sm text-center text-gray-700 bg-transparent border-b-2 border-white sm:text-base whitespace-nowrap cursor-base focus:outline-none"></div>
         </div>
       </div>
 
@@ -66,7 +59,6 @@ function ManagerProfile() {
       {(activeView === 'edit' || activeView === 'create') && (
         <VenuesForm mode={activeView} initialData={selectedVenue} />
       )}
-      {activeView === 'profiles' && <TablesProfiles />}
     </section>
   );
 }

@@ -71,7 +71,7 @@ function AvatarForm({
                     type="url"
                     name="avatar"
                     id="avatar-url"
-                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                    className="bg-gray-50 border-2 border-gray-300 text-gray-900 text-sm rounded-xl focus:outline-none focus:ring-0 focus:border-pelorous-300 block w-full p-2.5"
                     value={avatarUrl}
                     onChange={handleAvatarUrlChange}
                     placeholder="Avatar URL"

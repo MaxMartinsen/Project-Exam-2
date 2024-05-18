@@ -46,7 +46,7 @@ function FiltersForm({ onFilterChange }) {
         <h2 className="font-bold border-b-2 border-white mb-4">Filters</h2>
 
         <h3 className="mb-2 font-semibold text-gray-90">Facilities</h3>
-        <ul className="text-sm font-medium text-gray-900 mb-2">
+        <ul className="text-sm font-medium mb-2">
           <li className="w-full border-b border-white rounded-t-lg ">
             <div className="flex items-center">
               <input
@@ -54,7 +54,7 @@ function FiltersForm({ onFilterChange }) {
                 type="checkbox"
                 checked={breakfast}
                 onChange={handleCheckboxChange(setBreakfast)}
-                className="w-4 h-4 text-pelorous-400 bg-white/45 border-white rounded focus:ring-0"
+                className="w-4 h-4 accent-pelorous-500 bg-gray-100 border-white rounded focus:ring-pelorous-500"
               />
               <label
                 htmlFor="breakfast-checkbox"
@@ -71,7 +71,7 @@ function FiltersForm({ onFilterChange }) {
                 type="checkbox"
                 checked={pets}
                 onChange={handleCheckboxChange(setPets)}
-                className="w-4 h-4 text-pelorous-400 bg-white/45 border-white rounded focus:ring-0"
+                className="w-4 h-4 accent-pelorous-500 bg-gray-100 border-white rounded focus:ring-pelorous-500"
               />
               <label
                 htmlFor="pets-checkbox"
@@ -88,7 +88,7 @@ function FiltersForm({ onFilterChange }) {
                 type="checkbox"
                 checked={wifi}
                 onChange={handleCheckboxChange(setWifi)}
-                className="w-4 h-4 text-pelorous-400 bg-white/45 border-white rounded focus:ring-0"
+                className="w-4 h-4 accent-pelorous-500 bg-gray-100 border-white rounded focus:ring-pelorous-500"
               />
               <label
                 htmlFor="wifi-checkbox"
@@ -105,7 +105,7 @@ function FiltersForm({ onFilterChange }) {
                 type="checkbox"
                 checked={parking}
                 onChange={handleCheckboxChange(setParking)}
-                className="w-4 h-4 text-pelorous-400 bg-white/45 border-white rounded focus:ring-0"
+                className="w-4 h-4 accent-pelorous-500 bg-gray-100 border-white rounded focus:ring-pelorous-500"
               />
               <label
                 htmlFor="parking-checkbox"
@@ -129,7 +129,7 @@ function FiltersForm({ onFilterChange }) {
           placeholder="Min price"
           value={minPrice}
           onChange={handlePriceChange(setMinPrice)}
-          className="bg-white/45 border-white border-2 rounded-xl text-fuscous-gray-700 text-sm font-semibold focus:ring-0 focus:border-pelorous-300 block w-full py-1 px-4 "
+          className="bg-white/45 border-white border-2 rounded-xl text-fuscous-gray-700 text-sm font-semibold focus:outline-none focus:ring-0 focus:border-pelorous-300 block w-full py-1 px-4 "
         />
         <span className="border-2 my-2 mx-14 border-white"></span>
         <label
@@ -144,7 +144,7 @@ function FiltersForm({ onFilterChange }) {
           placeholder="Max price"
           value={maxPrice}
           onChange={handlePriceChange(setMaxPrice)}
-          className="bg-white/45 border-white border-2 rounded-xl text-fuscous-gray-700 text-sm font-semibold focus:ring-0 focus:border-pelorous-300 block w-full py-1 px-4 "
+          className="bg-white/45 border-white border-2 rounded-xl text-fuscous-gray-700 text-sm font-semibold focus:outline-none focus:ring-0 focus:border-pelorous-300 block w-full py-1 px-4 "
         />
       </form>
     </div>

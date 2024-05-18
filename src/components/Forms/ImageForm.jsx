@@ -46,7 +46,7 @@ function ImageForm({ images, onImagesChange }) {
               {images.length > 1 && (
                 <button
                   onClick={() => handleRemoveImage(index)}
-                  className="p-2 border rounded-lg bg-gray-300 text-gray-800"
+                  className="p-2 border rounded-lg bg-gray-300 text-gray-800 hover:bg-red-400"
                 >
                   <CgTrash
                     className="h-6 w-6 text-gray-600"
@@ -56,7 +56,7 @@ function ImageForm({ images, onImagesChange }) {
               )}
               <div className="relative w-full">
                 <input
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-pelorous-500 block w-full ps-4 p-2.5"
+                  className="bg-white/45 border-white border-2 rounded-xl text-fuscous-gray-700 text-sm font-semibold focus:outline-none focus:ring-0 focus:border-pelorous-300 block w-full py-2 px-4 ps-4"
                   type="url"
                   id="image"
                   placeholder="Image URL"
@@ -79,7 +79,7 @@ function ImageForm({ images, onImagesChange }) {
         ))}
         <button
           onClick={handleAddImage}
-          className="p-2 border rounded-lg bg-gray-300 text-gray-800"
+          className="p-2 border rounded-lg bg-gray-300 text-gray-800 hover:bg-pelorous-400"
           aria-label="Add a new image url input field"
         >
           <TbPhotoPlus

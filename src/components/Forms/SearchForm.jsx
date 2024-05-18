@@ -49,7 +49,7 @@ function SearchForm({ onSearch }) {
           type="text"
           value={searchQuery}
           onChange={handleChange}
-          className="bg-white/45 border-white border-2 rounded-xl text-fuscous-gray-700 text-xl font-semibold focus:ring-0 focus:border-pelorous-300 block w-full py-1 px-4 lg:py-2 lg:px-6"
+          className="bg-white/45 border-white border-2 rounded-xl text-fuscous-gray-700 text-xl font-semibold focus:outline-none focus:ring-0 focus:border-pelorous-300 block w-full py-1 px-4 lg:py-2 lg:px-6"
           placeholder="Search for venue"
         />
       </div>
