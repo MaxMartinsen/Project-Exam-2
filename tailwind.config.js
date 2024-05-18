@@ -52,5 +52,5 @@ export default {
       lato: ['Lato', 'sans-serif'],
     },
   },
-  plugins: [require('flowbite/plugin')],
+  plugins: [],
 };

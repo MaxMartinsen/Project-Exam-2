@@ -99,7 +99,7 @@ function RegisterForm() {
                   type="text"
                   name="name"
                   id="name"
-                  className="bg-white/45 border-white border-2 rounded-xl text-fuscous-gray-700 text-sm font-semibold focus:ring-0 focus:border-pelorous-300 block w-full py-2 px-4"
+                  className="bg-white/45 border-white border-2 rounded-xl text-fuscous-gray-700 text-sm font-semibold focus:outline-none focus:ring-0 focus:border-pelorous-300 block w-full py-2 px-4"
                   placeholder="Username"
                   required
                   onChange={handleChange}
@@ -122,7 +122,7 @@ function RegisterForm() {
                   type="email"
                   name="email"
                   id="email"
-                  className="bg-white/45 border-white border-2 rounded-xl text-fuscous-gray-700 text-sm font-semibold focus:ring-0 focus:border-pelorous-300 block w-full py-2 px-4"
+                  className="bg-white/45 border-white border-2 rounded-xl text-fuscous-gray-700 text-sm font-semibold focus:outline-none focus:ring-0 focus:border-pelorous-300 block w-full py-2 px-4"
                   placeholder="name@stud.noroff.no"
                   required
                   onChange={handleChange}
@@ -146,7 +146,7 @@ function RegisterForm() {
                   name="password"
                   id="password"
                   placeholder="••••••••"
-                  className="bg-white/45 border-white border-2 rounded-xl text-fuscous-gray-700 text-sm font-semibold focus:ring-0 focus:border-pelorous-300 block w-full py-2 px-4"
+                  className="bg-white/45 border-white border-2 rounded-xl text-fuscous-gray-700 text-sm font-semibold focus:outline-none focus:ring-0 focus:border-pelorous-300 block w-full py-2 px-4"
                   required
                   onChange={handleChange}
                 />
@@ -163,7 +163,7 @@ function RegisterForm() {
                       id="manager"
                       name="venueManager"
                       type="checkbox"
-                      className="w-4 h-4 text-pelorous-400 bg-white/45 border-white rounded focus:ring-0"
+                      className="w-4 h-4 text-pelorous-400 bg-white/45 border-white rounded focus:outline-none focus:ring-0"
                       onChange={handleChange}
                     />
                   </div>

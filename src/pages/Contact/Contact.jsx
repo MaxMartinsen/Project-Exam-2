@@ -56,7 +56,7 @@ function Contact() {
                     id="firstName"
                     type="text"
                     placeholder="John "
-                    className="bg-white/45 border-white border-2 rounded-xl text-fuscous-gray-700 text-sm font-semibold focus:ring-0 focus:border-pelorous-300 block w-full py-2 px-4"
+                    className="bg-white/45 border-white border-2 rounded-xl text-fuscous-gray-700 text-sm font-semibold focus:outline-none focus:ring-0 focus:border-pelorous-300 block w-full py-2 px-4"
                   />
                 </div>
 
@@ -73,7 +73,7 @@ function Contact() {
                     id="lastName"
                     type="text"
                     placeholder="Doe"
-                    className="bg-white/45 border-white border-2 rounded-xl text-fuscous-gray-700 text-sm font-semibold focus:ring-0 focus:border-pelorous-300 block w-full py-2 px-4"
+                    className="bg-white/45 border-white border-2 rounded-xl text-fuscous-gray-700 text-sm font-semibold focus:outline-none focus:ring-0 focus:border-pelorous-300 block w-full py-2 px-4"
                   />
                 </div>
               </div>
@@ -92,7 +92,7 @@ function Contact() {
                   id="email"
                   type="email"
                   placeholder="johndoe@stud.noroff.no"
-                  className="bg-white/45 border-white border-2 rounded-xl text-fuscous-gray-700 text-sm font-semibold focus:ring-0 focus:border-pelorous-300 block w-full py-2 px-4"
+                  className="bg-white/45 border-white border-2 rounded-xl text-fuscous-gray-700 text-sm font-semibold focus:outline-none focus:ring-0 focus:border-pelorous-300 block w-full py-2 px-4"
                 />
               </div>
 
@@ -107,7 +107,7 @@ function Contact() {
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
                   id="textarea"
-                  className="block w-full h-32 px-5 py-2.5 mt-2 text-sm font-semibold text-fuscous-gray-700 bg-white/45 border-2 border-white rounded-lg md:h-56 focus:border-pelorous-300  focus:ring-0"
+                  className="block w-full h-32 px-5 py-2.5 mt-2 text-sm font-semibold text-fuscous-gray-700 bg-white/45 border-2 border-white rounded-lg md:h-56 focus:border-pelorous-300  focus:outline-none focus:ring-0"
                   placeholder="Message"
                 ></textarea>
               </div>

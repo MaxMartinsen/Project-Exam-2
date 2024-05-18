@@ -81,7 +81,7 @@ function SettingsProfile() {
             alt={currentUser.avatar ? currentUser.avatar.alt : 'User avatar'}
           />
           <button
-            className="btn p-2 rounded absolute bottom-2 right-2 shadow bg-blue-gray-100 hover:bg-gray-400"
+            className="btn p-2 rounded absolute bottom-2 right-2 shadow bg-blue-gray-100 hover:bg-gray-200"
             onClick={handleModalToggle}
           >
             <svg
