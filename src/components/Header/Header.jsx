@@ -224,7 +224,7 @@ function Header() {
             <button id="hamburger" onClick={toggleMenu}>
               <svg
                 id="hamburger-bar"
-                className={`w-8 h-8 text-gray-800 ${menuVisible ? 'hidden' : ''}`}
+                className={`w-8 h-8 text-fuscous-gray-700 ${menuVisible ? 'hidden' : ''}`}
                 aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
@@ -242,7 +242,7 @@ function Header() {
 
               <svg
                 id="hamburger-close"
-                className={`w-8 h-8 text-gray-800 ${menuVisible ? '' : 'hidden'}`}
+                className={`w-8 h-8 text-fuscous-gray-700 ${menuVisible ? '' : 'hidden'}`}
                 aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
