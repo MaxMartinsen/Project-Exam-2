@@ -1,10 +1,8 @@
-import Slider from 'react-slick';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
+import { useState } from 'react';
 
 /**
- * ImageModal component showcases images in a modal overlay, supporting both single and multiple images through a carousel.
- * It is designed to provide users with a large view of images, particularly useful in galleries or product displays.
+ * ImageModal component showcases images in a modal overlay, using a custom carousel for multiple images.
+ * This is particularly useful in galleries or product displays.
  *
  * @param {Object} props - The properties passed to the component.
  * @param {Array} props.images - An array of image objects that contain the URLs and alternative text for the images.
@@ -15,12 +13,22 @@ import 'slick-carousel/slick/slick-theme.css';
  */
 
 function ImageModal({ images, isOpen, onClose }) {
-  const settings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  const goToSlide = (index) => {
+    setActiveIndex(index);
+  };
+
+  const goToPrev = () => {
+    setActiveIndex((prevIndex) =>
+      prevIndex > 0 ? prevIndex - 1 : images.length - 1
+    );
+  };
+
+  const goToNext = () => {
+    setActiveIndex((prevIndex) =>
+      prevIndex < images.length - 1 ? prevIndex + 1 : 0
+    );
   };
 
   if (!isOpen) return null;
@@ -28,20 +36,18 @@ function ImageModal({ images, isOpen, onClose }) {
   return (
     <>
       <div className="fixed z-50 inset-0 bg-black bg-opacity-50 flex justify-center items-center">
-        <div className="relative bg-white rounded-2xl shadow max-w-[300px] sm:max-w-[370px] md:max-w-[700px] xl:max-w-[1000px]">
+        <div className="relative rounded-2xl shadow w-[300px] sm:w-[370px] md:w-[700px] xl:w-[1000px]">
           <div className="relative p-4 text-center bg-white rounded-2xl shadow sm:p-5">
             <button
               onClick={onClose}
               type="button"
               className="text-gray-400 absolute top-2.5 right-2.5 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
-              data-modal-toggle="deleteModal"
             >
               <svg
                 aria-hidden="true"
                 className="w-5 h-5"
                 fill="currentColor"
                 viewBox="0 0 20 20"
-                xmlns="http://www.w3.org/2000/svg"
               >
                 <path
                   fillRule="evenodd"
@@ -51,28 +57,87 @@ function ImageModal({ images, isOpen, onClose }) {
               </svg>
               <span className="sr-only">Close modal</span>
             </button>
-            <div className="modal-backdrop p-6">
-              <div className="modal-content">
-                {images.length > 1 ? (
-                  <Slider {...settings}>
-                    {images.map((img, index) => (
-                      <div className="rounded-2xl" key={index}>
-                        <img
-                          className="rounded-2xl"
-                          src={img.url}
-                          alt={img.alt || 'Venue image'}
-                        />
-                      </div>
-                    ))}
-                  </Slider>
-                ) : (
-                  <img
-                    src={images[0].url}
-                    alt={images[0].alt || 'Venue image'}
-                    className="w-full rounded-2xl"
-                  />
-                )}
+            <div className="p-6">
+              <div className="relative h-56 overflow-hidden rounded-lg md:h-[620px]">
+                {images.map((img, index) => (
+                  <div
+                    key={index}
+                    className={`duration-700 ease-in-out w-full h-full ${index === activeIndex ? 'block' : 'hidden'}`}
+                  >
+                    <img
+                      src={img.url}
+                      alt={img.alt || 'Image'}
+                      className="w-full h-full object-cover rounded-2xl"
+                    />
+                  </div>
+                ))}
               </div>
+              {images.length > 1 && (
+                <>
+                  <div className="absolute z-30 flex -translate-x-1/2 space-x-3 rtl:space-x-reverse bottom-5 left-1/2">
+                    {images.map((_, index) => (
+                      <button
+                        key={index}
+                        type="button"
+                        className={`w-3 h-3 rounded-full active:right-2 ${index === activeIndex ? 'bg-pelorous-500' : 'bg-fuscous-gray-700'}`}
+                        aria-current={index === activeIndex ? 'true' : 'false'}
+                        aria-label={`Slide ${index + 1}`}
+                        onClick={() => goToSlide(index)}
+                      ></button>
+                    ))}
+                  </div>
+                  <button
+                    type="button"
+                    className="absolute top-0 start-11 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
+                    onClick={goToPrev}
+                    style={{ display: images.length > 1 ? 'flex' : 'none' }}
+                  >
+                    <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 group-hover:bg-white/50 active:group-focus:ring-4 group-focus:ring-pelorous-500 group-focus:outline-none">
+                      <svg
+                        className="w-4 h-4 text-black rtl:rotate-180"
+                        aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 6 10"
+                      >
+                        <path
+                          stroke="currentColor"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                          d="M5 1 1 5l4 4"
+                        />
+                      </svg>
+                      <span className="sr-only">Previous</span>
+                    </span>
+                  </button>
+                  <button
+                    type="button"
+                    className="absolute top-0 end-11 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
+                    onClick={goToNext}
+                    style={{ display: images.length > 1 ? 'flex' : 'none' }}
+                  >
+                    <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 group-hover:bg-white/50 active:group-focus:ring-4 group-focus:ring-pelorous-500 group-focus:outline-none">
+                      <svg
+                        className="w-4 h-4 text-black rtl:rotate-180"
+                        aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 6 10"
+                      >
+                        <path
+                          stroke="currentColor"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                          d="m1 9 4-4-4-4"
+                        />
+                      </svg>
+                      <span className="sr-only">Next</span>
+                    </span>
+                  </button>
+                </>
+              )}
             </div>
           </div>
         </div>
