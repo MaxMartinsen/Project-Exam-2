@@ -70,29 +70,49 @@ export const updateProfile = createAsyncThunk(
   }
 );
 
-// Asynchronous thunk to fetch bookings by profile
+// Recursive function to fetch all pages of bookings
+async function fetchAllBookings(
+  url,
+  token,
+  apiKey,
+  currentPage = 1,
+  accumulatedData = []
+) {
+  const response = await fetch(`${url}&page=${currentPage}`, {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+      'X-Noroff-API-Key': apiKey,
+    },
+  });
+
+  if (!response.ok) {
+    const errorData = await response.json();
+    console.error(`Failed to fetch bookings: ${errorData.message}`);
+    throw new Error(`Failed to fetch bookings: ${errorData.message}`);
+  }
+
+  const data = await response.json();
+  const newData = accumulatedData.concat(data.data);
+
+  if (data.meta && currentPage < data.meta.pageCount) {
+    return fetchAllBookings(url, token, apiKey, currentPage + 1, newData);
+  } else {
+    return newData;
+  }
+}
+
+// Asynchronous thunk to fetch bookings by profile with all pages
 export const fetchBookingsByProfile = createAsyncThunk(
   'profile/fetchBookingsByProfile',
   async ({ username, token, apiKey }, { rejectWithValue }) => {
     try {
-      const response = await fetch(
+      const allBookings = await fetchAllBookings(
         `${API_PROFILE_URL}/${username}/bookings?_customer=true&_venue=true`,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`,
-            'X-Noroff-API-Key': apiKey,
-          },
-        }
+        token,
+        apiKey
       );
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(`Failed to fetch bookings: ${errorData.message}`);
-      }
-
-      const data = await response.json();
-      return data?.data || [];
+      return allBookings;
     } catch (err) {
       console.error('Error fetching bookings:', err.message);
       return rejectWithValue(err.message);
