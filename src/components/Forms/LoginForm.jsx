@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 
-import { loginUser } from '../../features/user/userSlice';
+import { loginUser, clearErrors } from '../../features/user/userSlice';
 import { fetchUserProfile } from '../../features/profile/profileSlice';
 
 import { ROUTES } from '../../utils/routes';
@@ -36,6 +36,9 @@ function LoginForm() {
   const handleChange = ({ target: { value, name } }) => {
     setValues({ ...values, [name]: value });
     setErrors({ ...errors, [name]: '' });
+    if (userError) {
+      dispatch(clearErrors());
+    }
   };
 
   const handleSubmit = async (event) => {
@@ -49,7 +52,7 @@ function LoginForm() {
     // Validation
     const newErrors = {};
     if (!validateEmail(email))
-      newErrors.email = "Email must be a valid 'stud.noroff.no' address.";
+      newErrors.email = "Email must be a valid '@stud.noroff.no' address.";
     if (!validatePassword(password))
       newErrors.password = 'Password must be at least 8 characters long.';
 

@@ -4,11 +4,12 @@ import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { ROUTES } from '../../utils/routes';
 
-import { createUser } from '../../features/user/userSlice';
+import { createUser, clearErrors } from '../../features/user/userSlice';
 import {
-  validateName,
   validateEmail,
   validatePassword,
+  validateNameCharacters,
+  validateNameLength,
 } from '../../utils/validation';
 
 /**
@@ -41,6 +42,9 @@ function RegisterForm() {
       setIsVenueManager(checked);
     }
     setErrors({ ...errors, [name]: '' });
+    if (userError) {
+      dispatch(clearErrors());
+    }
   };
 
   const handleSubmit = async (event) => {
@@ -49,14 +53,21 @@ function RegisterForm() {
     const { name, email, password } = values;
 
     const newErrors = {};
-    if (!validateName(name))
+    // Check name character types
+    if (!validateNameCharacters(name))
       newErrors.name =
-        'Invalid name. No punctuation allowed, underscores are okay.';
+        'Name must contain only letters, numbers, and underscores.';
+    // Check name length
+    if (!validateNameLength(name))
+      newErrors.nameLength = 'Name must be no more than 20 characters long.';
+
     if (!validateEmail(email))
-      newErrors.email = "Email must be a valid 'stud.noroff.no' address.";
+      newErrors.email = "Email must be a valid '@stud.noroff.no' address.";
+
     if (!validatePassword(password))
       newErrors.password = 'Password must be at least 8 characters long.';
 
+    // Check if there are any validation errors
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
       return;
@@ -122,11 +133,11 @@ function RegisterForm() {
                   type="email"
                   name="email"
                   id="email"
+                  required
+                  autoComplete="email"
                   className="bg-white/45 border-white border-2 rounded-xl text-fuscous-gray-700 text-sm font-semibold focus:outline-none focus:ring-0 focus:border-pelorous-300 block w-full py-2 px-4"
                   placeholder="name@stud.noroff.no"
-                  required
                   onChange={handleChange}
-                  autoComplete="given-email"
                 />
                 {errors.email && (
                   <p className="text-red-500 text-xs italic mt-1">

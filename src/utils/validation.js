@@ -1,6 +1,11 @@
-export const validateName = (name) => {
-  // Allows only letters, numbers, and underscores
+// Validates only letters, numbers, and underscores
+export const validateNameCharacters = (name) => {
   return /^[a-zA-Z0-9_]+$/.test(name);
+};
+
+// Validates that the name is no longer than 20 characters
+export const validateNameLength = (name) => {
+  return name.length <= 20;
 };
 
 export const validateEmail = (email) => {
