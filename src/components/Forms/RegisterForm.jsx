@@ -59,7 +59,7 @@ function RegisterForm() {
         'Name must contain only letters, numbers, and underscores.';
     // Check name length
     if (!validateNameLength(name))
-      newErrors.nameLength = 'Name must be no more than 20 characters long.';
+      newErrors.name = 'Name must be no more than 20 characters long.';
 
     if (!validateEmail(email))
       newErrors.email = "Email must be a valid '@stud.noroff.no' address.";
