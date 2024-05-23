@@ -174,7 +174,7 @@ function RegisterForm() {
                       id="manager"
                       name="venueManager"
                       type="checkbox"
-                      className="w-4 h-4 text-pelorous-400 bg-white/45 border-white rounded focus:outline-none focus:ring-0"
+                      className="w-4 h-4 accent-pelorous-500 bg-gray-100 border-white rounded focus:ring-pelorous-500"
                       onChange={handleChange}
                     />
                   </div>
