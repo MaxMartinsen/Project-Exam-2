@@ -12,6 +12,7 @@ import SkeletonItem from './../Skeleton/SkeletonItem';
 
 import calculateTotalPrice from '../../utils/calculateTotalPrice';
 import calculateTotalNights from '../../utils/calculateTotalNights';
+import IMAGE from '../../assets/image/default-image.png';
 
 /**
  * TablesBookings component displays a list of upcoming bookings associated with the current user's profile.
@@ -114,8 +115,16 @@ function TabletsBookings() {
                             <div className="flex items-center gap-x-2">
                               <img
                                 className="object-cover w-20 h-20 rounded"
-                                src={booking.venue.media[0].url}
-                                alt={booking.venue.media[0].alt}
+                                src={
+                                  booking.venue.media.length > 0
+                                    ? booking.venue.media[0].url
+                                    : IMAGE
+                                }
+                                alt={
+                                  booking.venue.media.length > 0
+                                    ? booking.venue.media[0].alt
+                                    : 'Default Image'
+                                }
                               />
                               <div>
                                 <h2 className="font-medium text-gray-800">

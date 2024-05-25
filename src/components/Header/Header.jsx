@@ -43,6 +43,7 @@ function Header() {
   const isLoggedIn = Boolean(currentUser);
 
   const [showDropdown, setShowDropdown] = useState(false);
+  const [menuVisible, setMenuVisible] = useState(false);
 
   const handleLogout = () => {
     dispatch(logoutUser());
@@ -62,6 +63,16 @@ function Header() {
   const handleManager = () => {
     setShowDropdown(false);
     navigate(ROUTES.MANAGER);
+  };
+
+  const toggleMenu = () => {
+    setMenuVisible(!menuVisible);
+  };
+
+  const closeMenu = () => {
+    if (menuVisible) {
+      setMenuVisible(false);
+    }
   };
 
   useEffect(() => {
@@ -117,7 +128,12 @@ function Header() {
                   className="flex text-sm rounded md:me-0"
                   id="user-menu-button"
                   aria-expanded="false"
-                  onClick={() => setShowDropdown(!showDropdown)}
+                  onClick={() => {
+                    if (!showDropdown) {
+                      closeMenu();
+                    }
+                    setShowDropdown(!showDropdown);
+                  }}
                 >
                   <span className="sr-only">Open user menu</span>
                   <img
@@ -204,39 +220,56 @@ function Header() {
               Sign in
             </Link>
           )}
-          <button
-            data-collapse-toggle="navbar-sticky"
-            type="button"
-            className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
-            aria-controls="navbar-sticky"
-            aria-expanded="false"
-          >
-            <span className="sr-only">Open main menu</span>
-            <svg
-              className="w-5 h-5"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 17 14"
-            >
-              <path
-                stroke="currentColor"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M1 1h15M1 7h15M1 13h15"
-              />
-            </svg>
-          </button>
+          <div className="flex md:hidden">
+            <button id="hamburger" onClick={toggleMenu}>
+              <svg
+                id="hamburger-bar"
+                className={`w-8 h-8 text-fuscous-gray-700 ${menuVisible ? 'hidden' : ''}`}
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  strokeWidth="2"
+                  d="M5 7h14M5 12h14M5 17h10"
+                />
+              </svg>
+
+              <svg
+                id="hamburger-close"
+                className={`w-8 h-8 text-fuscous-gray-700 ${menuVisible ? '' : 'hidden'}`}
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M6 18 17.94 6M18 18 6.06 6"
+                />
+              </svg>
+            </button>
+          </div>
         </div>
         <div
-          className="items-center justify-between hidden w-full md:flex md:w-auto md:order-1"
-          id="navbar-sticky"
+          className={`items-center justify-between w-full ${menuVisible ? 'flex' : 'hidden'} md:flex md:w-auto md:order-1`}
+          id="navbar-menu"
         >
-          <ul className="flex flex-col p-4 md:p-0 mt-4 font-medium border bg-white border-gray-100 rounded-lg md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-inherit">
+          <ul className="flex flex-col w-full p-4 md:p-0 mt-4 font-medium border bg-white border-gray-100 rounded-lg md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-inherit">
             <li>
               <NavLink
                 to={ROUTES.HOME}
+                onClick={closeMenu}
                 className={({ isActive }) =>
                   `font-bold text-xl block py-2 px-3 rounded md:bg-transparent md:p-0 text-fuscous-gray-700 ${isActive ? 'md:text-fuscous-gray-700 md:decoration-pelorous-500 md:underline md:underline-offset-4 md:decoration-4 text-white bg-pelorous-500' : 'text-fuscous-gray-700 hover:text-pelorous-500'} `
                 }
@@ -247,6 +280,7 @@ function Header() {
             <li>
               <NavLink
                 to={ROUTES.ABOUT}
+                onClick={closeMenu}
                 className={({ isActive }) =>
                   `font-bold text-xl block py-2 px-3 rounded md:bg-transparent md:p-0 text-fuscous-gray-700 ${isActive ? 'md:text-fuscous-gray-700 md:decoration-pelorous-500 md:underline md:underline-offset-4 md:decoration-4 text-white bg-pelorous-500' : 'text-fuscous-gray-700 hover:text-pelorous-500'} `
                 }
@@ -257,6 +291,7 @@ function Header() {
             <li>
               <NavLink
                 to={ROUTES.CONTACT}
+                onClick={closeMenu}
                 className={({ isActive }) =>
                   `font-bold text-xl block py-2 px-3 rounded md:bg-transparent md:p-0 text-fuscous-gray-700 ${isActive ? 'md:text-fuscous-gray-700 md:decoration-pelorous-500 md:underline md:underline-offset-4 md:decoration-4 text-white bg-pelorous-500' : 'text-fuscous-gray-700 hover:text-pelorous-500'} `
                 }

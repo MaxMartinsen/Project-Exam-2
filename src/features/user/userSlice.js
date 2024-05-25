@@ -29,8 +29,15 @@ export const createUser = createAsyncThunk(
         },
         body: JSON.stringify(userData),
       });
-      if (!response.ok) throw new Error('Could not register user');
+
       const data = await response.json();
+      if (!response.ok) {
+        // Assuming the server response contains an array of errors
+        throw new Error(
+          data.errors.map((err) => err.message).join(', ') ||
+            'Could not register user'
+        );
+      }
       return data;
     } catch (error) {
       return rejectWithValue(error.message);
@@ -42,18 +49,23 @@ export const loginUser = createAsyncThunk(
   'user/loginUser',
   async (userData, { rejectWithValue }) => {
     try {
-      const loginResponse = await fetch(`${API_AUTH_URL}/login`, {
+      const response = await fetch(`${API_AUTH_URL}/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(userData),
       });
 
-      if (!loginResponse.ok) throw new Error('Login failed');
-      const loginData = await loginResponse.json();
-      localStorage.setItem('user', JSON.stringify(loginData.data));
+      const data = await response.json();
+      if (!response.ok) {
+        // Extract error message from JSON response and use rejectWithValue to handle it
+        const errorMessages = data.errors
+          ? data.errors.map((err) => err.message).join(', ')
+          : data.message || 'Login failed';
+        throw new Error(errorMessages);
+      }
+      localStorage.setItem('user', JSON.stringify(data.data));
 
-      const accessToken = loginData.data.accessToken;
-
+      const accessToken = data.data.accessToken;
       const apiKeyResponse = await fetch(`${API_AUTH_URL}/create-api-key`, {
         method: 'POST',
         headers: {
@@ -63,19 +75,22 @@ export const loginUser = createAsyncThunk(
         body: JSON.stringify({ name: 'API Key' }),
       });
 
-      if (!apiKeyResponse.ok) throw new Error('API Key creation failed');
+      if (!apiKeyResponse.ok) {
+        const apiKeyData = await apiKeyResponse.json();
+        const apiKeyErrorMsg = apiKeyData.message || 'API Key creation failed';
+        throw new Error(apiKeyErrorMsg);
+      }
       const apiKeyData = await apiKeyResponse.json();
 
       const user = {
-        user: loginData.data,
+        user: data.data,
         apiKey: apiKeyData.data.key,
       };
 
       localStorage.setItem('user', JSON.stringify(user));
-
       return user;
     } catch (error) {
-      return rejectWithValue(error.toString());
+      return rejectWithValue(error.message);
     }
   }
 );
@@ -117,24 +132,26 @@ const userSlice = createSlice({
       state.currentUser = { ...state.currentUser, ...action.payload };
       saveToLocalStorage(state.currentUser);
     },
+    clearErrors: (state) => {
+      state.error = null;
+    },
   },
   extraReducers: (builder) => {
     builder
       .addCase(createUser.pending, (state) => {
         state.status = 'loading';
+        state.error = null;
         state.isLoading = true;
       })
-      .addCase(createUser.fulfilled, (state, action) => {
+      .addCase(createUser.fulfilled, (state) => {
         state.status = 'succeeded';
-        const newUser = action.payload.data;
         state.isLoading = false;
-        saveToLocalStorage(newUser);
+        state.error = null;
       })
       .addCase(createUser.rejected, (state, action) => {
         state.isLoading = false;
-        state.error = action.payload;
+        state.error = action.payload || 'Registration failed';
         state.status = 'failed';
-        state.error = action.error.message;
       })
       .addCase(loginUser.pending, (state) => {
         state.status = 'loading';
@@ -153,13 +170,12 @@ const userSlice = createSlice({
       .addCase(loginUser.rejected, (state, action) => {
         state.status = 'failed';
         state.isLoading = false;
-        state.error = action.payload;
-        state.error = action.error.message;
+        state.error = action.payload || 'Login failed';
       })
       .addCase(logoutUser.fulfilled, (state) => {
         userSlice.caseReducers.clearCurrentUser(state);
       });
   },
 });
-export const { clearCurrentUser, updateUser } = userSlice.actions;
+export const { clearCurrentUser, updateUser, clearErrors } = userSlice.actions;
 export default userSlice.reducer;

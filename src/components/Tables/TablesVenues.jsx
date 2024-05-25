@@ -8,6 +8,7 @@ import { format } from 'date-fns';
 import DeleteModal from '../Modal/DeleteModal';
 import { deleteVenue } from '../../features/venues/venuesSlice';
 import SkeletonItem from '../Skeleton/SkeletonItem';
+import IMAGE from '../../assets/image/default-image.png';
 
 function TablesVenues({ onEditVenue }) {
   const dispatch = useDispatch();
@@ -59,7 +60,16 @@ function TablesVenues({ onEditVenue }) {
 
   if (isLoading) return <SkeletonItem />;
   if (error) return <div>Error: {error}</div>;
-  if (!venues.length) return <div>No venues found.</div>;
+  if (!venues.length)
+    return (
+      <>
+        <section className="antialiased">
+          <div className="max-w-screen-xxl px-4 mx-auto 2xl:px-0">
+            <div>No venues found.</div>
+          </div>
+        </section>
+      </>
+    );
   return (
     <section className="container px-4 mx-auto">
       <div className="flex items-center gap-x-3">
@@ -142,8 +152,16 @@ function TablesVenues({ onEditVenue }) {
                             <div className="flex items-center gap-x-2">
                               <img
                                 className="object-cover w-20 h-20 rounded"
-                                src={profile.media[0].url}
-                                alt={profile.media[0].alt}
+                                src={
+                                  profile.media.length > 0
+                                    ? profile.media[0].url
+                                    : IMAGE
+                                }
+                                alt={
+                                  profile.media.length > 0
+                                    ? profile.media[0].alt
+                                    : 'Venue Image'
+                                }
                               />
                               <div>
                                 <h2 className="font-medium text-gray-800">

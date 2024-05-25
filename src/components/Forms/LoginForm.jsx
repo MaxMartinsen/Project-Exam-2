@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 
-import { loginUser } from '../../features/user/userSlice';
+import { loginUser, clearErrors } from '../../features/user/userSlice';
 import { fetchUserProfile } from '../../features/profile/profileSlice';
 
 import { ROUTES } from '../../utils/routes';
@@ -36,6 +36,9 @@ function LoginForm() {
   const handleChange = ({ target: { value, name } }) => {
     setValues({ ...values, [name]: value });
     setErrors({ ...errors, [name]: '' });
+    if (userError) {
+      dispatch(clearErrors());
+    }
   };
 
   const handleSubmit = async (event) => {
@@ -49,7 +52,7 @@ function LoginForm() {
     // Validation
     const newErrors = {};
     if (!validateEmail(email))
-      newErrors.email = "Email must be a valid 'stud.noroff.no' address.";
+      newErrors.email = "Email must be a valid '@stud.noroff.no' address.";
     if (!validatePassword(password))
       newErrors.password = 'Password must be at least 8 characters long.';
 
@@ -101,7 +104,7 @@ function LoginForm() {
                   name="email"
                   id="email"
                   required
-                  className="bg-white/45 border-white border-2 rounded-xl text-fuscous-gray-700 text-sm font-semibold focus:ring-0 focus:border-pelorous-300 block w-full py-2 px-4"
+                  className="bg-white/45 border-white border-2 rounded-xl text-fuscous-gray-700 text-sm font-semibold focus:outline-none focus:ring-0 focus:border-pelorous-300 block w-full py-2 px-4"
                   placeholder="name@stud.noroff.no"
                   value={values.email}
                   onChange={handleChange}
@@ -125,7 +128,7 @@ function LoginForm() {
                   name="password"
                   id="password"
                   required
-                  className="bg-white/45 border-white border-2 rounded-xl text-fuscous-gray-700 text-sm font-semibold focus:ring-0 focus:border-pelorous-300 block w-full py-2 px-4"
+                  className="bg-white/45 border-white border-2 rounded-xl text-fuscous-gray-700 text-sm font-semibold focus:outline-none focus:ring-0 focus:border-pelorous-300 block w-full py-2 px-4"
                   placeholder="••••••••"
                   value={values.password}
                   onChange={handleChange}

@@ -17,24 +17,54 @@ import { API_BOOKINGS_URL } from '../../utils/constans';
  * @module bookingSlice
  */
 
+// Helper function to recursively fetch all pages
+const fetchAllPages = async (
+  url,
+  token,
+  apiKey,
+  venueId,
+  currentPage = 1,
+  accumulatedData = []
+) => {
+  const response = await fetch(
+    `${url}?venueId=${venueId}&page=${currentPage}`,
+    {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+        'X-Noroff-API-Key': apiKey,
+      },
+    }
+  );
+
+  if (!response.ok) {
+    throw new Error(`Error fetching bookings: ${response.statusText}`);
+  }
+
+  const data = await response.json();
+  const newData = accumulatedData.concat(data.data);
+
+  if (data.meta.currentPage < data.meta.pageCount) {
+    return fetchAllPages(url, token, apiKey, venueId, currentPage + 1, newData);
+  } else {
+    return newData;
+  }
+};
+
+// Async thunk for fetching bookings
 export const fetchBookings = createAsyncThunk(
   'bookings/fetchBookings',
   async ({ token, apiKey, venueId }, { rejectWithValue }) => {
     try {
-      const response = await fetch(`${API_BOOKINGS_URL}?venueId=${venueId}`, {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-          'X-Noroff-API-Key': apiKey,
-        },
-      });
-
-      if (!response.ok) throw new Error(`Failed to fetch bookings`);
-
-      const data = await response.json();
-
-      return data?.data || [];
+      const bookingsData = await fetchAllPages(
+        API_BOOKINGS_URL,
+        token,
+        apiKey,
+        venueId
+      );
+      return bookingsData;
     } catch (error) {
+      console.error('Error fetching bookings:', error);
       return rejectWithValue(error.message);
     }
   }

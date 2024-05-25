@@ -81,7 +81,7 @@ function VenuesList({ searchQuery, filterOptions, onFilterChange }) {
                 >
                   <div className="absolute w-full md:bg-white/45 -z-10 md:h-80 xl:h-96 rounded-3xl md:border-2 md:border-white md:shadow-inner"></div>
 
-                  <div className="group overflow-hidden w-full p-2 md:flex bg-white/45 rounded-3xl border-white border-2 md:border-none md:bg-transparent md:p-5 lg:pl-6 lg:pr-5 md:justify-evenly">
+                  <div className="group overflow-hidden w-full p-2 md:flex bg-white/45 rounded-3xl border-white border-2 md:border-none md:bg-transparent md:p-5 lg:px-6 md:justify-evenly">
                     <img
                       className="transition-transform duration-700 transform group-hover:scale-105 object-cover rounded-2xl shadow-md w-full h-80 md:h-[18rem] md:max-w-[12rem] lg:h-[22rem] lg:max-w-[14rem] xl:h-[26rem] xl:min-w-[26rem] md:rounded-3xl"
                       src={venue.media.length > 0 ? venue.media[0].url : IMAGE}
@@ -91,7 +91,7 @@ function VenuesList({ searchQuery, filterOptions, onFilterChange }) {
                           : 'Default Image'
                       }
                     />
-                    <div className="mt-4 w-full h-auto md:ml-3 md:my-0 lg:my-7 xl:ml-6 xl:my-9 flex flex-col">
+                    <div className="mt-4 w-full h-auto md:ml-3 md:my-1 lg:my-10 xl:ml-6 flex flex-col">
                       <div className="flex justify-between">
                         <div className="flex flex-col">
                           <h3 className="text-2xl xl:text-3xl font-semibold tracking-tight text-fuscous-gray-700 max-w-60 md:max-w-60 lg:max-w-80 xxl:max-w-96 overflow-hidden whitespace-nowrap text-ellipsis">
@@ -139,7 +139,7 @@ function VenuesList({ searchQuery, filterOptions, onFilterChange }) {
                           </span>
                         </div>
                         <div className="flex flex-col items-end">
-                          <button className="cursor-pointer w-fit py-1 px-4 lg:py-2 lg:px-6 flex  items-center rounded-xl border-2 text-white font-semibold text-lg lg:text-xl border-white bg-gradient-to-br from-pelorous-600 to-pelorous-400 hover:from-pelorous-500 hover:to-pelorous-300">
+                          <button className="cursor-pointer w-fit py-1 px-4 lg:py-2 lg:px-6 flex  items-center rounded-2xl border-2 text-white font-semibold text-lg lg:text-xl border-white bg-gradient-to-br from-pelorous-600 to-pelorous-400 hover:from-pelorous-500 hover:to-pelorous-300">
                             See availability
                             <FaArrowRight className="ml-6" />
                           </button>
@@ -155,7 +155,7 @@ function VenuesList({ searchQuery, filterOptions, onFilterChange }) {
             {displayedVenues.length < filteredVenues.length && (
               <div className="flex items-center justify-center">
                 <button
-                  className="cursor-pointer w-fit py-1 px-4 lg:py-2 lg:px-6 flex  items-center rounded-xl border-2 text-white font-semibold text-lg lg:text-xl border-white bg-gradient-to-br from-pelorous-600 to-pelorous-400 hover:from-pelorous-500 hover:to-pelorous-300"
+                  className="cursor-pointer w-fit py-1 px-4 lg:py-2 lg:px-6 flex  items-center rounded-2xl border-2 text-white font-semibold text-lg lg:text-xl border-white bg-gradient-to-br from-pelorous-600 to-pelorous-400 hover:from-pelorous-500 hover:to-pelorous-300"
                   onClick={handleLoadMore}
                 >
                   More Venues
