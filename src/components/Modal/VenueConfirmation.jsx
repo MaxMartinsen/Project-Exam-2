@@ -12,7 +12,7 @@ import { ROUTES } from '../../utils/routes';
  * @returns {JSX.Element} A modal that informs the user that a venue has been successfully created, with options to close the modal or navigate to another page.
  */
 
-function VenueConfirmation({ isOpen, onClose }) {
+function VenueConfirmation({ isOpen, onClose, actionType }) {
   const navigate = useNavigate();
   if (!isOpen) return null;
   return (
@@ -20,7 +20,9 @@ function VenueConfirmation({ isOpen, onClose }) {
       <div className="relative bg-white rounded-lg shadow">
         <div className="p-4 md:p-5 border-b rounded-t ">
           <h3 className="text-lg font-semibold text-gray-900 text-center px-14">
-            Your Venue Is Created
+            {actionType === 'edit'
+              ? 'Venue Updated Successfully'
+              : 'Venue Created Successfully'}
           </h3>
           <button
             type="button"
@@ -47,7 +49,7 @@ function VenueConfirmation({ isOpen, onClose }) {
         </div>
         <div className="p-4 md:p-5">
           <p className="text-gray-500 text-center mb-4">
-            Thank you for booking with Holidaze!
+            Thank you for using the platform with Holidaze!
           </p>
           <button
             type="button"

@@ -447,7 +447,11 @@ function VenuesForm({ mode, initialData }) {
           </div>
         </form>
       </div>
-      <VenueConfirmation isOpen={showConfirmation} onClose={handleModalClose} />
+      <VenueConfirmation
+        isOpen={showConfirmation}
+        onClose={handleModalClose}
+        actionType={mode}
+      />
     </section>
   );
 }
