@@ -49,13 +49,10 @@ function VenuesItem({ venue }) {
   const [currentImages, setCurrentImages] = useState([]);
 
   const handleImageClick = () => {
-    if (media.length > 1) {
-      setCurrentImages(media);
-      setIsModalOpen(true);
-    } else {
-      setCurrentImages(media);
-      setIsModalOpen(true);
-    }
+    const defaultImage = [{ url: IMAGE, alt: 'Default Venue Image' }];
+    // Check if media exists and has at least one entry, otherwise use default image
+    setCurrentImages(media.length > 0 ? media : defaultImage);
+    setIsModalOpen(true);
   };
 
   const handleBooking = async (bookingData) => {
