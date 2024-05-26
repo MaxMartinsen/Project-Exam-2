@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import IMAGE from '../../assets/image/default-image.png';
 
 /**
  * ImageModal component showcases images in a modal overlay, using a custom carousel for multiple images.
@@ -65,7 +66,7 @@ function ImageModal({ images, isOpen, onClose }) {
                     className={`duration-700 ease-in-out w-full h-full ${index === activeIndex ? 'block' : 'hidden'}`}
                   >
                     <img
-                      src={img.url}
+                      src={img.url || IMAGE}
                       alt={img.alt || 'Image'}
                       className="w-full h-full object-cover rounded-2xl"
                     />
