@@ -50,7 +50,6 @@ function VenuesItem({ venue }) {
 
   const handleImageClick = () => {
     const defaultImage = [{ url: IMAGE, alt: 'Default Venue Image' }];
-    // Check if media exists and has at least one entry, otherwise use default image
     setCurrentImages(media.length > 0 ? media : defaultImage);
     setIsModalOpen(true);
   };
