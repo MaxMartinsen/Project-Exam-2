@@ -81,7 +81,7 @@ function VenuesList({ searchQuery, filterOptions, onFilterChange }) {
                 >
                   <div className="absolute w-full md:bg-white/45 -z-10 md:h-80 xl:h-96 rounded-3xl md:border-2 md:border-white md:shadow-inner"></div>
 
-                  <div className="group overflow-hidden w-full p-2 md:flex bg-white/45 rounded-3xl border-white border-2 md:border-none md:bg-transparent md:px-5 lg:px-6 md:justify-evenly">
+                  <div className="group overflow-hidden w-full p-2 md:flex bg-white/45 rounded-3xl border-white border-2 md:border-none md:bg-transparent md:px-5 md:py-4 lg:px-6 md:justify-evenly">
                     <img
                       className="transition-transform duration-700 transform group-hover:scale-105 object-cover rounded-2xl shadow-md w-full h-80 md:h-[18rem] md:max-w-[12rem] lg:h-[22rem] lg:max-w-[14rem] xl:h-[26rem] xl:min-w-[26rem] md:rounded-3xl"
                       src={venue.media.length > 0 ? venue.media[0].url : IMAGE}
